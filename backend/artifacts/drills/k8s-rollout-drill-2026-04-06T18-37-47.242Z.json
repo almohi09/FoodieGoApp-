@@ -1,0 +1,128 @@
+{
+  "type": "k8s_rollout_drill",
+  "startedAt": "2026-04-06T18:37:47.231Z",
+  "completedAt": "2026-04-06T18:37:47.236Z",
+  "pass": true,
+  "params": {
+    "namespace": "foodiego",
+    "deployment": "foodiego-backend",
+    "manifestPath": "infra/k8s",
+    "timeout": "180s",
+    "dryRun": true,
+    "healthUrl": null
+  },
+  "steps": [
+    {
+      "step": "kubectl_client_version",
+      "command": [
+        "kubectl",
+        "version",
+        "--client",
+        "-o",
+        "json"
+      ],
+      "ok": true,
+      "startedAt": "2026-04-06T18:37:47.235Z",
+      "endedAt": "2026-04-06T18:37:47.235Z",
+      "stdout": "[dry-run] command not executed"
+    },
+    {
+      "step": "kustomize_apply",
+      "command": [
+        "kubectl",
+        "apply",
+        "-k",
+        "infra/k8s"
+      ],
+      "ok": true,
+      "startedAt": "2026-04-06T18:37:47.236Z",
+      "endedAt": "2026-04-06T18:37:47.236Z",
+      "stdout": "[dry-run] command not executed"
+    },
+    {
+      "step": "rollout_status_after_apply",
+      "command": [
+        "kubectl",
+        "rollout",
+        "status",
+        "deployment/foodiego-backend",
+        "-n",
+        "foodiego",
+        "--timeout=180s"
+      ],
+      "ok": true,
+      "startedAt": "2026-04-06T18:37:47.236Z",
+      "endedAt": "2026-04-06T18:37:47.236Z",
+      "stdout": "[dry-run] command not executed"
+    },
+    {
+      "step": "deployment_snapshot_after_apply",
+      "command": [
+        "kubectl",
+        "get",
+        "deployment",
+        "foodiego-backend",
+        "-n",
+        "foodiego",
+        "-o",
+        "json"
+      ],
+      "ok": true,
+      "startedAt": "2026-04-06T18:37:47.236Z",
+      "endedAt": "2026-04-06T18:37:47.236Z",
+      "stdout": "[dry-run] command not executed"
+    },
+    {
+      "step": "rollout_undo",
+      "command": [
+        "kubectl",
+        "rollout",
+        "undo",
+        "deployment/foodiego-backend",
+        "-n",
+        "foodiego"
+      ],
+      "ok": true,
+      "startedAt": "2026-04-06T18:37:47.236Z",
+      "endedAt": "2026-04-06T18:37:47.236Z",
+      "stdout": "[dry-run] command not executed"
+    },
+    {
+      "step": "rollout_status_after_undo",
+      "command": [
+        "kubectl",
+        "rollout",
+        "status",
+        "deployment/foodiego-backend",
+        "-n",
+        "foodiego",
+        "--timeout=180s"
+      ],
+      "ok": true,
+      "startedAt": "2026-04-06T18:37:47.236Z",
+      "endedAt": "2026-04-06T18:37:47.236Z",
+      "stdout": "[dry-run] command not executed"
+    },
+    {
+      "step": "deployment_snapshot_after_undo",
+      "command": [
+        "kubectl",
+        "get",
+        "deployment",
+        "foodiego-backend",
+        "-n",
+        "foodiego",
+        "-o",
+        "json"
+      ],
+      "ok": true,
+      "startedAt": "2026-04-06T18:37:47.236Z",
+      "endedAt": "2026-04-06T18:37:47.236Z",
+      "stdout": "[dry-run] command not executed"
+    }
+  ],
+  "checksum": {
+    "algorithm": "sha256",
+    "value": "41e2e8b33e516144e8e99a9ce5aee3e6dce42794f212f7533b33fc2b3dd82847"
+  }
+}

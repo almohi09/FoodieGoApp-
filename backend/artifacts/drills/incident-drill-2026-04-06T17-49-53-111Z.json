@@ -1,0 +1,67 @@
+{
+  "pass": false,
+  "windowMs": 300,
+  "thresholds": {
+    "alertMinRequests": 3,
+    "alertP95MsThreshold": 0
+  },
+  "timeline": [
+    {
+      "at": "2026-04-06T17:49:51.576Z",
+      "step": "drill_started",
+      "details": {
+        "baseUrl": "http://127.0.0.1:63628/api/v1"
+      }
+    },
+    {
+      "at": "2026-04-06T17:49:51.669Z",
+      "step": "baseline_health_check",
+      "details": {
+        "status": 200
+      }
+    },
+    {
+      "at": "2026-04-06T17:49:51.691Z",
+      "step": "synthetic_traffic_generated",
+      "details": {
+        "requests": 5
+      }
+    },
+    {
+      "at": "2026-04-06T17:49:51.703Z",
+      "step": "alert_detection",
+      "details": {
+        "activeAlerts": [
+          "high_p95_latency"
+        ]
+      }
+    },
+    {
+      "at": "2026-04-06T17:49:51.703Z",
+      "step": "mitigation_started",
+      "details": {
+        "action": "traffic_shaping_simulated"
+      }
+    },
+    {
+      "at": "2026-04-06T17:49:53.108Z",
+      "step": "mitigation_validation",
+      "details": {
+        "activeAlerts": [
+          "high_p95_latency"
+        ]
+      }
+    },
+    {
+      "at": "2026-04-06T17:49:53.110Z",
+      "step": "post_mitigation_health_check",
+      "details": {
+        "status": 200
+      }
+    }
+  ],
+  "summary": {
+    "alertRaised": true,
+    "alertResolved": false
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "type": "k8s_rollout_drill",
+  "startedAt": "2026-04-06T19:26:07.086Z",
+  "completedAt": "2026-04-06T19:26:38.028Z",
+  "pass": true,
+  "params": {
+    "namespace": "foodiego",
+    "deployment": "foodiego-backend",
+    "manifestPath": "infra/k8s-local",
+    "timeout": "300s",
+    "k8sContext": "kind-foodiego-staging",
+    "dryRun": false,
+    "healthUrl": null
+  },
+  "steps": [
+    {
+      "step": "kubectl_client_version",
+      "command": [
+        "kubectl",
+        "--context",
+        "kind-foodiego-staging",
+        "version",
+        "--client",
+        "-o",
+        "json"
+      ],
+      "ok": true,
+      "startedAt": "2026-04-06T19:26:07.089Z",
+      "endedAt": "2026-04-06T19:26:07.336Z",
+      "stdout": "{\n  \"clientVersion\": {\n    \"major\": \"1\",\n    \"minor\": \"34\",\n    \"gitVersion\": \"v1.34.1\",\n    \"gitCommit\": \"93248f9ae092f571eb870b7664c534bfc7d00f03\",\n    \"gitTreeState\": \"clean\",\n    \"buildDate\": \"2025-09-09T19:44:50Z\",\n    \"goVersion\": \"go1.24.6\",\n    \"compiler\": \"gc\",\n    \"platform\": \"windows/amd64\"\n  },\n  \"kustomizeVersion\": \"v5.7.1\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "step": "kubectl_current_context",
+      "command": [
+        "kubectl",
+        "--context",
+        "kind-foodiego-staging",
+        "config",
+        "current-context"
+      ],
+      "ok": true,
+      "startedAt": "2026-04-06T19:26:07.337Z",
+      "endedAt": "2026-04-06T19:26:07.583Z",
+      "stdout": "kind-foodiego-staging\n",
+      "stderr": ""
+    },
+    {
+      "step": "kustomize_apply",
+      "command": [
+        "kubectl",
+        "--context",
+        "kind-foodiego-staging",
+        "apply",
+        "-k",
+        "infra/k8s-local"
+      ],
+      "ok": true,
+      "startedAt": "2026-04-06T19:26:07.583Z",
+      "endedAt": "2026-04-06T19:26:09.634Z",
+      "stdout": "namespace/foodiego unchanged\nconfigmap/foodiego-backend-config unchanged\nsecret/foodiego-backend-secret configured\nservice/foodiego-backend unchanged\ndeployment.apps/foodiego-backend unchanged\npoddisruptionbudget.policy/foodiego-backend configured\nhorizontalpodautoscaler.autoscaling/foodiego-backend unchanged\n",
+      "stderr": ""
+    },
+    {
+      "step": "rollout_status_after_apply",
+      "command": [
+        "kubectl",
+        "--context",
+        "kind-foodiego-staging",
+        "rollout",
+        "status",
+        "deployment/foodiego-backend",
+        "-n",
+        "foodiego",
+        "--timeout=300s"
+      ],
+      "ok": true,
+      "startedAt": "2026-04-06T19:26:09.635Z",
+      "endedAt": "2026-04-06T19:26:10.081Z",
+      "stdout": "deployment \"foodiego-backend\" successfully rolled out\n",
+      "stderr": ""
+    },
+    {
+      "step": "deployment_snapshot_after_apply",
+      "command": [
+        "kubectl",
+        "--context",
+        "kind-foodiego-staging",
+        "get",
+        "deployment",
+        "foodiego-backend",
+        "-n",
+        "foodiego",
+        "-o",
+        "json"
+      ],
+      "ok": true,
+      "startedAt": "2026-04-06T19:26:10.081Z",
+      "endedAt": "2026-04-06T19:26:10.355Z",
+      "stdout": "{\n    \"apiVersion\": \"apps/v1\",\n    \"kind\": \"Deployment\",\n    \"metadata\": {\n        \"annotations\": {\n            \"deployment.kubernetes.io/revision\": \"6\",\n            \"kubectl.kubernetes.io/last-applied-configuration\": \"{\\\"apiVersion\\\":\\\"apps/v1\\\",\\\"kind\\\":\\\"Deployment\\\",\\\"metadata\\\":{\\\"annotations\\\":{},\\\"name\\\":\\\"foodiego-backend\\\",\\\"namespace\\\":\\\"foodiego\\\"},\\\"spec\\\":{\\\"replicas\\\":2,\\\"revisionHistoryLimit\\\":5,\\\"selector\\\":{\\\"matchLabels\\\":{\\\"app\\\":\\\"foodiego-backend\\\"}},\\\"template\\\":{\\\"metadata\\\":{\\\"labels\\\":{\\\"app\\\":\\\"foodiego-backend\\\"}},\\\"spec\\\":{\\\"containers\\\":[{\\\"args\\\":[\\\"dist/server.js\\\"],\\\"command\\\":[\\\"node\\\"],\\\"envFrom\\\":[{\\\"configMapRef\\\":{\\\"name\\\":\\\"foodiego-backend-config\\\"}},{\\\"secretRef\\\":{\\\"name\\\":\\\"foodiego-backend-secret\\\"}}],\\\"image\\\":\\\"foodiego/backend:local\\\",\\\"imagePullPolicy\\\":\\\"IfNotPresent\\\",\\\"livenessProbe\\\":{\\\"httpGet\\\":{\\\"path\\\":\\\"/api/v1/health\\\",\\\"port\\\":4000},\\\"initialDelaySeconds\\\":15,\\\"periodSeconds\\\":15},\\\"name\\\":\\\"backend\\\",\\\"ports\\\":[{\\\"containerPort\\\":4000}],\\\"readinessProbe\\\":{\\\"httpGet\\\":{\\\"path\\\":\\\"/api/v1/health\\\",\\\"port\\\":4000},\\\"initialDelaySeconds\\\":5,\\\"periodSeconds\\\":10},\\\"resources\\\":{\\\"limits\\\":{\\\"cpu\\\":\\\"500m\\\",\\\"memory\\\":\\\"512Mi\\\"},\\\"requests\\\":{\\\"cpu\\\":\\\"100m\\\",\\\"memory\\\":\\\"256Mi\\\"}}}]}}}}\\n\"\n        },\n        \"creationTimestamp\": \"2026-04-06T19:00:50Z\",\n        \"generation\": 6,\n        \"name\": \"foodiego-backend\",\n        \"namespace\": \"foodiego\",\n        \"resourceVersion\": \"3591\",\n        \"uid\": \"c8e7001c-9b35-4dfc-93e5-4a316bd7a44d\"\n    },\n    \"spec\": {\n        \"progressDeadlineSeconds\": 600,\n        \"replicas\": 2,\n        \"revisionHistoryLimit\": 5,\n        \"selector\": {\n            \"matchLabels\": {\n                \"app\": \"foodiego-backend\"\n            }\n        },\n        \"strategy\": {\n            \"rollingUpdate\": {\n                \"maxSurge\": \"25%\",\n                \"maxUnavailable\": \"25%\"\n            },\n            \"type\": \"RollingUpdate\"\n        },\n        \"template\": {\n            \"metadata\": {\n                \"labels\": {\n                    \"app\": \"foodiego-backend\"\n                }\n            },\n            \"spec\": {\n                \"containers\": [\n                    {\n                        \"args\": [\n                            \"dist/server.js\"\n                        ],\n                        \"command\": [\n                            \"node\"\n                        ],\n                        \"env\": [\n                            {\n                                \"name\": \"DRILL_RESEED_TS\",\n                                \"value\": \"1775503527\"\n                            }\n                        ],\n                        \"envFrom\": [\n                            {\n                                \"configMapRef\": {\n                                    \"name\": \"foodiego-backend-config\"\n                                }\n                            },\n                            {\n                                \"secretRef\": {\n                                    \"name\": \"foodiego-backend-secret\"\n                                }\n                            }\n                        ],\n                        \"image\": \"foodiego/backend:local\",\n                        \"imagePullPolicy\": \"IfNotPresent\",\n                        \"livenessProbe\": {\n                            \"failureThreshold\": 3,\n                            \"httpGet\": {\n                                \"path\": \"/api/v1/health\",\n                                \"port\": 4000,\n                                \"scheme\": \"HTTP\"\n                            },\n                            \"initialDelaySeconds\": 15,\n                            \"periodSeconds\": 15,\n                            \"successThreshold\": 1,\n                            \"timeoutSeconds\": 1\n                        },\n                        \"name\": \"backend\",\n                        \"ports\": [\n                            {\n                                \"containerPort\": 4000,\n                                \"protocol\": \"TCP\"\n                            }\n                        ],\n                        \"readinessProbe\": {\n                            \"failureThreshold\": 3,\n                            \"httpGet\": {\n                                \"path\": \"/api/v1/health\",\n                                \"port\": 4000,\n                                \"scheme\": \"HTTP\"\n                            },\n                            \"initialDelaySeconds\": 5,\n                            \"periodSeconds\": 10,\n                            \"successThreshold\": 1,\n                            \"timeoutSeconds\": 1\n                        },\n                        \"resources\": {\n                            \"limits\": {\n                                \"cpu\": \"500m\",\n                                \"memory\": \"512Mi\"\n                            },\n                            \"requests\": {\n                                \"cpu\": \"100m\",\n                                \"memory\": \"256Mi\"\n                            }\n                        },\n                        \"terminationMessagePath\": \"/dev/termination-log\",\n                        \"terminationMessagePolicy\": \"File\"\n                    }\n                ],\n                \"dnsPolicy\": \"ClusterFirst\",\n                \"restartPolicy\": \"Always\",\n                \"schedulerName\": \"default-scheduler\",\n                \"securityContext\": {},\n                \"terminationGracePeriodSeconds\": 30\n            }\n        }\n    },\n    \"status\": {\n        \"availableReplicas\": 2,\n        \"conditions\": [\n            {\n                \"lastTransitionTime\": \"2026-04-06T19:07:38Z\",\n                \"lastUpdateTime\": \"2026-04-06T19:07:38Z\",\n                \"message\": \"Deployment has minimum availability.\",\n                \"reason\": \"MinimumReplicasAvailable\",\n                \"status\": \"True\",\n                \"type\": \"Available\"\n            },\n            {\n                \"lastTransitionTime\": \"2026-04-06T19:25:10Z\",\n                \"lastUpdateTime\": \"2026-04-06T19:25:54Z\",\n                \"message\": \"ReplicaSet \\\"foodiego-backend-5675b8c7d9\\\" has successfully progressed.\",\n                \"reason\": \"NewReplicaSetAvailable\",\n                \"status\": \"True\",\n                \"type\": \"Progressing\"\n            }\n        ],\n        \"observedGeneration\": 6,\n        \"readyReplicas\": 2,\n        \"replicas\": 2,\n        \"terminatingReplicas\": 2,\n        \"updatedReplicas\": 2\n    }\n}\n",
+      "stderr": ""
+    },
+    {
+      "step": "rollout_undo",
+      "command": [
+        "kubectl",
+        "--context",
+        "kind-foodiego-staging",
+        "rollout",
+        "undo",
+        "deployment/foodiego-backend",
+        "-n",
+        "foodiego"
+      ],
+      "ok": true,
+      "startedAt": "2026-04-06T19:26:10.356Z",
+      "endedAt": "2026-04-06T19:26:10.668Z",
+      "stdout": "deployment.apps/foodiego-backend rolled back\n",
+      "stderr": ""
+    },
+    {
+      "step": "rollout_status_after_undo",
+      "command": [
+        "kubectl",
+        "--context",
+        "kind-foodiego-staging",
+        "rollout",
+        "status",
+        "deployment/foodiego-backend",
+        "-n",
+        "foodiego",
+        "--timeout=300s"
+      ],
+      "ok": true,
+      "startedAt": "2026-04-06T19:26:10.668Z",
+      "endedAt": "2026-04-06T19:26:37.637Z",
+      "stdout": "Waiting for deployment \"foodiego-backend\" rollout to finish: 1 out of 2 new replicas have been updated...\nWaiting for deployment \"foodiego-backend\" rollout to finish: 1 out of 2 new replicas have been updated...\nWaiting for deployment \"foodiego-backend\" rollout to finish: 1 out of 2 new replicas have been updated...\nWaiting for deployment \"foodiego-backend\" rollout to finish: 1 out of 2 new replicas have been updated...\nWaiting for deployment \"foodiego-backend\" rollout to finish: 1 old replicas are pending termination...\nWaiting for deployment \"foodiego-backend\" rollout to finish: 1 old replicas are pending termination...\nWaiting for deployment \"foodiego-backend\" rollout to finish: 1 old replicas are pending termination...\ndeployment \"foodiego-backend\" successfully rolled out\n",
+      "stderr": ""
+    },
+    {
+      "step": "deployment_snapshot_after_undo",
+      "command": [
+        "kubectl",
+        "--context",
+        "kind-foodiego-staging",
+        "get",
+        "deployment",
+        "foodiego-backend",
+        "-n",
+        "foodiego",
+        "-o",
+        "json"
+      ],
+      "ok": true,
+      "startedAt": "2026-04-06T19:26:37.638Z",
+      "endedAt": "2026-04-06T19:26:38.028Z",
+      "stdout": "{\n    \"apiVersion\": \"apps/v1\",\n    \"kind\": \"Deployment\",\n    \"metadata\": {\n        \"annotations\": {\n            \"deployment.kubernetes.io/revision\": \"7\",\n            \"kubectl.kubernetes.io/last-applied-configuration\": \"{\\\"apiVersion\\\":\\\"apps/v1\\\",\\\"kind\\\":\\\"Deployment\\\",\\\"metadata\\\":{\\\"annotations\\\":{},\\\"name\\\":\\\"foodiego-backend\\\",\\\"namespace\\\":\\\"foodiego\\\"},\\\"spec\\\":{\\\"replicas\\\":2,\\\"revisionHistoryLimit\\\":5,\\\"selector\\\":{\\\"matchLabels\\\":{\\\"app\\\":\\\"foodiego-backend\\\"}},\\\"template\\\":{\\\"metadata\\\":{\\\"labels\\\":{\\\"app\\\":\\\"foodiego-backend\\\"}},\\\"spec\\\":{\\\"containers\\\":[{\\\"args\\\":[\\\"dist/server.js\\\"],\\\"command\\\":[\\\"node\\\"],\\\"envFrom\\\":[{\\\"configMapRef\\\":{\\\"name\\\":\\\"foodiego-backend-config\\\"}},{\\\"secretRef\\\":{\\\"name\\\":\\\"foodiego-backend-secret\\\"}}],\\\"image\\\":\\\"foodiego/backend:local\\\",\\\"imagePullPolicy\\\":\\\"IfNotPresent\\\",\\\"livenessProbe\\\":{\\\"httpGet\\\":{\\\"path\\\":\\\"/api/v1/health\\\",\\\"port\\\":4000},\\\"initialDelaySeconds\\\":15,\\\"periodSeconds\\\":15},\\\"name\\\":\\\"backend\\\",\\\"ports\\\":[{\\\"containerPort\\\":4000}],\\\"readinessProbe\\\":{\\\"httpGet\\\":{\\\"path\\\":\\\"/api/v1/health\\\",\\\"port\\\":4000},\\\"initialDelaySeconds\\\":5,\\\"periodSeconds\\\":10},\\\"resources\\\":{\\\"limits\\\":{\\\"cpu\\\":\\\"500m\\\",\\\"memory\\\":\\\"512Mi\\\"},\\\"requests\\\":{\\\"cpu\\\":\\\"100m\\\",\\\"memory\\\":\\\"256Mi\\\"}}}]}}}}\\n\"\n        },\n        \"creationTimestamp\": \"2026-04-06T19:00:50Z\",\n        \"generation\": 7,\n        \"name\": \"foodiego-backend\",\n        \"namespace\": \"foodiego\",\n        \"resourceVersion\": \"3736\",\n        \"uid\": \"c8e7001c-9b35-4dfc-93e5-4a316bd7a44d\"\n    },\n    \"spec\": {\n        \"progressDeadlineSeconds\": 600,\n        \"replicas\": 2,\n        \"revisionHistoryLimit\": 5,\n        \"selector\": {\n            \"matchLabels\": {\n                \"app\": \"foodiego-backend\"\n            }\n        },\n        \"strategy\": {\n            \"rollingUpdate\": {\n                \"maxSurge\": \"25%\",\n                \"maxUnavailable\": \"25%\"\n            },\n            \"type\": \"RollingUpdate\"\n        },\n        \"template\": {\n            \"metadata\": {\n                \"labels\": {\n                    \"app\": \"foodiego-backend\"\n                }\n            },\n            \"spec\": {\n                \"containers\": [\n                    {\n                        \"args\": [\n                            \"dist/server.js\"\n                        ],\n                        \"command\": [\n                            \"node\"\n                        ],\n                        \"envFrom\": [\n                            {\n                                \"configMapRef\": {\n                                    \"name\": \"foodiego-backend-config\"\n                                }\n                            },\n                            {\n                                \"secretRef\": {\n                                    \"name\": \"foodiego-backend-secret\"\n                                }\n                            }\n                        ],\n                        \"image\": \"foodiego/backend:local\",\n                        \"imagePullPolicy\": \"IfNotPresent\",\n                        \"livenessProbe\": {\n                            \"failureThreshold\": 3,\n                            \"httpGet\": {\n                                \"path\": \"/api/v1/health\",\n                                \"port\": 4000,\n                                \"scheme\": \"HTTP\"\n                            },\n                            \"initialDelaySeconds\": 15,\n                            \"periodSeconds\": 15,\n                            \"successThreshold\": 1,\n                            \"timeoutSeconds\": 1\n                        },\n                        \"name\": \"backend\",\n                        \"ports\": [\n                            {\n                                \"containerPort\": 4000,\n                                \"protocol\": \"TCP\"\n                            }\n                        ],\n                        \"readinessProbe\": {\n                            \"failureThreshold\": 3,\n                            \"httpGet\": {\n                                \"path\": \"/api/v1/health\",\n                                \"port\": 4000,\n                                \"scheme\": \"HTTP\"\n                            },\n                            \"initialDelaySeconds\": 5,\n                            \"periodSeconds\": 10,\n                            \"successThreshold\": 1,\n                            \"timeoutSeconds\": 1\n                        },\n                        \"resources\": {\n                            \"limits\": {\n                                \"cpu\": \"500m\",\n                                \"memory\": \"512Mi\"\n                            },\n                            \"requests\": {\n                                \"cpu\": \"100m\",\n                                \"memory\": \"256Mi\"\n                            }\n                        },\n                        \"terminationMessagePath\": \"/dev/termination-log\",\n                        \"terminationMessagePolicy\": \"File\"\n                    }\n                ],\n                \"dnsPolicy\": \"ClusterFirst\",\n                \"restartPolicy\": \"Always\",\n                \"schedulerName\": \"default-scheduler\",\n                \"securityContext\": {},\n                \"terminationGracePeriodSeconds\": 30\n            }\n        }\n    },\n    \"status\": {\n        \"availableReplicas\": 2,\n        \"conditions\": [\n            {\n                \"lastTransitionTime\": \"2026-04-06T19:07:38Z\",\n                \"lastUpdateTime\": \"2026-04-06T19:07:38Z\",\n                \"message\": \"Deployment has minimum availability.\",\n                \"reason\": \"MinimumReplicasAvailable\",\n                \"status\": \"True\",\n                \"type\": \"Available\"\n            },\n            {\n                \"lastTransitionTime\": \"2026-04-06T19:25:10Z\",\n                \"lastUpdateTime\": \"2026-04-06T19:26:37Z\",\n                \"message\": \"ReplicaSet \\\"foodiego-backend-9778fb59f\\\" has successfully progressed.\",\n                \"reason\": \"NewReplicaSetAvailable\",\n                \"status\": \"True\",\n                \"type\": \"Progressing\"\n            }\n        ],\n        \"observedGeneration\": 7,\n        \"readyReplicas\": 2,\n        \"replicas\": 2,\n        \"terminatingReplicas\": 2,\n        \"updatedReplicas\": 2\n    }\n}\n",
+      "stderr": ""
+    }
+  ],
+  "checksum": {
+    "algorithm": "sha256",
+    "value": "f2557e7778a3f3aa60f64d200f841ff981ebd769426580f6aab22921ae5fccf4"
+  }
+}

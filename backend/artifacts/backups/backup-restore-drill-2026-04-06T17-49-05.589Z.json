@@ -1,0 +1,98 @@
+{
+  "metadata": {
+    "capturedAt": "2026-04-06T17:49:05.538Z",
+    "drill": "backup_restore_validation"
+  },
+  "user": {
+    "id": "drill_user_910f6f25-c",
+    "phone": "+918897745313",
+    "name": null,
+    "email": null,
+    "role": "customer",
+    "status": "active",
+    "createdAt": "2026-04-06T17:49:05.313Z",
+    "updatedAt": "2026-04-06T17:49:05.313Z",
+    "orderCount": 1,
+    "totalSpend": 199
+  },
+  "addresses": [
+    {
+      "id": "drill_addr_0fdbcafd-3",
+      "userId": "drill_user_910f6f25-c",
+      "label": "drill",
+      "address": "Backup Restore Drill Street",
+      "landmark": "Near Reliability Gate",
+      "lat": 12.9716,
+      "lng": 77.5946,
+      "isDefault": true,
+      "createdAt": "2026-04-06T17:49:05.313Z",
+      "updatedAt": "2026-04-06T17:49:05.313Z"
+    }
+  ],
+  "order": {
+    "id": "drill_order_ee251d31-a",
+    "userId": "drill_user_910f6f25-c",
+    "restaurantId": "cmnnahc600004hwbchctveu7c",
+    "restaurantName": "Pizza Palace",
+    "restaurantImage": "https://images.example.com/pizza-palace.jpg",
+    "status": "pending",
+    "subtotal": 164,
+    "deliveryFee": 35,
+    "discount": 0,
+    "foodieCoinsUsed": 0,
+    "foodieCoinsEarned": 8,
+    "finalAmount": 199,
+    "deliveryAddress": {
+      "id": "drill_addr_0fdbcafd-3",
+      "lat": 12.9716,
+      "lng": 77.5946,
+      "label": "drill",
+      "address": "Backup Restore Drill Street"
+    },
+    "paymentMethod": "upi",
+    "estimatedDelivery": "2026-04-06T18:29:05.477Z",
+    "deliveredAt": null,
+    "sellerId": "cmnnahc5r0002hwbcu7uyibhc",
+    "acceptedAt": null,
+    "startedPrepAt": null,
+    "readyAt": null,
+    "createdAt": "2026-04-06T17:49:05.313Z",
+    "updatedAt": "2026-04-06T17:49:05.313Z"
+  },
+  "items": [
+    {
+      "id": "drill_item_549316cc-7",
+      "orderId": "drill_order_ee251d31-a",
+      "menuItemId": "cmnnahc63000ahwbc5w95v8r8",
+      "name": "Margherita Pizza",
+      "quantity": 1,
+      "price": 164,
+      "customizations": null,
+      "createdAt": "2026-04-06T17:49:05.313Z"
+    }
+  ],
+  "tracking": [
+    {
+      "id": "drill_track_eb7e1b6a-c",
+      "orderId": "drill_order_ee251d31-a",
+      "status": "placed",
+      "message": "Order placed for backup/restore drill",
+      "location": null,
+      "timestamp": "2026-04-06T17:49:05.313Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": "drill_pay_3635776b-1",
+      "orderId": "drill_order_ee251d31-a",
+      "method": "upi",
+      "status": "pending",
+      "transactionId": "upi_7f776765-b",
+      "source": "unknown",
+      "amount": 199,
+      "metadata": null,
+      "createdAt": "2026-04-06T17:49:05.313Z",
+      "updatedAt": "2026-04-06T17:49:05.313Z"
+    }
+  ]
+}

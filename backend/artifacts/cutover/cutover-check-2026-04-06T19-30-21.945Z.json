@@ -1,0 +1,17 @@
+{
+  "startedAt": "2026-04-06T19:30:21.933Z",
+  "completedAt": "2026-04-06T19:30:21.935Z",
+  "environment": "production",
+  "checks": {
+    "postgresEnabled": true,
+    "otpProviderHttp": true,
+    "otpBypassDisabled": true,
+    "monitoringSinkConfigured": true,
+    "monitoringSinkTokenConfigured": true,
+    "monitoringRequestEventsEnabled": true
+  },
+  "checksum": {
+    "algorithm": "sha256",
+    "value": "1ef21203362d796ee97bf91ac456b0931d794630153fecec11bc741ce301024b"
+  }
+}

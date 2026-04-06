@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-04-06T19:32:58.793Z",
+  "target": "staging",
+  "pass": false,
+  "checks": {
+    "cutoverPolicyEvidencePresent": true,
+    "k8sRolloutEvidencePresent": true,
+    "k8sRolloutPass": true,
+    "stagingContextEvidence": false
+  },
+  "missing": [
+    "stagingContextEvidence"
+  ],
+  "artifacts": {
+    "latestCutoverFile": "C:\\Users\\Almohi1\\Desktop\\fullstack_development\\projects\\FoodieGo\\FoodieGoApp\\backend\\artifacts\\cutover\\cutover-check-2026-04-06T19-30-21.945Z.json",
+    "latestK8sDrillFile": "C:\\Users\\Almohi1\\Desktop\\fullstack_development\\projects\\FoodieGo\\FoodieGoApp\\backend\\artifacts\\drills\\k8s-rollout-drill-2026-04-06T19-26-38.032Z.json"
+  },
+  "context": {
+    "k8sContext": "kind-foodiego-staging",
+    "localRehearsal": true
+  },
+  "checksum": {
+    "algorithm": "sha256",
+    "value": "b14823e484f317a0b8b74485b9e06ffdacc44dd34e29ce60feaacff8a8dd6b76"
+  }
+}

@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: foodiego-backend
+  namespace: foodiego
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: foodiego-backend

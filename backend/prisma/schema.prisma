@@ -1,0 +1,348 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  customer
+  seller
+  admin
+  rider
+}
+
+model User {
+  id         String    @id @default(cuid())
+  phone      String    @unique
+  name       String?
+  email      String?
+  role       UserRole  @default(customer)
+  status     String    @default("active")
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  orderCount Int       @default(0)
+  totalSpend Float?
+  addresses  Address[]
+  orders     Order[]
+  sessions   UserSession[]
+}
+
+model Address {
+  id        String   @id @default(cuid())
+  userId    String
+  label     String
+  address   String
+  landmark  String?
+  lat       Float
+  lng       Float
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Seller {
+  id           String   @id @default(cuid())
+  phone        String
+  name         String
+  email        String   @unique
+  businessName String
+  businessType String
+  status       String
+  totalOrders  Int      @default(0)
+  totalRevenue Float    @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  restaurant   Restaurant?
+}
+
+model Admin {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  name        String
+  role        String
+  permissions Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Restaurant {
+  id           String     @id @default(cuid())
+  name         String
+  image        String
+  rating       Float      @default(0)
+  reviewCount  Int        @default(0)
+  deliveryTime String
+  deliveryFee  Float      @default(0)
+  cuisines     String[]
+  isOpen       Boolean    @default(true)
+  sellerId     String?    @unique
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  seller       Seller?    @relation(fields: [sellerId], references: [id], onDelete: SetNull)
+  menuItems    MenuItem[]
+}
+
+model MenuItem {
+  id             String     @id @default(cuid())
+  restaurantId   String
+  name           String
+  description    String
+  price          Float
+  image          String
+  category       String
+  isVeg          Boolean
+  isCustomizable Boolean
+  isAvailable    Boolean    @default(true)
+  popular        Boolean    @default(false)
+  stock          Int?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  restaurant     Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId])
+}
+
+model Order {
+  id               String          @id @default(cuid())
+  userId           String
+  restaurantId     String
+  restaurantName   String
+  restaurantImage  String
+  status           String
+  subtotal         Float
+  deliveryFee      Float
+  discount         Float
+  foodieCoinsUsed  Int             @default(0)
+  foodieCoinsEarned Int            @default(0)
+  finalAmount      Float
+  deliveryAddress  Json
+  paymentMethod    String
+  estimatedDelivery DateTime?
+  deliveredAt      DateTime?
+  sellerId         String?
+  acceptedAt       DateTime?
+  startedPrepAt    DateTime?
+  readyAt          DateTime?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  user             User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items            OrderItem[]
+  trackingEvents   TrackingEvent[]
+  payments         PaymentTransaction[]
+  refunds          Refund[]
+
+  @@index([userId])
+  @@index([restaurantId])
+  @@index([status])
+}
+
+model OrderItem {
+  id            String   @id @default(cuid())
+  orderId       String
+  menuItemId    String
+  name          String
+  quantity      Int
+  price         Float
+  customizations String?
+  createdAt     DateTime @default(now())
+  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+}
+
+model TrackingEvent {
+  id        String   @id @default(cuid())
+  orderId   String
+  status    String
+  message   String
+  location  Json?
+  timestamp DateTime @default(now())
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId, timestamp])
+}
+
+model PaymentTransaction {
+  id            String   @id @default(cuid())
+  orderId       String
+  method        String
+  status        String
+  transactionId String?  @unique
+  source        String   @default("unknown")
+  amount        Float?
+  metadata      Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  webhookEvents PaymentWebhookEvent[]
+
+  @@index([orderId])
+  @@index([status])
+}
+
+model Refund {
+  id             String   @id @default(cuid())
+  orderId        String
+  paymentId      String?
+  status         String
+  amount         Float?
+  reason         String?
+  gatewayRefundId String?
+  metadata       Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  order          Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([status])
+}
+
+model PaymentWebhookEvent {
+  id          String             @id @default(cuid())
+  paymentId   String
+  provider    String
+  eventType   String
+  signature   String?
+  payload     Json
+  receivedAt  DateTime           @default(now())
+  processedAt DateTime?
+  status      String             @default("received")
+  payment     PaymentTransaction @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  @@index([paymentId, receivedAt])
+  @@index([eventType])
+}
+
+model UserSession {
+  id                String   @id @default(cuid())
+  userId            String
+  role              UserRole
+  accessToken       String   @unique
+  refreshToken      String   @unique
+  deviceId          String?
+  createdAt         DateTime @default(now())
+  accessExpiresAt   DateTime
+  refreshExpiresAt  DateTime
+  revokedAt         DateTime?
+  replacedBySessionId String?
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, revokedAt])
+  @@index([accessExpiresAt])
+  @@index([refreshExpiresAt])
+}
+
+model IdempotencyKey {
+  id         String   @id @default(cuid())
+  userId     String
+  route      String
+  key        String
+  response   Json
+  statusCode Int      @default(200)
+  createdAt  DateTime @default(now())
+  expiresAt  DateTime?
+
+  @@unique([userId, route, key])
+  @@index([createdAt])
+}
+
+model Payout {
+  id         String   @id @default(cuid())
+  sellerId   String
+  sellerName String
+  amount     Float
+  status     String
+  cycle      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@index([sellerId])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorRole String
+  actorId   String?
+  action    String
+  targetType String
+  targetId  String
+  outcome   String
+  errorCode String?
+  details   String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([actorRole, createdAt])
+}
+
+model DispatchRider {
+  id          String   @id @default(cuid())
+  name        String
+  phone       String
+  isAvailable Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  orders      DispatchOrder[]
+}
+
+model DispatchOrder {
+  id             String         @id @default(cuid())
+  restaurantName String
+  amount         Float
+  status         String
+  riderId        String?
+  riderName      String?
+  proofOtp       String?
+  proofHash      String?
+  proofCapturedAt DateTime?
+  proofAuditLogId String?
+  updatedAt      DateTime       @default(now())
+  createdAt      DateTime       @default(now())
+  rider          DispatchRider? @relation(fields: [riderId], references: [id], onDelete: SetNull)
+
+  @@index([status, updatedAt])
+  @@index([riderId])
+  @@index([proofAuditLogId])
+}
+
+model AsyncJob {
+  id          String   @id @default(cuid())
+  type        String
+  status      String   @default("pending")
+  payload     Json
+  dedupeKey   String?  @unique
+  attempts    Int      @default(0)
+  maxAttempts Int      @default(5)
+  availableAt DateTime @default(now())
+  lockedAt    DateTime?
+  lockedBy    String?
+  lastError   String?
+  result      Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([status, availableAt, createdAt])
+}
+
+model DeadLetterJob {
+  id         String   @id @default(cuid())
+  asyncJobId String
+  type       String
+  payload    Json
+  attempts   Int
+  reason     String
+  status     String   @default("open")
+  replayedAt DateTime?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@index([type, createdAt])
+}

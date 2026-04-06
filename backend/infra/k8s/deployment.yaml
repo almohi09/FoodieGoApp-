@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foodiego-backend
+  namespace: foodiego
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: foodiego-backend
+  template:
+    metadata:
+      labels:
+        app: foodiego-backend
+    spec:
+      containers:
+        - name: backend
+          image: ghcr.io/foodiego/backend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 4000
+          envFrom:
+            - configMapRef:
+                name: foodiego-backend-config
+            - secretRef:
+                name: foodiego-backend-secret
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 4000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 4000
+            initialDelaySeconds: 15
+            periodSeconds: 15
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

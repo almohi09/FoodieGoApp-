@@ -1,0 +1,2586 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FoodieGo - Food Delivery</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #ff5722;
+        --primary-light: #ff7f50;
+        --primary-dark: #e64a19;
+        --secondary: #1a1a2e;
+        --accent: #f8b500;
+        --success: #22c55e;
+        --warning: #f59e0b;
+        --error: #ef4444;
+        --bg: #f8f9fa;
+        --bg-dark: #1a1a2e;
+        --surface: #ffffff;
+        --surface-dark: #16213e;
+        --text: #1a1a2e;
+        --text-secondary: #64748b;
+        --text-muted: #94a3b8;
+        --border: #e2e8f0;
+        --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.15);
+        --radius: 12px;
+        --radius-lg: 20px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* Navigation */
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 70px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 5%;
+        z-index: 1000;
+        transition: all 0.3s;
+      }
+
+      .nav.scrolled {
+        box-shadow: var(--shadow);
+      }
+
+      .nav-logo {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--primary);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .nav-logo i {
+        font-size: 28px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 32px;
+        list-style: none;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 500;
+        font-size: 15px;
+        transition: color 0.3s;
+        position: relative;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--primary);
+      }
+
+      .nav-links a.active::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: var(--primary);
+        border-radius: 2px;
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .nav-btn {
+        padding: 10px 24px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+      }
+
+      .nav-btn-outline {
+        background: transparent;
+        color: var(--text);
+        border: 2px solid var(--border);
+      }
+
+      .nav-btn-outline:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .nav-btn-primary {
+        background: var(--primary);
+        color: white;
+      }
+
+      .nav-btn-primary:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+      }
+
+      .cart-icon {
+        position: relative;
+        font-size: 22px;
+        cursor: pointer;
+        color: var(--text);
+      }
+
+      .cart-badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        width: 20px;
+        height: 20px;
+        background: var(--primary);
+        color: white;
+        font-size: 11px;
+        font-weight: 700;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        font-size: 24px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        color: var(--text);
+      }
+
+      /* Pages */
+      .page {
+        display: none;
+        min-height: 100vh;
+        padding-top: 70px;
+      }
+
+      .page.active {
+        display: block;
+      }
+
+      /* Home Page */
+      .hero {
+        min-height: calc(100vh - 70px);
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        display: flex;
+        align-items: center;
+        padding: 0 5%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 70%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255, 87, 34, 0.1));
+        border-radius: 50%;
+      }
+
+      .hero-content {
+        max-width: 600px;
+        z-index: 1;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 87, 34, 0.15);
+        color: var(--primary-light);
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 24px;
+      }
+
+      .hero h1 {
+        font-size: clamp(40px, 6vw, 64px);
+        font-weight: 800;
+        color: white;
+        line-height: 1.1;
+        margin-bottom: 20px;
+      }
+
+      .hero h1 span {
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .hero p {
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 32px;
+      }
+
+      .search-box {
+        background: white;
+        border-radius: var(--radius-lg);
+        padding: 8px;
+        display: flex;
+        gap: 8px;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .search-box input {
+        flex: 1;
+        padding: 16px 20px;
+        border: none;
+        font-size: 16px;
+        outline: none;
+        font-family: inherit;
+      }
+
+      .search-box button {
+        padding: 16px 32px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: var(--radius);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .search-box button:hover {
+        background: var(--primary-dark);
+      }
+
+      .hero-stats {
+        display: flex;
+        gap: 48px;
+        margin-top: 48px;
+      }
+
+      .hero-stat {
+        text-align: left;
+      }
+
+      .hero-stat h3 {
+        font-size: 32px;
+        font-weight: 800;
+        color: white;
+      }
+
+      .hero-stat p {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.5);
+        margin: 0;
+      }
+
+      /* Sections */
+      .section {
+        padding: 80px 5%;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+
+      .section-title {
+        font-size: 28px;
+        font-weight: 700;
+      }
+
+      .section-link {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* Categories */
+      .categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 20px;
+      }
+
+      .category-card {
+        text-align: center;
+        padding: 24px 16px;
+        background: white;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: all 0.3s;
+        border: 2px solid transparent;
+      }
+
+      .category-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .category-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 12px;
+        font-size: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: var(--bg);
+      }
+
+      .category-name {
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      /* Restaurant Cards */
+      .restaurants-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 24px;
+      }
+
+      .restaurant-card {
+        background: white;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .restaurant-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .restaurant-image {
+        height: 180px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 64px;
+      }
+
+      .restaurant-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: var(--primary);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .restaurant-info {
+        padding: 20px;
+      }
+
+      .restaurant-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 8px;
+      }
+
+      .restaurant-name {
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .restaurant-rating {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: var(--success);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .restaurant-cuisine {
+        color: var(--text-secondary);
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+
+      .restaurant-meta {
+        display: flex;
+        gap: 16px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+
+      .restaurant-meta span {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* Offers Banner */
+      .offers-banner {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--primary-dark) 100%
+        );
+        border-radius: var(--radius-lg);
+        padding: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: white;
+        margin-bottom: 40px;
+      }
+
+      .offer-content h3 {
+        font-size: 28px;
+        font-weight: 800;
+        margin-bottom: 8px;
+      }
+
+      .offer-content p {
+        opacity: 0.9;
+      }
+
+      .offer-btn {
+        background: white;
+        color: var(--primary);
+        padding: 14px 32px;
+        border-radius: 50px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+
+      .offer-btn:hover {
+        transform: scale(1.05);
+      }
+
+      /* Menu Page */
+      .menu-page {
+        background: var(--bg);
+      }
+
+      .menu-header {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        padding: 60px 5% 120px;
+        color: white;
+      }
+
+      .menu-header-info {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      .menu-logo {
+        width: 100px;
+        height: 100px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+      }
+
+      .menu-header h1 {
+        font-size: 32px;
+        margin-bottom: 8px;
+      }
+
+      .menu-header p {
+        opacity: 0.7;
+      }
+
+      .menu-filters {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .menu-filter {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 8px 16px;
+        border-radius: 20px;
+        color: white;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .menu-filter.active,
+      .menu-filter:hover {
+        background: white;
+        color: var(--primary);
+      }
+
+      .menu-content {
+        margin-top: -60px;
+        padding: 0 5% 80px;
+      }
+
+      .menu-layout {
+        display: grid;
+        grid-template-columns: 250px 1fr 350px;
+        gap: 40px;
+      }
+
+      .menu-categories {
+        background: white;
+        border-radius: var(--radius);
+        padding: 24px;
+        height: fit-content;
+        position: sticky;
+        top: 90px;
+      }
+
+      .menu-category {
+        padding: 12px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        color: var(--text-secondary);
+        transition: all 0.3s;
+      }
+
+      .menu-category:hover,
+      .menu-category.active {
+        background: var(--primary);
+        color: white;
+      }
+
+      .menu-items {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .menu-item {
+        background: white;
+        border-radius: var(--radius);
+        padding: 20px;
+        display: flex;
+        gap: 20px;
+        transition: all 0.3s;
+      }
+
+      .menu-item:hover {
+        box-shadow: var(--shadow);
+      }
+
+      .menu-item-image {
+        width: 120px;
+        height: 120px;
+        background: var(--bg);
+        border-radius: var(--radius);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        flex-shrink: 0;
+      }
+
+      .menu-item-info {
+        flex: 1;
+      }
+
+      .menu-item-name {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+
+      .menu-item-desc {
+        font-size: 14px;
+        color: var(--text-secondary);
+        margin-bottom: 12px;
+        line-height: 1.5;
+      }
+
+      .menu-item-price {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .menu-item-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 12px;
+      }
+
+      .add-btn {
+        background: var(--primary);
+        color: white;
+        padding: 10px 24px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .add-btn:hover {
+        background: var(--primary-dark);
+      }
+
+      .veg-badge {
+        display: inline-flex;
+        width: 16px;
+        height: 16px;
+        border: 2px solid var(--success);
+        border-radius: 3px;
+        margin-right: 8px;
+      }
+
+      .veg-badge::after {
+        content: '';
+        width: 8px;
+        height: 8px;
+        background: var(--success);
+        border-radius: 50%;
+        margin: 2px;
+      }
+
+      /* Cart Sidebar */
+      .cart-sidebar {
+        background: white;
+        border-radius: var(--radius);
+        padding: 24px;
+        height: fit-content;
+        position: sticky;
+        top: 90px;
+      }
+
+      .cart-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      .cart-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .cart-item-info {
+        flex: 1;
+      }
+
+      .cart-item-name {
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .cart-item-price {
+        color: var(--text-secondary);
+        font-size: 14px;
+      }
+
+      .cart-item-qty {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .qty-btn {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .cart-empty {
+        text-align: center;
+        padding: 40px 0;
+        color: var(--text-muted);
+      }
+
+      .cart-empty i {
+        font-size: 48px;
+        margin-bottom: 16px;
+        opacity: 0.3;
+      }
+
+      .cart-footer {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 2px solid var(--border);
+      }
+
+      .cart-total {
+        display: flex;
+        justify-content: space-between;
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      .checkout-btn {
+        width: 100%;
+        padding: 16px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: var(--radius);
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .checkout-btn:hover {
+        background: var(--primary-dark);
+      }
+
+      /* Profile Page */
+      .profile-page {
+        background: var(--bg);
+      }
+
+      .profile-header {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        padding: 60px 5%;
+        color: white;
+        text-align: center;
+      }
+
+      .profile-avatar {
+        width: 120px;
+        height: 120px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+      }
+
+      .profile-name {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .profile-email {
+        opacity: 0.7;
+        margin-bottom: 20px;
+      }
+
+      .profile-stats {
+        display: flex;
+        justify-content: center;
+        gap: 48px;
+      }
+
+      .profile-stat {
+        text-align: center;
+      }
+
+      .profile-stat h3 {
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      .profile-stat p {
+        font-size: 14px;
+        opacity: 0.7;
+      }
+
+      .profile-content {
+        padding: 40px 5%;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .profile-section {
+        background: white;
+        border-radius: var(--radius);
+        padding: 24px;
+        margin-bottom: 20px;
+      }
+
+      .profile-section-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .profile-section-title i {
+        color: var(--primary);
+      }
+
+      .address-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px;
+        background: var(--bg);
+        border-radius: var(--radius);
+        margin-bottom: 12px;
+      }
+
+      .address-info {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      .address-icon {
+        width: 40px;
+        height: 40px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+      }
+
+      .address-label {
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .address-text {
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+
+      .address-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .address-btn {
+        padding: 8px 16px;
+        border: 1px solid var(--border);
+        background: white;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: all 0.3s;
+      }
+
+      .address-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .address-btn.primary {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+
+      /* Admin Dashboard */
+      .admin-page {
+        background: var(--bg);
+      }
+
+      .admin-sidebar {
+        position: fixed;
+        left: 0;
+        top: 70px;
+        bottom: 0;
+        width: 260px;
+        background: var(--bg-dark);
+        padding: 24px 0;
+        z-index: 100;
+      }
+
+      .admin-nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 24px;
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: all 0.3s;
+        cursor: pointer;
+        border-left: 3px solid transparent;
+      }
+
+      .admin-nav-item:hover,
+      .admin-nav-item.active {
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+        border-left-color: var(--primary);
+      }
+
+      .admin-nav-item i {
+        width: 20px;
+        font-size: 18px;
+      }
+
+      .admin-main {
+        margin-left: 260px;
+        padding: 32px;
+      }
+
+      .admin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+      }
+
+      .admin-title {
+        font-size: 28px;
+        font-weight: 700;
+      }
+
+      .admin-subtitle {
+        color: var(--text-secondary);
+        margin-top: 4px;
+      }
+
+      .admin-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+
+      .stat-card {
+        background: white;
+        border-radius: var(--radius);
+        padding: 24px;
+      }
+
+      .stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: var(--radius);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        margin-bottom: 16px;
+      }
+
+      .stat-icon.orange {
+        background: rgba(255, 87, 34, 0.1);
+        color: var(--primary);
+      }
+      .stat-icon.green {
+        background: rgba(34, 197, 94, 0.1);
+        color: var(--success);
+      }
+      .stat-icon.blue {
+        background: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+      }
+      .stat-icon.purple {
+        background: rgba(168, 85, 247, 0.1);
+        color: #a855f7;
+      }
+
+      .stat-value {
+        font-size: 28px;
+        font-weight: 800;
+        margin-bottom: 4px;
+      }
+
+      .stat-label {
+        color: var(--text-secondary);
+        font-size: 14px;
+      }
+
+      .stat-change {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 13px;
+        color: var(--success);
+        margin-top: 8px;
+      }
+
+      .stat-change.down {
+        color: var(--error);
+      }
+
+      /* Charts */
+      .chart-container {
+        background: white;
+        border-radius: var(--radius);
+        padding: 24px;
+        margin-bottom: 32px;
+      }
+
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+
+      .chart-title {
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .chart-filters {
+        display: flex;
+        gap: 8px;
+      }
+
+      .chart-filter {
+        padding: 6px 16px;
+        border: 1px solid var(--border);
+        background: white;
+        border-radius: 20px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .chart-filter.active,
+      .chart-filter:hover {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+
+      .chart {
+        height: 300px;
+        display: flex;
+        align-items: flex-end;
+        gap: 16px;
+        padding-top: 20px;
+      }
+
+      .chart-bar {
+        flex: 1;
+        background: linear-gradient(
+          180deg,
+          var(--primary) 0%,
+          var(--primary-light) 100%
+        );
+        border-radius: 8px 8px 0 0;
+        transition: all 0.3s;
+        position: relative;
+      }
+
+      .chart-bar:hover {
+        opacity: 0.8;
+      }
+
+      .chart-bar::before {
+        content: attr(data-value);
+        position: absolute;
+        top: -24px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .chart-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 12px;
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      /* Tables */
+      .table-container {
+        background: white;
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+
+      .table-header {
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .table-title {
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .table th,
+      .table td {
+        padding: 16px 24px;
+        text-align: left;
+      }
+
+      .table th {
+        background: var(--bg);
+        font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+      }
+
+      .table tr {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .table tr:last-child {
+        border-bottom: none;
+      }
+
+      .table tr:hover {
+        background: var(--bg);
+      }
+
+      .status-badge {
+        display: inline-flex;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .status-badge.success {
+        background: rgba(34, 197, 94, 0.1);
+        color: var(--success);
+      }
+
+      .status-badge.warning {
+        background: rgba(245, 158, 11, 0.1);
+        color: var(--warning);
+      }
+
+      .status-badge.error {
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--error);
+      }
+
+      .table-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .table-btn {
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--border);
+        background: white;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+      }
+
+      .table-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--bg-dark);
+        color: white;
+        padding: 80px 5% 40px;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 48px;
+        margin-bottom: 48px;
+      }
+
+      .footer-brand h3 {
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .footer-brand h3 i {
+        color: var(--primary);
+      }
+
+      .footer-brand p {
+        color: rgba(255, 255, 255, 0.6);
+        line-height: 1.8;
+      }
+
+      .footer-title {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 24px;
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 12px;
+      }
+
+      .footer-links a {
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-links a:hover {
+        color: white;
+      }
+
+      .footer-bottom {
+        padding-top: 32px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .footer-copyright {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 14px;
+      }
+
+      .footer-socials {
+        display: flex;
+        gap: 16px;
+      }
+
+      .footer-socials a {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+
+      .footer-socials a:hover {
+        background: var(--primary);
+        transform: translateY(-4px);
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-in {
+        animation: fadeIn 0.6s ease forwards;
+      }
+
+      /* Responsive */
+      @media (max-width: 1200px) {
+        .menu-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .menu-categories {
+          display: none;
+        }
+
+        .cart-sidebar {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          border-radius: var(--radius) var(--radius) 0 0;
+          max-height: 60vh;
+          overflow-y: auto;
+          z-index: 1000;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .admin-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .admin-sidebar {
+          width: 80px;
+        }
+
+        .admin-nav-item span {
+          display: none;
+        }
+
+        .admin-main {
+          margin-left: 80px;
+        }
+
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .mobile-menu-btn {
+          display: block;
+        }
+
+        .hero-stats {
+          flex-wrap: wrap;
+          gap: 24px;
+        }
+
+        .offers-banner {
+          flex-direction: column;
+          text-align: center;
+          gap: 24px;
+        }
+
+        .menu-item {
+          flex-direction: column;
+        }
+
+        .menu-item-image {
+          width: 100%;
+          height: 200px;
+        }
+
+        .admin-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .table-container {
+          overflow-x: auto;
+        }
+      }
+
+      /* Modal */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+      }
+
+      .modal-overlay.active {
+        display: flex;
+      }
+
+      .modal {
+        background: white;
+        border-radius: var(--radius-lg);
+        padding: 32px;
+        max-width: 500px;
+        width: 90%;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+
+      .modal-title {
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      .modal-close {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: var(--bg);
+        cursor: pointer;
+        font-size: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid var(--border);
+        border-radius: var(--radius);
+        font-size: 16px;
+        font-family: inherit;
+        transition: border-color 0.3s;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      /* Toast */
+      .toast-container {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 3000;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .toast {
+        background: white;
+        padding: 16px 24px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        animation: slideIn 0.3s ease;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .toast.success {
+        border-left: 4px solid var(--success);
+      }
+
+      .toast.error {
+        border-left: 4px solid var(--error);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="nav" id="navbar">
+      <a href="#" class="nav-logo" onclick="showPage('home')">
+        <i class="fas fa-utensils"></i>
+        FoodieGo
+      </a>
+      <ul class="nav-links">
+        <li><a href="#" class="active" onclick="showPage('home')">Home</a></li>
+        <li><a href="#" onclick="showPage('menu')">Menu</a></li>
+        <li><a href="#" onclick="showPage('profile')">Profile</a></li>
+        <li><a href="#" onclick="showPage('admin')">Admin</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="cart-icon" onclick="showPage('menu')">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </div>
+        <button class="nav-btn nav-btn-outline" onclick="showPage('profile')">
+          Login
+        </button>
+        <button class="nav-btn nav-btn-primary">Sign Up</button>
+        <button class="mobile-menu-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div class="page active" id="page-home">
+      <section class="hero">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i class="fas fa-fire"></i>
+            #1 Food Delivery App
+          </div>
+          <h1>Your Favorite Food, <span>Delivered Fast</span></h1>
+          <p>
+            Order from the best local restaurants with easy, convenient delivery
+            to your doorstep.
+          </p>
+          <div class="search-box">
+            <input type="text" placeholder="Enter your delivery address" />
+            <input type="text" placeholder="Search restaurants or cuisines" />
+            <button><i class="fas fa-search"></i> Find Food</button>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <h3>500+</h3>
+              <p>Restaurants</p>
+            </div>
+            <div class="hero-stat">
+              <h3>50K+</h3>
+              <p>Orders Delivered</p>
+            </div>
+            <div class="hero-stat">
+              <h3>4.8</h3>
+              <p>Average Rating</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Explore Cuisines</h2>
+          <a href="#" class="section-link"
+            >View All <i class="fas fa-arrow-right"></i
+          ></a>
+        </div>
+        <div class="categories">
+          <div class="category-card" onclick="showPage('menu')">
+            <div class="category-icon">🍕</div>
+            <div class="category-name">Pizza</div>
+          </div>
+          <div class="category-card" onclick="showPage('menu')">
+            <div class="category-icon">🍔</div>
+            <div class="category-name">Burgers</div>
+          </div>
+          <div class="category-card" onclick="showPage('menu')">
+            <div class="category-icon">🍣</div>
+            <div class="category-name">Sushi</div>
+          </div>
+          <div class="category-card" onclick="showPage('menu')">
+            <div class="category-icon">🌮</div>
+            <div class="category-name">Mexican</div>
+          </div>
+          <div class="category-card" onclick="showPage('menu')">
+            <div class="category-icon">🍜</div>
+            <div class="category-name">Noodles</div>
+          </div>
+          <div class="category-card" onclick="showPage('menu')">
+            <div class="category-icon">🥗</div>
+            <div class="category-name">Salads</div>
+          </div>
+          <div class="category-card" onclick="showPage('menu')">
+            <div class="category-icon">🍰</div>
+            <div class="category-name">Desserts</div>
+          </div>
+          <div class="category-card" onclick="showPage('menu')">
+            <div class="category-icon">☕</div>
+            <div class="category-name">Drinks</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="offers-banner">
+          <div class="offer-content">
+            <h3>Get 50% OFF Your First Order!</h3>
+            <p>Use code WELCOME50 at checkout. Limited time offer.</p>
+          </div>
+          <a href="#" class="offer-btn">Order Now</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Top Restaurants</h2>
+          <a href="#" class="section-link"
+            >View All <i class="fas fa-arrow-right"></i
+          ></a>
+        </div>
+        <div class="restaurants-grid">
+          <div class="restaurant-card" onclick="showPage('menu')">
+            <div class="restaurant-image">
+              🍕
+              <span class="restaurant-badge">20% OFF</span>
+            </div>
+            <div class="restaurant-info">
+              <div class="restaurant-header">
+                <span class="restaurant-name">Pizza Palace</span>
+                <span class="restaurant-rating"
+                  >4.5 <i class="fas fa-star"></i
+                ></span>
+              </div>
+              <p class="restaurant-cuisine">Italian, Pizza, Pasta</p>
+              <div class="restaurant-meta">
+                <span><i class="fas fa-clock"></i> 25-35 min</span>
+                <span><i class="fas fa-motorcycle"></i> ₹40</span>
+              </div>
+            </div>
+          </div>
+          <div class="restaurant-card" onclick="showPage('menu')">
+            <div class="restaurant-image">
+              🍔
+              <span class="restaurant-badge">Free Delivery</span>
+            </div>
+            <div class="restaurant-info">
+              <div class="restaurant-header">
+                <span class="restaurant-name">Burger Barn</span>
+                <span class="restaurant-rating"
+                  >4.3 <i class="fas fa-star"></i
+                ></span>
+              </div>
+              <p class="restaurant-cuisine">American, Burgers, Fast Food</p>
+              <div class="restaurant-meta">
+                <span><i class="fas fa-clock"></i> 20-30 min</span>
+                <span><i class="fas fa-motorcycle"></i> Free</span>
+              </div>
+            </div>
+          </div>
+          <div class="restaurant-card" onclick="showPage('menu')">
+            <div class="restaurant-image">
+              🍣
+              <span class="restaurant-badge">New</span>
+            </div>
+            <div class="restaurant-info">
+              <div class="restaurant-header">
+                <span class="restaurant-name">Sushi Master</span>
+                <span class="restaurant-rating"
+                  >4.8 <i class="fas fa-star"></i
+                ></span>
+              </div>
+              <p class="restaurant-cuisine">Japanese, Sushi, Asian</p>
+              <div class="restaurant-meta">
+                <span><i class="fas fa-clock"></i> 30-40 min</span>
+                <span><i class="fas fa-motorcycle"></i> ₹50</span>
+              </div>
+            </div>
+          </div>
+          <div class="restaurant-card" onclick="showPage('menu')">
+            <div class="restaurant-image">🌮</div>
+            <div class="restaurant-info">
+              <div class="restaurant-header">
+                <span class="restaurant-name">Taco Town</span>
+                <span class="restaurant-rating"
+                  >4.2 <i class="fas fa-star"></i
+                ></span>
+              </div>
+              <p class="restaurant-cuisine">Mexican, Tacos, Burritos</p>
+              <div class="restaurant-meta">
+                <span><i class="fas fa-clock"></i> 25-35 min</span>
+                <span><i class="fas fa-motorcycle"></i> ₹30</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <h3><i class="fas fa-utensils"></i> FoodieGo</h3>
+            <p>
+              Delivering happiness to your doorstep since 2020. Order from the
+              best restaurants in your area.
+            </p>
+          </div>
+          <div>
+            <h4 class="footer-title">Company</h4>
+            <ul class="footer-links">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Press</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="footer-title">Support</h4>
+            <ul class="footer-links">
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">FAQs</a></li>
+              <li><a href="#">Sitemap</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="footer-title">Legal</h4>
+            <ul class="footer-links">
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Cookie Policy</a></li>
+              <li><a href="#">Refund Policy</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="footer-copyright">© 2024 FoodieGo. All rights reserved.</p>
+          <div class="footer-socials">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Menu Page -->
+    <div class="page" id="page-menu">
+      <div class="menu-page">
+        <div class="menu-header">
+          <div class="menu-header-info">
+            <div class="menu-logo">🍕</div>
+            <div>
+              <h1>Pizza Palace</h1>
+              <p>Italian, Pizza, Pasta • 25-35 min • ₹40 delivery</p>
+            </div>
+          </div>
+          <div class="menu-filters">
+            <button class="menu-filter active">Recommended</button>
+            <button class="menu-filter">Veg Only</button>
+            <button class="menu-filter">Popular</button>
+            <button class="menu-filter">Deals</button>
+          </div>
+        </div>
+        <div class="menu-content">
+          <div class="menu-layout">
+            <div class="menu-categories">
+              <div class="menu-category active">Recommended</div>
+              <div class="menu-category">Veg Pizzas</div>
+              <div class="menu-category">Non-Veg Pizzas</div>
+              <div class="menu-category">Sides</div>
+              <div class="menu-category">Drinks</div>
+              <div class="menu-category">Desserts</div>
+            </div>
+            <div class="menu-items">
+              <div class="menu-item">
+                <div class="menu-item-image">🍕</div>
+                <div class="menu-item-info">
+                  <h3 class="menu-item-name">
+                    <span class="veg-badge"></span>Margherita Pizza
+                  </h3>
+                  <p class="menu-item-desc">
+                    Classic pizza with fresh tomatoes, mozzarella, and basil
+                  </p>
+                  <div class="menu-item-price">₹299</div>
+                  <div class="menu-item-actions">
+                    <button
+                      class="add-btn"
+                      onclick="addToCart('Margherita Pizza', 299)"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-image">🍕</div>
+                <div class="menu-item-info">
+                  <h3 class="menu-item-name">
+                    <span class="veg-badge"></span>Pepperoni Pizza
+                  </h3>
+                  <p class="menu-item-desc">
+                    Loaded with pepperoni and extra cheese
+                  </p>
+                  <div class="menu-item-price">₹399</div>
+                  <div class="menu-item-actions">
+                    <button
+                      class="add-btn"
+                      onclick="addToCart('Pepperoni Pizza', 399)"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-image">🍕</div>
+                <div class="menu-item-info">
+                  <h3 class="menu-item-name">
+                    <span class="veg-badge"></span>Veggie Supreme
+                  </h3>
+                  <p class="menu-item-desc">
+                    Loaded with fresh vegetables and herbs
+                  </p>
+                  <div class="menu-item-price">₹449</div>
+                  <div class="menu-item-actions">
+                    <button
+                      class="add-btn"
+                      onclick="addToCart('Veggie Supreme', 449)"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-image">🧄</div>
+                <div class="menu-item-info">
+                  <h3 class="menu-item-name">
+                    <span class="veg-badge"></span>Garlic Bread
+                  </h3>
+                  <p class="menu-item-desc">
+                    Crispy garlic bread with butter and herbs
+                  </p>
+                  <div class="menu-item-price">₹129</div>
+                  <div class="menu-item-actions">
+                    <button
+                      class="add-btn"
+                      onclick="addToCart('Garlic Bread', 129)"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-image">🍝</div>
+                <div class="menu-item-info">
+                  <h3 class="menu-item-name">
+                    <span class="veg-badge"></span>Pasta Alfredo
+                  </h3>
+                  <p class="menu-item-desc">Creamy alfredo sauce with pasta</p>
+                  <div class="menu-item-price">₹249</div>
+                  <div class="menu-item-actions">
+                    <button
+                      class="add-btn"
+                      onclick="addToCart('Pasta Alfredo', 249)"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cart-sidebar">
+              <h3 class="cart-title">Your Cart</h3>
+              <div id="cartItems">
+                <div class="cart-empty">
+                  <i class="fas fa-shopping-cart"></i>
+                  <p>Your cart is empty</p>
+                </div>
+              </div>
+              <div class="cart-footer" id="cartFooter" style="display: none">
+                <div class="cart-total">
+                  <span>Subtotal</span>
+                  <span id="cartTotal">₹0</span>
+                </div>
+                <button
+                  class="checkout-btn"
+                  onclick="showToast('Order placed successfully!', 'success')"
+                >
+                  Proceed to Checkout
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Page -->
+    <div class="page" id="page-profile">
+      <div class="profile-page">
+        <div class="profile-header">
+          <div class="profile-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <h1 class="profile-name">John Doe</h1>
+          <p class="profile-email">john.doe@email.com</p>
+          <div class="profile-stats">
+            <div class="profile-stat">
+              <h3>12</h3>
+              <p>Orders</p>
+            </div>
+            <div class="profile-stat">
+              <h3>₹4,520</h3>
+              <p>Total Spent</p>
+            </div>
+            <div class="profile-stat">
+              <h3>3</h3>
+              <p>Reviews</p>
+            </div>
+          </div>
+        </div>
+        <div class="profile-content">
+          <div class="profile-section">
+            <h3 class="profile-section-title">
+              <i class="fas fa-map-marker-alt"></i> Saved Addresses
+            </h3>
+            <div class="address-card">
+              <div class="address-info">
+                <div class="address-icon"><i class="fas fa-home"></i></div>
+                <div>
+                  <div class="address-label">Home</div>
+                  <div class="address-text">
+                    123 Main Street, Sector 62, Noida, UP 201301
+                  </div>
+                </div>
+              </div>
+              <div class="address-actions">
+                <button class="address-btn primary">Default</button>
+                <button class="address-btn">Edit</button>
+              </div>
+            </div>
+            <div class="address-card">
+              <div class="address-info">
+                <div class="address-icon"><i class="fas fa-briefcase"></i></div>
+                <div>
+                  <div class="address-label">Work</div>
+                  <div class="address-text">
+                    456 Tech Park, Sector 135, Noida, UP 201304
+                  </div>
+                </div>
+              </div>
+              <div class="address-actions">
+                <button class="address-btn">Set Default</button>
+                <button class="address-btn">Edit</button>
+              </div>
+            </div>
+            <button
+              class="add-btn"
+              style="margin-top: 16px"
+              onclick="showToast('Add new address', 'success')"
+            >
+              <i class="fas fa-plus"></i> Add New Address
+            </button>
+          </div>
+          <div class="profile-section">
+            <h3 class="profile-section-title">
+              <i class="fas fa-wallet"></i> Payment Methods
+            </h3>
+            <div class="address-card">
+              <div class="address-info">
+                <div class="address-icon">
+                  <i class="fab fa-google-pay"></i>
+                </div>
+                <div>
+                  <div class="address-label">Google Pay</div>
+                  <div class="address-text">**** **** 1234</div>
+                </div>
+              </div>
+              <div class="address-actions">
+                <button class="address-btn primary">Default</button>
+                <button class="address-btn">Edit</button>
+              </div>
+            </div>
+            <div class="address-card">
+              <div class="address-info">
+                <div class="address-icon">
+                  <i class="fas fa-credit-card"></i>
+                </div>
+                <div>
+                  <div class="address-label">Visa Card</div>
+                  <div class="address-text">**** **** **** 5678</div>
+                </div>
+              </div>
+              <div class="address-actions">
+                <button class="address-btn">Set Default</button>
+                <button class="address-btn">Edit</button>
+              </div>
+            </div>
+          </div>
+          <div class="profile-section">
+            <h3 class="profile-section-title">
+              <i class="fas fa-cog"></i> Settings
+            </h3>
+            <div style="display: flex; flex-direction: column; gap: 12px">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  padding: 16px;
+                  background: var(--bg);
+                  border-radius: var(--radius);
+                "
+              >
+                <div>
+                  <div style="font-weight: 600">Push Notifications</div>
+                  <div style="font-size: 13px; color: var(--text-secondary)">
+                    Get updates about orders
+                  </div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" checked />
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  padding: 16px;
+                  background: var(--bg);
+                  border-radius: var(--radius);
+                "
+              >
+                <div>
+                  <div style="font-weight: 600">Email Notifications</div>
+                  <div style="font-size: 13px; color: var(--text-secondary)">
+                    Receive promotional emails
+                  </div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Page -->
+    <div class="page" id="page-admin">
+      <div class="admin-page">
+        <div class="admin-sidebar">
+          <div class="admin-nav-item active">
+            <i class="fas fa-chart-pie"></i>
+            <span>Dashboard</span>
+          </div>
+          <div class="admin-nav-item">
+            <i class="fas fa-utensils"></i>
+            <span>Restaurants</span>
+          </div>
+          <div class="admin-nav-item">
+            <i class="fas fa-shopping-bag"></i>
+            <span>Orders</span>
+          </div>
+          <div class="admin-nav-item">
+            <i class="fas fa-users"></i>
+            <span>Users</span>
+          </div>
+          <div class="admin-nav-item">
+            <i class="fas fa-tags"></i>
+            <span>Offers</span>
+          </div>
+          <div class="admin-nav-item">
+            <i class="fas fa-flag"></i>
+            <span>Reports</span>
+          </div>
+          <div class="admin-nav-item">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </div>
+        </div>
+        <div class="admin-main">
+          <div class="admin-header">
+            <div>
+              <h1 class="admin-title">Dashboard</h1>
+              <p class="admin-subtitle">
+                Welcome back! Here's what's happening today.
+              </p>
+            </div>
+            <button class="nav-btn nav-btn-primary">
+              <i class="fas fa-download"></i> Export Report
+            </button>
+          </div>
+          <div class="admin-grid">
+            <div class="stat-card">
+              <div class="stat-icon orange">
+                <i class="fas fa-shopping-bag"></i>
+              </div>
+              <div class="stat-value">1,234</div>
+              <div class="stat-label">Total Orders</div>
+              <div class="stat-change">
+                <i class="fas fa-arrow-up"></i> 12.5% vs last week
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon green">
+                <i class="fas fa-rupee-sign"></i>
+              </div>
+              <div class="stat-value">₹45.2K</div>
+              <div class="stat-label">Total Revenue</div>
+              <div class="stat-change">
+                <i class="fas fa-arrow-up"></i> 8.2% vs last week
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon blue"><i class="fas fa-users"></i></div>
+              <div class="stat-value">3,456</div>
+              <div class="stat-label">Active Users</div>
+              <div class="stat-change">
+                <i class="fas fa-arrow-up"></i> 5.3% vs last week
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon purple">
+                <i class="fas fa-utensils"></i>
+              </div>
+              <div class="stat-value">128</div>
+              <div class="stat-label">Restaurants</div>
+              <div class="stat-change down">
+                <i class="fas fa-arrow-down"></i> 2.1% vs last week
+              </div>
+            </div>
+          </div>
+          <div class="chart-container">
+            <div class="chart-header">
+              <h3 class="chart-title">Revenue Overview</h3>
+              <div class="chart-filters">
+                <button class="chart-filter">Week</button>
+                <button class="chart-filter active">Month</button>
+                <button class="chart-filter">Year</button>
+              </div>
+            </div>
+            <div class="chart">
+              <div
+                class="chart-bar"
+                style="height: 60%"
+                data-value="₹12K"
+              ></div>
+              <div
+                class="chart-bar"
+                style="height: 80%"
+                data-value="₹16K"
+              ></div>
+              <div class="chart-bar" style="height: 45%" data-value="₹9K"></div>
+              <div
+                class="chart-bar"
+                style="height: 90%"
+                data-value="₹18K"
+              ></div>
+              <div
+                class="chart-bar"
+                style="height: 70%"
+                data-value="₹14K"
+              ></div>
+              <div
+                class="chart-bar"
+                style="height: 95%"
+                data-value="₹19K"
+              ></div>
+              <div
+                class="chart-bar"
+                style="height: 85%"
+                data-value="₹17K"
+              ></div>
+            </div>
+            <div class="chart-labels">
+              <span>Mon</span>
+              <span>Tue</span>
+              <span>Wed</span>
+              <span>Thu</span>
+              <span>Fri</span>
+              <span>Sat</span>
+              <span>Sun</span>
+            </div>
+          </div>
+          <div class="table-container">
+            <div class="table-header">
+              <h3 class="table-title">Recent Orders</h3>
+              <button class="nav-btn nav-btn-outline">View All</button>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Restaurant</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#FD00123</td>
+                  <td>Sarah Johnson</td>
+                  <td>Pizza Palace</td>
+                  <td>₹599</td>
+                  <td><span class="status-badge success">Delivered</span></td>
+                  <td>
+                    <div class="table-actions">
+                      <button class="table-btn">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="table-btn">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#FD00122</td>
+                  <td>Mike Chen</td>
+                  <td>Burger Barn</td>
+                  <td>₹349</td>
+                  <td><span class="status-badge warning">Preparing</span></td>
+                  <td>
+                    <div class="table-actions">
+                      <button class="table-btn">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="table-btn">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#FD00121</td>
+                  <td>Emily Davis</td>
+                  <td>Sushi Master</td>
+                  <td>₹899</td>
+                  <td>
+                    <span class="status-badge warning">Out for Delivery</span>
+                  </td>
+                  <td>
+                    <div class="table-actions">
+                      <button class="table-btn">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="table-btn">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#FD00120</td>
+                  <td>Alex Turner</td>
+                  <td>Taco Town</td>
+                  <td>₹459</td>
+                  <td><span class="status-badge error">Cancelled</span></td>
+                  <td>
+                    <div class="table-actions">
+                      <button class="table-btn">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="table-btn">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 class="modal-title" id="modalTitle">Modal Title</h2>
+          <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div id="modalContent">
+          <p>Modal content goes here...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+      // Cart functionality
+      let cart = [];
+
+      function addToCart(name, price) {
+        const existingItem = cart.find(item => item.name === name);
+        if (existingItem) {
+          existingItem.quantity++;
+        } else {
+          cart.push({ name, price, quantity: 1 });
+        }
+        updateCartUI();
+        showToast(`${name} added to cart!`, 'success');
+      }
+
+      function removeFromCart(name) {
+        cart = cart.filter(item => item.name !== name);
+        updateCartUI();
+      }
+
+      function updateQuantity(name, delta) {
+        const item = cart.find(i => i.name === name);
+        if (item) {
+          item.quantity += delta;
+          if (item.quantity <= 0) {
+            removeFromCart(name);
+            return;
+          }
+        }
+        updateCartUI();
+      }
+
+      function updateCartUI() {
+        const cartItems = document.getElementById('cartItems');
+        const cartFooter = document.getElementById('cartFooter');
+        const cartBadge = document.getElementById('cartBadge');
+        const cartTotal = document.getElementById('cartTotal');
+
+        cartBadge.textContent = cart.reduce(
+          (sum, item) => sum + item.quantity,
+          0,
+        );
+
+        if (cart.length === 0) {
+          cartItems.innerHTML = `
+                    <div class="cart-empty">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Your cart is empty</p>
+                    </div>
+                `;
+          cartFooter.style.display = 'none';
+        } else {
+          cartItems.innerHTML = cart
+            .map(
+              item => `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">₹${item.price * item.quantity}</div>
+                        </div>
+                        <div class="cart-item-qty">
+                            <button class="qty-btn" onclick="updateQuantity('${item.name}', -1)">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="qty-btn" onclick="updateQuantity('${item.name}', 1)">+</button>
+                        </div>
+                    </div>
+                `,
+            )
+            .join('');
+          cartFooter.style.display = 'block';
+          const total = cart.reduce(
+            (sum, item) => sum + item.price * item.quantity,
+            0,
+          );
+          cartTotal.textContent = `₹${total}`;
+        }
+      }
+
+      // Page navigation
+      function showPage(pageName) {
+        document.querySelectorAll('.page').forEach(page => {
+          page.classList.remove('active');
+        });
+        document.getElementById(`page-${pageName}`).classList.add('active');
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+          link.classList.remove('active');
+        });
+
+        window.scrollTo(0, 0);
+      }
+
+      // Modal
+      function openModal(title, content) {
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalContent').innerHTML = content;
+        document.getElementById('modalOverlay').classList.add('active');
+      }
+
+      function closeModal() {
+        document.getElementById('modalOverlay').classList.remove('active');
+      }
+
+      // Toast notifications
+      function showToast(message, type = 'success') {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+        container.appendChild(toast);
+
+        setTimeout(() => {
+          toast.remove();
+        }, 3000);
+      }
+
+      // Navbar scroll effect
+      window.addEventListener('scroll', () => {
+        const navbar = document.getElementById('navbar');
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+
+      // Close modal on overlay click
+      document.getElementById('modalOverlay').addEventListener('click', e => {
+        if (e.target === document.getElementById('modalOverlay')) {
+          closeModal();
+        }
+      });
+
+      // Filter buttons
+      document.querySelectorAll('.menu-filter, .chart-filter').forEach(btn => {
+        btn.addEventListener('click', function () {
+          this.parentElement
+            .querySelectorAll('.menu-filter, .chart-filter')
+            .forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+
+      // Admin nav items
+      document.querySelectorAll('.admin-nav-item').forEach(item => {
+        item.addEventListener('click', function () {
+          document
+            .querySelectorAll('.admin-nav-item')
+            .forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+
+      // Menu category items
+      document.querySelectorAll('.menu-category').forEach(cat => {
+        cat.addEventListener('click', function () {
+          document
+            .querySelectorAll('.menu-category')
+            .forEach(c => c.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+
+      console.log('FoodieGo website loaded successfully!');
+    </script>
+
+    <style>
+      /* Toggle Switch */
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 28px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.3s;
+        border-radius: 28px;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: '';
+        height: 22px;
+        width: 22px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.3s;
+        border-radius: 50%;
+      }
+
+      input:checked + .slider {
+        background-color: var(--primary);
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(22px);
+      }
+    </style>
+  </body>
+</html>

@@ -73,3 +73,18 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Environment variables (CRITICAL)
+.env
+.env.*
+
+# Backend build output (if using TypeScript)
+dist/
+
+# Logs
+logs
+*.log
+
+# OS / misc
+.DS_Store
+Thumbs.db

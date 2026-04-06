@@ -1,0 +1,55 @@
+{
+  "name": "foodiego-backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FoodieGo backend API (initial implementation slice)",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "test:unit": "npm run build && node --test --test-isolation=none dist/tests/unit/*.test.js",
+    "test:contract": "npm run build && node --test --test-isolation=none dist/tests/contract/*.test.js",
+    "test:integration": "npm run build && node --test --test-isolation=none dist/tests/integration/*.test.js",
+    "perf:smoke": "tsx scripts/perf-smoke.ts",
+    "deploy:verify": "tsx scripts/deploy-verify.ts",
+    "monitoring:smoke": "tsx scripts/monitoring-smoke.ts",
+    "cutover:check": "tsx scripts/cutover-check.ts",
+    "cutover:evidence:pack": "tsx scripts/cutover-evidence-pack.ts",
+    "incident:drill": "tsx scripts/incident-drill.ts",
+    "backup:restore:drill": "tsx scripts/backup-restore-drill.ts",
+    "rollback:drill": "tsx scripts/rollback-drill.ts",
+    "k8s:rollout:drill": "tsx scripts/k8s-rollout-drill.ts",
+    "worker:run": "tsx scripts/worker-run.ts",
+    "worker:once": "tsx scripts/worker-run-once.ts",
+    "dead-letter:replay": "tsx scripts/dead-letter-replay.ts",
+    "security:check": "npm audit --omit=dev --audit-level=high",
+    "release:gate": "npm run build && npm run test:unit && npm run test:contract && npm run test:integration && npm run perf:smoke",
+    "release:gate:strict": "npm run release:gate && npm run security:check",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate:dev": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:db:push": "prisma db push",
+    "prisma:studio": "prisma studio",
+    "db:seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.15.3",
+    "prisma": "^6.6.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=22.11.0"
+  }
+}

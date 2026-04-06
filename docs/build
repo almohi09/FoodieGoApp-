@@ -1,0 +1,64 @@
+Roadmap
+                                                                                                                           
+  1. Phase 1: Transaction MVP (must-have)                                                                                  
+                                                                                                                           
+  - Goal: user can reliably discover, order, pay, and track.                                                               
+  - Build:                                                                                                                 
+      - Real restaurant/catalog APIs (/restaurants, /menu, /search)                                                        
+      - Auth API wiring in UI (replace setTimeout flows)                                                                   
+      - Address CRUD + default address APIs                                                                                
+      - Checkout API (price quote, apply coupon, place order)                                                              
+      - Payment gateway integration (UPI + card + COD state handling)                                                      
+      - Real orders list (/orders) + order detail                                                                          
+      - Basic tracking events polling/socket (confirmed, preparing, out_for_delivery, delivered)                           
+  - Done criteria:                                                                                                         
+      - End-to-end order placed from app reaches backend and appears in order history.                                     
+                                                                                                                           
+  2. Phase 2: Reliability + Core Marketplace Depth                                                                         
+                                                                                                                           
+  - Goal: match baseline Swiggy/Zomato reliability.                                                                        
+  - Build:                                                                                                                 
+      - Inventory/open-close/hours checks at add-to-cart and checkout                                                      
+      - Dynamic delivery fee + ETA service                                                                                 
+      - Reorder/cancel/refund flows with policy rules                                                                      
+      - Push notifications for all order milestones                                                                        
+      - Better search ranking + typo tolerance + recent/trending queries from backend                                      
+      - Real coupon engine constraints (min basket, user eligibility, one-time use)                                        
+  - Done criteria:                                                                                                         
+      - Failed/edge checkout cases handled gracefully and recoverably.                                                     
+                                                                                                                           
+  3. Phase 3: Experience Parity                                                                                            
+
+  - Goal: competitive UX depth.                                                                                            
+  - Build:                                                                                                                 
+      - Restaurant reviews/ratings/photos                                                                                  
+      - Advanced filters (veg-only, price, delivery time, offers, rating)                                                  
+      - Restaurant promo cards, sponsored slots                                                                            
+      - Favorite restaurants, reorder from past orders                                                                     
+      - In-app support chat + ticketing                                                                                    
+      - Saved payments and faster repeat checkout                                                                          
+  - Done criteria:                                                                                                         
+      - User can complete repeat order in <30s with high success rate.                                                     
+                                                                                                                           
+  4. Phase 4: Seller/Admin Real Operations                                                                                 
+
+  - Goal: panels become operational, not placeholder.                                                                      
+  - Build:                                                                                                                 
+      - Seller menu/inventory/order management APIs + screens                                                              
+      - Admin moderation, approval queues, user/seller controls                                                            
+      - Payouts/reconciliation dashboards                                                                                  
+      - SLA monitors (prep time, delivery delay, cancellation)                                                             
+  - Done criteria:                                                                                                         
+      - Seller can run daily operations from app; admin can monitor and intervene.                                         
+                                                                                                                           
+  5. Phase 5: Scale + Growth                                                                                               
+                                                                                                                           
+  - Goal: production-grade scale and growth engine.                                                                        
+  - Build:                                                                                                                 
+      - Event analytics + funnel dashboards                                                                                
+      - A/B experimentation flags                                                                                          
+      - Personalization/recommendation service                                                                             
+      - Fraud/risk checks (payment abuse, coupon abuse, account abuse)                                                     
+      - Caching/CDN/image optimization and offline-resilient states                                                        
+  - Done criteria:                                                                                                         
+      - Stable under load, measurable conversion/retention improvements.    

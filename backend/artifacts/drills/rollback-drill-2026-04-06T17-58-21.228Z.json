@@ -1,0 +1,42 @@
+{
+  "pass": true,
+  "baseUrl": "http://localhost:4130/api/v1",
+  "timeline": [
+    {
+      "at": "2026-04-06T17:58:20.491Z",
+      "step": "rollback_drill_started",
+      "details": {
+        "baseUrl": "http://localhost:4130/api/v1"
+      }
+    },
+    {
+      "at": "2026-04-06T17:58:20.701Z",
+      "step": "candidate_health_check",
+      "details": {
+        "status": 200
+      }
+    },
+    {
+      "at": "2026-04-06T17:58:20.701Z",
+      "step": "simulate_canary_failure",
+      "details": {
+        "signal": "error_rate_spike_detected"
+      }
+    },
+    {
+      "at": "2026-04-06T17:58:20.960Z",
+      "step": "rollback_triggered",
+      "details": {
+        "command": "kubectl rollout undo deployment/foodiego-backend -n foodiego"
+      }
+    },
+    {
+      "at": "2026-04-06T17:58:21.227Z",
+      "step": "post_rollback_validation",
+      "details": {
+        "healthStatus": 200,
+        "metricsStatus": 200
+      }
+    }
+  ]
+}
