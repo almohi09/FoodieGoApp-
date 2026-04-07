@@ -9,18 +9,27 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { colors, spacing, typography, borderRadius, shadows } from '../../../theme';
+import {
+  colors,
+  spacing,
+  typography,
+  borderRadius,
+  shadows,
+} from '../../../theme';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import { Button } from '../../components/common';
 import { mockCoupons } from '../../../data/api/mockData';
 import { useAppSelector } from '../../hooks/useRedux';
 
-type RewardsNavigationProp = NativeStackNavigationProp<RootStackParamList, 'MainTabs'>;
+type RewardsNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'MainTabs'
+>;
 
 export const RewardsScreen: React.FC = () => {
   const navigation = useNavigation<RewardsNavigationProp>();
   const insets = useSafeAreaInsets();
-  const user = useAppSelector((state) => state.user.user);
+  const user = useAppSelector(state => state.user.user);
 
   const coins = user?.foodieCoins || 1250;
   const isFoodiePass = user?.isFoodiePass || false;
@@ -124,7 +133,7 @@ export const RewardsScreen: React.FC = () => {
           </TouchableOpacity>
         </View>
 
-        {mockCoupons.map((coupon) => (
+        {mockCoupons.map(coupon => (
           <TouchableOpacity key={coupon.id} style={styles.couponCard}>
             <View style={styles.couponLeft}>
               <View style={styles.couponDiscount}>
@@ -450,5 +459,7 @@ const styles = StyleSheet.create({
     ...typography.captionMedium,
     color: colors.loyalty,
   },
+  bottomSpacer: {
+    height: 40,
+  },
 });
-

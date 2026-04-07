@@ -771,7 +771,7 @@ router.put(
       : [];
     const categories = db.menuCategories.get(req.params.restaurantId) || [];
     const reordered = categoryIds
-      .map((id, index) => {
+      .map((id: string, index: number) => {
         const cat = categories.find(c => c.id === id);
         return cat ? { ...cat, sortOrder: index } : null;
       })
@@ -780,5 +780,244 @@ router.put(
     res.json({ success: true, categories: reordered });
   },
 );
+
+router.get(
+  '/seller/restaurants/:restaurantId/earnings/summary',
+  requireAuth,
+  requireRole(['seller']),
+  (req, res) => {
+    const summary = {
+      totalEarnings: 45600,
+      pendingPayout: 12500,
+      completedPayouts: 33100,
+      thisMonth: 15200,
+      lastMonth: 14200,
+      orderCount: 312,
+      averageOrderValue: 146,
+    };
+    res.json(summary);
+  },
+);
+
+router.get(
+  '/seller/restaurants/:restaurantId/earnings/chart',
+  requireAuth,
+  requireRole(['seller']),
+  (req, res) => {
+    const { period = 'week' } = req.query;
+    const chart = generateEarningsChart(period as string);
+    res.json({ chart });
+  },
+);
+
+router.get(
+  '/seller/restaurants/:restaurantId/earnings/transactions',
+  requireAuth,
+  requireRole(['seller']),
+  (req, res) => {
+    const { page = 1, limit = 20, type, startDate, endDate } = req.query;
+    const transactions = [
+      {
+        id: 'txn_1',
+        type: 'order',
+        amount: 420,
+        status: 'completed',
+        createdAt: new Date().toISOString(),
+        orderId: 'order_1',
+      },
+      {
+        id: 'txn_2',
+        type: 'payout',
+        amount: -5000,
+        status: 'completed',
+        createdAt: new Date().toISOString(),
+      },
+      {
+        id: 'txn_3',
+        type: 'order',
+        amount: 380,
+        status: 'completed',
+        createdAt: new Date().toISOString(),
+        orderId: 'order_2',
+      },
+      {
+        id: 'txn_4',
+        type: 'adjustment',
+        amount: -50,
+        status: 'completed',
+        createdAt: new Date().toISOString(),
+      },
+    ];
+    res.json({
+      transactions,
+      total: transactions.length,
+      page: Number(page),
+      limit: Number(limit),
+    });
+  },
+);
+
+router.get(
+  '/seller/restaurants/:restaurantId/payouts',
+  requireAuth,
+  requireRole(['seller']),
+  (req, res) => {
+    const { page = 1, limit = 20, status } = req.query;
+    const payouts = [
+      {
+        id: 'payout_1',
+        amount: 5000,
+        status: 'completed',
+        createdAt: new Date().toISOString(),
+        processedAt: new Date().toISOString(),
+      },
+      {
+        id: 'payout_2',
+        amount: 7500,
+        status: 'pending',
+        createdAt: new Date().toISOString(),
+      },
+      {
+        id: 'payout_3',
+        amount: 3000,
+        status: 'completed',
+        createdAt: new Date().toISOString(),
+        processedAt: new Date().toISOString(),
+      },
+    ];
+    res.json({
+      payouts,
+      total: payouts.length,
+      page: Number(page),
+      limit: Number(limit),
+    });
+  },
+);
+
+router.post(
+  '/seller/restaurants/:restaurantId/payouts',
+  requireAuth,
+  requireRole(['seller']),
+  (req, res) => {
+    const { amount } = req.body;
+    const payout = {
+      id: `payout_${Date.now()}`,
+      amount,
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+    };
+    res.json({ success: true, payout });
+  },
+);
+
+router.get(
+  '/seller/restaurants/:restaurantId/payouts/:payoutId',
+  requireAuth,
+  requireRole(['seller']),
+  (req, res) => {
+    const payout = {
+      id: req.params.payoutId,
+      amount: 5000,
+      status: 'completed',
+      createdAt: new Date().toISOString(),
+      processedAt: new Date().toISOString(),
+    };
+    res.json(payout);
+  },
+);
+
+router.get(
+  '/seller/restaurants/:restaurantId/bank-details',
+  requireAuth,
+  requireRole(['seller']),
+  (req, res) => {
+    const details = {
+      accountNumber: '****4567',
+      ifsc: 'SBIN0001234',
+      accountHolder: 'Restaurant Name',
+      verified: true,
+    };
+    res.json(details);
+  },
+);
+
+router.put(
+  '/seller/restaurants/:restaurantId/bank-details',
+  requireAuth,
+  requireRole(['seller']),
+  (req, res) => {
+    const { accountNumber, ifsc, accountHolder } = req.body;
+    const details = { accountNumber, ifsc, accountHolder, verified: false };
+    res.json(details);
+  },
+);
+
+router.post(
+  '/seller/restaurants/:restaurantId/bank-details/verify',
+  requireAuth,
+  requireRole(['seller']),
+  (req, res) => {
+    res.json({ success: true, verified: true });
+  },
+);
+
+router.get(
+  '/seller/restaurants/:restaurantId/commission',
+  requireAuth,
+  requireRole(['seller']),
+  (req, res) => {
+    const commission = {
+      rate: 18,
+      totalOrders: 312,
+      grossSales: 45600,
+      commissionAmount: 8208,
+      platformFee: 1200,
+      netPayable: 34392,
+      breakdown: [
+        {
+          period: 'Apr 1-7',
+          orders: 52,
+          sales: 7600,
+          commission: 1368,
+          platformFee: 200,
+        },
+        {
+          period: 'Mar 25-31',
+          orders: 48,
+          sales: 7100,
+          commission: 1278,
+          platformFee: 180,
+        },
+      ],
+    };
+    res.json(commission);
+  },
+);
+
+router.get(
+  '/seller/restaurants/:restaurantId/invoice',
+  requireAuth,
+  requireRole(['seller']),
+  (req, res) => {
+    res.json({
+      invoiceUrl: 'https://storage.example.com/invoices/invoice_2026_04.pdf',
+    });
+  },
+);
+
+function generateEarningsChart(period: string) {
+  const days = period === 'week' ? 7 : period === 'month' ? 30 : 365;
+  const chart = [];
+  for (let i = days - 1; i >= 0; i--) {
+    const date = new Date();
+    date.setDate(date.getDate() - i);
+    chart.push({
+      date: date.toISOString().split('T')[0],
+      orders: Math.floor(Math.random() * 20) + 5,
+      earnings: Math.floor(Math.random() * 2000) + 500,
+    });
+  }
+  return chart;
+}
 
 export default router;

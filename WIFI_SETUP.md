@@ -65,6 +65,28 @@ APK location: `android/app/build/outputs/apk/debug/app-debug.apk`
 
 ---
 
+## Windows USB Build (Path-Length Safe)
+
+If Android build fails with CMake/Ninja path length errors (for example `Filename longer than 260 characters`), use a short junction path:
+
+```powershell
+New-Item -ItemType Junction -Path C:\fg -Target C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp
+cd C:\fg\android
+.\gradlew clean
+.\gradlew app:installDebug
+```
+
+Then start and launch app with Metro on `8081`:
+
+```powershell
+cd C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp
+npm run start
+adb reverse tcp:8081 tcp:8081
+npx react-native run-android --port 8081
+```
+
+---
+
 ## Troubleshooting
 
 **Device not found?**
@@ -78,6 +100,7 @@ APK location: `android/app/build/outputs/apk/debug/app-debug.apk`
 **Build errors?**
 - Run: `cd android && ./gradlew clean`
 - Then rebuild
+- If you see `Filename longer than 260 characters`, use the **Windows USB Build (Path-Length Safe)** section above.
 
 ---
 

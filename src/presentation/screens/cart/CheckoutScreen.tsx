@@ -6,17 +6,32 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Linking,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { colors, spacing, typography, borderRadius, shadows } from '../../../theme';
+import {
+  colors,
+  spacing,
+  typography,
+  borderRadius,
+  shadows,
+} from '../../../theme';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import { Button, Input } from '../../components/common';
 import { useAppSelector } from '../../hooks/useRedux';
-import { selectCartItems, selectCartTotal } from '../../../store/slices/cartSlice';
+import {
+  selectCartItems,
+  selectCartTotal,
+} from '../../../store/slices/cartSlice';
 import { useAppDispatch } from '../../hooks/useRedux';
-import { applyCoupon, clearCart, setDeliveryFee } from '../../../store/slices/cartSlice';
+import {
+  applyCoupon,
+  clearCart,
+  setDeliveryFee,
+  setQuoteDetails,
+} from '../../../store/slices/cartSlice';
 import { checkoutService } from '../../../data/api/checkoutService';
 import { inventoryService } from '../../../data/api/inventoryService';
 import { couponService } from '../../../data/api/couponService';
@@ -34,8 +49,12 @@ import {
   enforceLocalVelocityGuard,
   recordGuardedFailure,
 } from '../../../data/api/securityGuard';
+import { useAppStore } from '../../../data/storage/appStore';
 
-type CheckoutNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Checkout'>;
+type CheckoutNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Checkout'
+>;
 
 export const CheckoutScreen: React.FC = () => {
   const navigation = useNavigation<CheckoutNavigationProp>();
@@ -43,8 +62,11 @@ export const CheckoutScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector(selectCartItems);
   const cartTotal = useAppSelector(selectCartTotal);
-  const { couponCode, couponDiscount, deliveryFee } = useAppSelector(state => state.cart);
+  const { couponCode, couponDiscount, deliveryFee } = useAppSelector(
+    state => state.cart,
+  );
   const user = useAppSelector(state => state.user.user);
+  const { saveCheckoutRecovery, clearCheckoutRecovery } = useAppStore();
 
   const [selectedAddress, setSelectedAddress] = useState('');
   const [selectedPayment, setSelectedPayment] = useState('upi');
@@ -61,12 +83,13 @@ export const CheckoutScreen: React.FC = () => {
 
   useEffect(() => {
     const loadAddresses = async () => {
-      const fallback = user?.addresses?.map(a => ({
-        id: a.id,
-        label: a.label,
-        address: a.address,
-        isDefault: a.isDefault,
-      })) || [];
+      const fallback =
+        user?.addresses?.map(a => ({
+          id: a.id,
+          label: a.label,
+          address: a.address,
+          isDefault: a.isDefault,
+        })) || [];
 
       const response = await authService.getAddresses();
       const apiAddresses =
@@ -80,7 +103,8 @@ export const CheckoutScreen: React.FC = () => {
           : fallback;
 
       setAddresses(apiAddresses);
-      const defaultAddress = apiAddresses.find(a => a.isDefault) || apiAddresses[0];
+      const defaultAddress =
+        apiAddresses.find(a => a.isDefault) || apiAddresses[0];
       if (defaultAddress) {
         setSelectedAddress(defaultAddress.id);
       }
@@ -106,6 +130,13 @@ export const CheckoutScreen: React.FC = () => {
 
       if (quote.success && quote.quote) {
         dispatch(setDeliveryFee(quote.quote.deliveryFee));
+        dispatch(
+          setQuoteDetails({
+            subtotal: quote.quote.subtotal,
+            packagingFee: quote.quote.packagingFee,
+            taxes: quote.quote.taxes,
+          }),
+        );
       }
     };
 
@@ -113,10 +144,25 @@ export const CheckoutScreen: React.FC = () => {
   }, [cartItems, dispatch, restaurantId, selectedAddress]);
 
   const paymentMethods = [
-    { id: 'upi', icon: '📱', name: 'UPI', subtitle: 'Google Pay, PhonePe, Paytm' },
-    { id: 'card', icon: '💳', name: 'Credit/Debit Card', subtitle: 'Visa, Mastercard, RuPay' },
+    {
+      id: 'upi',
+      icon: '📱',
+      name: 'UPI',
+      subtitle: 'Google Pay, PhonePe, Paytm',
+    },
+    {
+      id: 'card',
+      icon: '💳',
+      name: 'Credit/Debit Card',
+      subtitle: 'Visa, Mastercard, RuPay',
+    },
     { id: 'wallet', icon: '👛', name: 'Wallet', subtitle: 'Paytm, Amazon Pay' },
-    { id: 'cod', icon: '💵', name: 'Cash on Delivery', subtitle: 'Pay when you receive' },
+    {
+      id: 'cod',
+      icon: '💵',
+      name: 'Cash on Delivery',
+      subtitle: 'Pay when you receive',
+    },
   ];
 
   const finalTotal = useMemo(
@@ -205,7 +251,9 @@ export const CheckoutScreen: React.FC = () => {
           paymentMethod: selectedPayment,
         });
         if (fraudCheck.action === 'block') {
-          throw new Error('Order blocked by risk checks. Please contact support.');
+          throw new Error(
+            'Order blocked by risk checks. Please contact support.',
+          );
         }
       }
 
@@ -220,7 +268,11 @@ export const CheckoutScreen: React.FC = () => {
         couponCode: couponCode || undefined,
       });
 
-      if (!orderResult.success || !orderResult.orderId || !orderResult.paymentDetails) {
+      if (
+        !orderResult.success ||
+        !orderResult.orderId ||
+        !orderResult.paymentDetails
+      ) {
         throw new Error(orderResult.error || 'Order could not be placed.');
       }
 
@@ -230,10 +282,11 @@ export const CheckoutScreen: React.FC = () => {
         method: orderResult.paymentDetails.method,
       });
 
-      const reconciliation = await paymentReconciliationService.reconcileOrderPayment(
-        orderResult.orderId,
-        paymentStatus,
-      );
+      const reconciliation =
+        await paymentReconciliationService.reconcileOrderPayment(
+          orderResult.orderId,
+          paymentStatus,
+        );
       const finalPaymentStatus = reconciliation.finalStatus;
 
       if (!reconciliation.success) {
@@ -264,6 +317,7 @@ export const CheckoutScreen: React.FC = () => {
       }
 
       dispatch(clearCart());
+      await clearCheckoutRecovery();
       await clearGuardState('order_place');
       await trackEvent('checkout_complete', { orderId: orderResult.orderId });
       await trackEvent('order_placed', { orderId: orderResult.orderId });
@@ -271,8 +325,60 @@ export const CheckoutScreen: React.FC = () => {
     } catch (error: any) {
       await recordGuardedFailure('order_place');
       const message = error?.message || 'Unable to place order.';
+
+      await saveCheckoutRecovery({
+        restaurantId: restaurantId,
+        restaurantName: cartItems[0]?.restaurantName || null,
+        cartItems: cartItems.map(item => ({
+          item: item.item,
+          restaurantId: item.restaurantId,
+          restaurantName: item.restaurantName,
+          quantity: item.quantity,
+          customizations: item.customizations,
+        })),
+        addressId: selectedAddress,
+        paymentMethod: selectedPayment,
+        quoteDetails: {
+          subtotal: cartTotal,
+          packagingFee: 0,
+          taxes: 0,
+          deliveryFee: deliveryFee,
+          total: finalTotal,
+        },
+        pendingOrderId: null,
+        lastUpdated: Date.now(),
+      });
+
       setPlacingError(message);
-      Alert.alert('Checkout Failed', message);
+      Alert.alert(
+        'Checkout Failed',
+        message,
+        [
+          {
+            text: 'Contact Support',
+            onPress: () => {
+              const supportUrl =
+                'mailto:support@foodiego.com?subject=Checkout Issue&body=Hi, I need help with my order. Issue: ' +
+                encodeURIComponent(message);
+              Linking.canOpenURL(supportUrl).then(supported => {
+                if (supported) {
+                  Linking.openURL(supportUrl);
+                } else {
+                  Alert.alert(
+                    'Support',
+                    'Email: support@foodiego.com\nPhone: +1800-123-4567',
+                  );
+                }
+              });
+            },
+          },
+          {
+            text: 'Try Again',
+            style: 'cancel',
+          },
+        ],
+        { cancelable: true },
+      );
     } finally {
       setLoading(false);
     }
@@ -305,12 +411,18 @@ export const CheckoutScreen: React.FC = () => {
   const handleSimulateE2EOrder = async () => {
     const fakeOrderId = `E2E-${Date.now()}`;
     dispatch(clearCart());
-    await trackEvent('checkout_complete', { orderId: fakeOrderId, mode: 'e2e-simulated' });
+    await trackEvent('checkout_complete', {
+      orderId: fakeOrderId,
+      mode: 'e2e-simulated',
+    });
     navigation.replace('OrderConfirmed', { orderId: fakeOrderId });
   };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]} testID="checkout-screen">
+    <View
+      style={[styles.container, { paddingTop: insets.top }]}
+      testID="checkout-screen"
+    >
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={styles.backIcon}>←</Text>
@@ -322,7 +434,7 @@ export const CheckoutScreen: React.FC = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Delivery Address</Text>
-          {addresses.map((addr) => (
+          {addresses.map(addr => (
             <TouchableOpacity
               key={addr.id}
               style={[
@@ -333,7 +445,9 @@ export const CheckoutScreen: React.FC = () => {
             >
               <View style={styles.addressHeader}>
                 <View style={styles.radioOuter}>
-                  {selectedAddress === addr.id && <View style={styles.radioInner} />}
+                  {selectedAddress === addr.id && (
+                    <View style={styles.radioInner} />
+                  )}
                 </View>
                 <Text style={styles.addressLabel}>{addr.label}</Text>
               </View>
@@ -369,7 +483,9 @@ export const CheckoutScreen: React.FC = () => {
           </View>
           {couponCode && (
             <View style={styles.appliedCoupon}>
-              <Text style={styles.appliedCouponText}>✓ {couponCode} applied</Text>
+              <Text style={styles.appliedCouponText}>
+                ✓ {couponCode} applied
+              </Text>
               <Text style={styles.appliedDiscount}>-₹{couponDiscount}</Text>
             </View>
           )}
@@ -377,7 +493,7 @@ export const CheckoutScreen: React.FC = () => {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Payment Method</Text>
-          {paymentMethods.map((method) => (
+          {paymentMethods.map(method => (
             <TouchableOpacity
               key={method.id}
               style={[
@@ -388,7 +504,9 @@ export const CheckoutScreen: React.FC = () => {
             >
               <View style={styles.paymentHeader}>
                 <View style={styles.radioOuter}>
-                  {selectedPayment === method.id && <View style={styles.radioInner} />}
+                  {selectedPayment === method.id && (
+                    <View style={styles.radioInner} />
+                  )}
                 </View>
                 <Text style={styles.paymentIcon}>{method.icon}</Text>
                 <View style={styles.paymentInfo}>
@@ -408,10 +526,17 @@ export const CheckoutScreen: React.FC = () => {
             <Text style={styles.scheduleIcon}>📅</Text>
             <View style={styles.scheduleInfo}>
               <Text style={styles.scheduleTitle}>Schedule Order</Text>
-              <Text style={styles.scheduleSubtitle}>Deliver at a specific time</Text>
+              <Text style={styles.scheduleSubtitle}>
+                Deliver at a specific time
+              </Text>
             </View>
             <View style={[styles.toggle, scheduleOrder && styles.toggleActive]}>
-              <View style={[styles.toggleThumb, scheduleOrder && styles.toggleThumbActive]} />
+              <View
+                style={[
+                  styles.toggleThumb,
+                  scheduleOrder && styles.toggleThumbActive,
+                ]}
+              />
             </View>
           </TouchableOpacity>
         </View>
@@ -420,7 +545,7 @@ export const CheckoutScreen: React.FC = () => {
           <Text style={styles.sectionTitle}>Order Summary</Text>
           {placingError && <Text style={styles.errorText}>{placingError}</Text>}
           <View style={styles.summaryCard}>
-            {cartItems.map((item) => (
+            {cartItems.map(item => (
               <View key={item.id} style={styles.summaryItem}>
                 <Text style={styles.summaryItemName}>
                   {item.quantity}x {item.item.name}
@@ -458,7 +583,9 @@ export const CheckoutScreen: React.FC = () => {
         <View style={styles.bottomSpacer} />
       </ScrollView>
 
-      <View style={[styles.footer, { paddingBottom: insets.bottom + spacing.md }]}>
+      <View
+        style={[styles.footer, { paddingBottom: insets.bottom + spacing.md }]}
+      >
         <View style={styles.footerTotal}>
           <Text style={styles.footerTotalLabel}>Total</Text>
           <Text style={styles.footerTotalValue}>₹{finalTotal}</Text>
@@ -472,7 +599,12 @@ export const CheckoutScreen: React.FC = () => {
         />
       </View>
       {isDevE2EAssist && (
-        <View style={[styles.devE2EBar, { paddingBottom: insets.bottom + spacing.xs }]}>
+        <View
+          style={[
+            styles.devE2EBar,
+            { paddingBottom: insets.bottom + spacing.xs },
+          ]}
+        >
           <Button
             title="Simulate E2E Success"
             onPress={handleSimulateE2EOrder}
@@ -771,5 +903,7 @@ const styles = StyleSheet.create({
   devE2EButton: {
     width: '100%',
   },
+  bottomSpacer: {
+    height: 40,
+  },
 });
-

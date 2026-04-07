@@ -104,7 +104,9 @@ class LocationService {
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=YOUR_GOOGLE_API_KEY`,
       );
-      const data = await response.json();
+      const data = (await response.json()) as {
+        results?: Array<{ formatted_address?: string }>;
+      };
       if (data.results && data.results.length > 0) {
         location.address = data.results[0].formatted_address;
       }
@@ -120,7 +122,12 @@ class LocationService {
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=YOUR_GOOGLE_API_KEY`,
       );
-      const data = await response.json();
+      const data = (await response.json()) as {
+        results?: Array<{
+          geometry: { location: { lat: number; lng: number } };
+          formatted_address?: string;
+        }>;
+      };
       if (data.results && data.results.length > 0) {
         const result = data.results[0];
         return {

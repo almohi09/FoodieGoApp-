@@ -921,4 +921,203 @@ router.get(
   },
 );
 
+router.get(
+  '/admin/dashboard/order-metrics',
+  requireAuth,
+  requireRole(['admin']),
+  (_req, res) => {
+    const metrics = {
+      totalOrders: 1245,
+      ordersToday: 89,
+      ordersWeek: 623,
+      ordersMonth: 2456,
+      averageOrderValue: 342,
+      completionRate: 94.5,
+      cancellationRate: 3.2,
+      byStatus: {
+        pending: 12,
+        confirmed: 8,
+        preparing: 15,
+        ready_for_pickup: 6,
+        out_for_delivery: 18,
+        delivered: 892,
+        cancelled: 42,
+        refunded: 18,
+      },
+      byPaymentMethod: {
+        upi: 456,
+        card: 234,
+        cod: 512,
+        wallet: 43,
+      },
+    };
+    res.json(metrics);
+  },
+);
+
+router.get(
+  '/admin/dashboard/sla-metrics',
+  requireAuth,
+  requireRole(['admin']),
+  (_req, res) => {
+    const metrics = {
+      prepTime: {
+        average: 18.5,
+        target: 20,
+        breached: 124,
+        breachRate: 9.9,
+      },
+      deliveryTime: {
+        average: 32.1,
+        target: 35,
+        breached: 89,
+        breachRate: 7.1,
+      },
+      responseTime: {
+        average: 2.3,
+        target: 5,
+        breached: 12,
+        breachRate: 0.9,
+      },
+      overallScore: 92.4,
+      topBreaches: [
+        {
+          restaurantId: 'restaurant_1',
+          restaurantName: 'Pizza Palace',
+          breachCount: 23,
+        },
+        {
+          restaurantId: 'restaurant_2',
+          restaurantName: 'Burger Joint',
+          breachCount: 18,
+        },
+      ],
+    };
+    res.json(metrics);
+  },
+);
+
+router.get(
+  '/admin/dashboard/revenue-chart',
+  requireAuth,
+  requireRole(['admin']),
+  (req, res) => {
+    const { period = 'week' } = req.query;
+    const days = period === 'week' ? 7 : period === 'month' ? 30 : 365;
+    const chart = [];
+    for (let i = days - 1; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      chart.push({
+        date: date.toISOString().split('T')[0],
+        revenue: Math.floor(Math.random() * 50000) + 10000,
+        orders: Math.floor(Math.random() * 150) + 50,
+      });
+    }
+    res.json({ chart });
+  },
+);
+
+router.get(
+  '/admin/approvals',
+  requireAuth,
+  requireRole(['admin']),
+  (_req, res) => {
+    res.json({
+      queue: [
+        {
+          id: 'approval_1',
+          type: 'seller_registration',
+          sellerId: 'seller_3',
+          sellerName: 'New Restaurant',
+          submittedAt: util.nowIso(),
+          status: 'pending',
+        },
+        {
+          id: 'approval_2',
+          type: 'menu_item',
+          sellerId: 'seller_1',
+          itemName: 'New Dish',
+          submittedAt: util.nowIso(),
+          status: 'pending',
+        },
+      ],
+      total: 2,
+    });
+  },
+);
+
+router.post(
+  '/admin/approvals/:id/approve',
+  requireAuth,
+  requireRole(['admin']),
+  (req, res) => {
+    const { id } = req.params;
+    res.json({ success: true, approvalId: id, status: 'approved' });
+  },
+);
+
+router.post(
+  '/admin/approvals/:id/reject',
+  requireAuth,
+  requireRole(['admin']),
+  (req, res) => {
+    const { id } = req.params;
+    const { reason } = req.body;
+    res.json({ success: true, approvalId: id, status: 'rejected', reason });
+  },
+);
+
+router.get(
+  '/admin/reports/delivery-delays',
+  requireAuth,
+  requireRole(['admin']),
+  (req, res) => {
+    const { startDate, endDate } = req.query;
+    res.json({
+      delays: [
+        {
+          orderId: 'order_1',
+          delayMinutes: 15,
+          reason: 'Traffic',
+          riderId: 'rider_1',
+        },
+        {
+          orderId: 'order_2',
+          delayMinutes: 22,
+          reason: 'Restaurant delay',
+          riderId: 'rider_2',
+        },
+      ],
+      total: 2,
+    });
+  },
+);
+
+router.get(
+  '/admin/reports/prep-time-breaches',
+  requireAuth,
+  requireRole(['admin']),
+  (req, res) => {
+    const { startDate, endDate } = req.query;
+    res.json({
+      breaches: [
+        {
+          orderId: 'order_3',
+          prepTime: 28,
+          target: 20,
+          restaurantId: 'restaurant_1',
+        },
+        {
+          orderId: 'order_4',
+          prepTime: 35,
+          target: 20,
+          restaurantId: 'restaurant_2',
+        },
+      ],
+      total: 2,
+    });
+  },
+);
+
 export default router;

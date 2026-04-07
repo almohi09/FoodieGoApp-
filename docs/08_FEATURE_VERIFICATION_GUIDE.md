@@ -15,6 +15,20 @@ npm run start
 npm run android
 ```
 
+Windows note:
+- If Android build fails with `Filename longer than 260 characters`, build/install from short junction path:
+```powershell
+New-Item -ItemType Junction -Path C:\fg -Target C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp
+cd C:\fg\android
+.\gradlew clean
+.\gradlew app:installDebug
+```
+- Then run:
+```powershell
+adb reverse tcp:8081 tcp:8081
+npx react-native run-android --port 8081
+```
+
 ## 2) Customer flow verification
 
 1. Open app -> Splash -> Onboarding -> Login options.
@@ -160,3 +174,9 @@ Current known status:
 - Unit tests: passing.
 - Jest smoke E2E: implemented and passing.
 - Detox Android emulator smoke: implemented (onboarding->guest->home->restaurant->cart->checkout->confirm->tracking).
+
+Latest rerun from this workspace (April 7, 2026):
+- `npm run lint` -> PASS (0 errors, warnings only)
+- `npm test -- --runInBand --watchAll=false --forceExit` -> PASS
+- `npm run test:e2e:smoke` -> PASS
+- `cd backend && npm run release:gate:strict` -> PASS

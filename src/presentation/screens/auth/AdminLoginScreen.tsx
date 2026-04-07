@@ -70,6 +70,7 @@ export const AdminLoginScreen: React.FC = () => {
     <KeyboardAvoidingView
       style={[styles.container, { backgroundColor: colors.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      testID="admin-login-screen"
     >
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -124,6 +125,7 @@ export const AdminLoginScreen: React.FC = () => {
                 placeholderTextColor={colors.textTertiary}
                 keyboardType="email-address"
                 autoCapitalize="none"
+                testID="admin-login-email-input"
               />
             </View>
 
@@ -150,6 +152,7 @@ export const AdminLoginScreen: React.FC = () => {
                   placeholder="Enter your password"
                   placeholderTextColor={colors.textTertiary}
                   secureTextEntry={!showPassword}
+                  testID="admin-login-password-input"
                 />
                 <TouchableOpacity
                   onPress={() => setShowPassword(!showPassword)}
@@ -184,6 +187,7 @@ export const AdminLoginScreen: React.FC = () => {
             loading={loading}
             disabled={!email || !password}
             style={styles.button}
+            testID="admin-login-submit-button"
           />
 
           <View style={styles.securityNote}>

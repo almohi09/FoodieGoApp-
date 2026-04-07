@@ -45,6 +45,27 @@ npm run start:wifi
 npm run android
 ```
 
+### Windows Android Build (Recommended Stable Flow)
+
+If your project path is long, Android New Architecture C++ build can fail on Windows with
+`Filename longer than 260 characters`.
+
+Use a short junction path before building:
+
+```powershell
+New-Item -ItemType Junction -Path C:\fg -Target C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp
+cd C:\fg\android
+.\gradlew clean
+.\gradlew app:installDebug
+```
+
+Then run Metro + app from project root:
+
+```powershell
+adb reverse tcp:8081 tcp:8081
+npx react-native run-android --port 8081
+```
+
 ### Build APK
 
 ```bash

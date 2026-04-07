@@ -12,13 +12,25 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '../../../context/ThemeContext';
 import {
   riderService,
   RiderOrder,
   RiderStats,
 } from '../../../data/api/riderService';
+import {
+  riderAuthStore,
+  RiderProfile,
+} from '../../../data/stores/riderAuthStore';
+import { riderLocationService } from '../../../data/services/riderLocationService';
+import {
+  riderNotificationService,
+  NewOrderNotification,
+} from '../../../data/services/riderNotificationService';
+import {
+  riderWebSocketService,
+  OrderAssignment,
+} from '../../../data/services/riderWebSocketService';
 
 type RiderDashboardNavigationProp = NativeStackNavigationProp<any>;
 
@@ -50,16 +62,33 @@ export const RiderDashboardScreen: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [isOnline, setIsOnline] = useState(false);
+  const [wsConnected, setWsConnected] = useState(false);
   const [stats, setStats] = useState<RiderStats | null>(null);
   const [assignedOrders, setAssignedOrders] = useState<RiderOrder[]>([]);
   const [activeOrder, setActiveOrder] = useState<RiderOrder | null>(null);
+  const [riderProfile, setRiderProfile] = useState<RiderProfile | null>(null);
+  const [unreadNotifications, setUnreadNotifications] = useState(0);
+  const [newOrderAlert, setNewOrderAlert] =
+    useState<NewOrderNotification | null>(null);
+  const [realtimeOrder, setRealtimeOrder] = useState<OrderAssignment | null>(
+    null,
+  );
 
   const loadData = useCallback(async () => {
     try {
-      const [statsResult, ordersResult] = await Promise.all([
+      const [profileResult, statsResult, ordersResult] = await Promise.all([
+        riderAuthStore.getProfile(),
         riderService.getStats(),
         riderService.getAssignedOrders(),
       ]);
+
+      if (profileResult) {
+        setRiderProfile(profileResult);
+        setIsOnline(profileResult.isOnline);
+        if (profileResult.isOnline) {
+          riderLocationService.startTracking();
+        }
+      }
 
       if (statsResult.success && statsResult.stats) {
         setStats(statsResult.stats);
@@ -81,7 +110,82 @@ export const RiderDashboardScreen: React.FC = () => {
 
   useEffect(() => {
     loadData();
+    let cleanupNotifications: (() => void) | undefined;
+    let cleanupWs: (() => void) | undefined;
+
+    const initServices = async () => {
+      await riderNotificationService.initialize();
+      setUnreadNotifications(riderNotificationService.getUnreadCount());
+
+      const unsubscribe = riderNotificationService.addNotificationListener(
+        notification => {
+          if (!notification.read) {
+            setUnreadNotifications(prev => prev + 1);
+          }
+        },
+      );
+
+      const unsubscribeNewOrder = riderNotificationService.addNewOrderListener(
+        order => {
+          setNewOrderAlert(order);
+          setUnreadNotifications(prev => prev + 1);
+          loadData();
+        },
+      );
+
+      cleanupNotifications = () => {
+        unsubscribe();
+        unsubscribeNewOrder();
+      };
+
+      if (riderWebSocketService.isConnected()) {
+        setWsConnected(true);
+      } else {
+        await riderWebSocketService.connect();
+      }
+
+      const unsubscribeWsConnection =
+        riderWebSocketService.addConnectionListener(connected => {
+          setWsConnected(connected);
+        });
+
+      const unsubscribeWsOrder = riderWebSocketService.addOrderListener(
+        order => {
+          setRealtimeOrder(order);
+          setNewOrderAlert({
+            orderId: order.orderId,
+            restaurantName: order.restaurantName,
+            restaurantAddress: order.restaurantAddress,
+            customerAddress: order.customerAddress,
+            deliveryFee: order.deliveryFee,
+            distance: order.distance,
+            estimatedEarnings: order.deliveryFee,
+          });
+          loadData();
+        },
+      );
+
+      cleanupWs = () => {
+        unsubscribeWsConnection();
+        unsubscribeWsOrder();
+      };
+    };
+
+    initServices().catch(console.warn);
+
+    return () => {
+      cleanupNotifications?.();
+      cleanupWs?.();
+    };
   }, [loadData]);
+
+  useEffect(() => {
+    if (isOnline) {
+      riderWebSocketService.connect();
+    } else {
+      riderWebSocketService.disconnect();
+    }
+  }, [isOnline]);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -90,9 +194,20 @@ export const RiderDashboardScreen: React.FC = () => {
 
   const handleToggleOnline = async () => {
     try {
-      const result = await riderService.setOnlineStatus(!isOnline);
+      const newStatus = !isOnline;
+      const result = await riderService.setOnlineStatus(newStatus);
       if (result.success) {
-        setIsOnline(!isOnline);
+        setIsOnline(newStatus);
+        if (riderProfile) {
+          const updatedProfile = { ...riderProfile, isOnline: newStatus };
+          setRiderProfile(updatedProfile);
+          await riderAuthStore.updateOnlineStatus(newStatus);
+        }
+        if (newStatus) {
+          riderLocationService.startTracking();
+        } else {
+          riderLocationService.stopTracking();
+        }
       } else {
         Alert.alert('Error', result.error || 'Failed to update status');
       }
@@ -108,8 +223,11 @@ export const RiderDashboardScreen: React.FC = () => {
         text: 'Logout',
         style: 'destructive',
         onPress: async () => {
-          await AsyncStorage.removeItem('rider_token');
-          await AsyncStorage.removeItem('rider_refresh_token');
+          if (isOnline) {
+            await riderService.setOnlineStatus(false);
+            riderLocationService.stopTracking();
+          }
+          await riderAuthStore.clearSession();
           navigation.reset({
             index: 0,
             routes: [{ name: 'Splash' }],
@@ -141,7 +259,10 @@ export const RiderDashboardScreen: React.FC = () => {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <View
+      style={[styles.container, { backgroundColor: colors.background }]}
+      testID="rider-dashboard-screen"
+    >
       <ScrollView
         contentContainerStyle={[
           styles.scrollContent,
@@ -162,13 +283,58 @@ export const RiderDashboardScreen: React.FC = () => {
               Welcome back,
             </Text>
             <Text style={[styles.name, { color: colors.textPrimary }]}>
-              Rider
+              {riderProfile?.name || 'Rider'}
             </Text>
           </View>
-          <TouchableOpacity onPress={handleLogout} style={styles.profileButton}>
-            <Text style={styles.profileIcon}>👤</Text>
-          </TouchableOpacity>
+          <View style={styles.headerButtons}>
+            <TouchableOpacity style={styles.notificationButton}>
+              <Text style={styles.notificationIcon}>🔔</Text>
+              {unreadNotifications > 0 && (
+                <View
+                  style={[
+                    styles.notificationBadge,
+                    { backgroundColor: colors.error },
+                  ]}
+                >
+                  <Text style={styles.notificationBadgeText}>
+                    {unreadNotifications > 9 ? '9+' : unreadNotifications}
+                  </Text>
+                </View>
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={handleLogout}
+              style={styles.profileButton}
+            >
+              <Text style={styles.profileIcon}>👤</Text>
+            </TouchableOpacity>
+          </View>
         </View>
+
+        {/* New Order Alert */}
+        {newOrderAlert && (
+          <TouchableOpacity
+            style={[styles.newOrderAlert, { backgroundColor: colors.primary }]}
+            onPress={() => {
+              setNewOrderAlert(null);
+              loadData();
+            }}
+          >
+            <Text style={styles.newOrderIcon}>🆕</Text>
+            <View style={styles.newOrderInfo}>
+              <Text style={styles.newOrderTitle}>New Order!</Text>
+              <Text style={styles.newOrderSubtitle}>
+                {newOrderAlert.restaurantName} - ₹{newOrderAlert.deliveryFee}
+              </Text>
+            </View>
+            <TouchableOpacity
+              style={styles.newOrderClose}
+              onPress={() => setNewOrderAlert(null)}
+            >
+              <Text style={styles.newOrderCloseText}>✕</Text>
+            </TouchableOpacity>
+          </TouchableOpacity>
+        )}
 
         {/* Online/Offline Toggle */}
         <View style={[styles.statusCard, { backgroundColor: colors.surface }]}>
@@ -190,6 +356,23 @@ export const RiderDashboardScreen: React.FC = () => {
               <Text style={[styles.statusText, { color: colors.textPrimary }]}>
                 {isOnline ? 'Online' : 'Offline'}
               </Text>
+              {isOnline && (
+                <View style={styles.wsIndicator}>
+                  <View
+                    style={[
+                      styles.wsDot,
+                      {
+                        backgroundColor: wsConnected
+                          ? colors.success
+                          : colors.error,
+                      },
+                    ]}
+                  />
+                  <Text style={[styles.wsText, { color: colors.textTertiary }]}>
+                    {wsConnected ? 'Live' : 'Reconnecting...'}
+                  </Text>
+                </View>
+              )}
             </View>
           </View>
           <TouchableOpacity
@@ -198,12 +381,118 @@ export const RiderDashboardScreen: React.FC = () => {
               { backgroundColor: isOnline ? colors.error : colors.success },
             ]}
             onPress={handleToggleOnline}
+            testID="rider-online-toggle"
           >
             <Text style={styles.toggleButtonText}>
               {isOnline ? 'Go Offline' : 'Go Online'}
             </Text>
           </TouchableOpacity>
         </View>
+
+        {/* Realtime Order Alert */}
+        {realtimeOrder && (
+          <View
+            style={[
+              styles.realtimeOrderCard,
+              { backgroundColor: colors.surface },
+            ]}
+          >
+            <View style={styles.realtimeOrderHeader}>
+              <Text style={styles.realtimeOrderIcon}>🔔</Text>
+              <Text
+                style={[
+                  styles.realtimeOrderTitle,
+                  { color: colors.textPrimary },
+                ]}
+              >
+                New Order Received!
+              </Text>
+            </View>
+            <View style={styles.realtimeOrderDetails}>
+              <Text
+                style={[
+                  styles.realtimeOrderRestaurant,
+                  { color: colors.textPrimary },
+                ]}
+              >
+                {realtimeOrder.restaurantName}
+              </Text>
+              <Text
+                style={[
+                  styles.realtimeOrderAddress,
+                  { color: colors.textSecondary },
+                ]}
+              >
+                {realtimeOrder.restaurantAddress}
+              </Text>
+              <View style={styles.realtimeOrderMeta}>
+                <Text
+                  style={[styles.realtimeOrderFee, { color: colors.success }]}
+                >
+                  ₹{realtimeOrder.deliveryFee}
+                </Text>
+                <Text
+                  style={[
+                    styles.realtimeOrderDistance,
+                    { color: colors.textTertiary },
+                  ]}
+                >
+                  {realtimeOrder.distance.toFixed(1)} km
+                </Text>
+              </View>
+            </View>
+            <View style={styles.realtimeOrderActions}>
+              <TouchableOpacity
+                style={[
+                  styles.acceptOrderButton,
+                  { backgroundColor: colors.success },
+                ]}
+                onPress={async () => {
+                  const result =
+                    await riderWebSocketService.acceptOrderFromWebSocket(
+                      realtimeOrder.orderId,
+                    );
+                  if (result.success) {
+                    setRealtimeOrder(null);
+                    loadData();
+                  } else {
+                    Alert.alert(
+                      'Error',
+                      result.error || 'Failed to accept order',
+                    );
+                  }
+                }}
+              >
+                <Text style={styles.acceptOrderButtonText}>Accept</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.rejectOrderButton,
+                  { borderColor: colors.error },
+                ]}
+                onPress={async () => {
+                  const result =
+                    await riderWebSocketService.rejectOrderFromWebSocket(
+                      realtimeOrder.orderId,
+                      'Too far',
+                    );
+                  if (result.success) {
+                    setRealtimeOrder(null);
+                  }
+                }}
+              >
+                <Text
+                  style={[
+                    styles.rejectOrderButtonText,
+                    { color: colors.error },
+                  ]}
+                >
+                  Reject
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
 
         {/* Active Order Banner */}
         {activeOrder && (
@@ -438,6 +727,74 @@ const styles = StyleSheet.create({
   profileIcon: {
     fontSize: 24,
   },
+  headerButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  notificationButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#f0f0f0',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  notificationIcon: {
+    fontSize: 24,
+  },
+  notificationBadge: {
+    position: 'absolute',
+    top: -4,
+    right: -4,
+    minWidth: 20,
+    height: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 4,
+  },
+  notificationBadgeText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  newOrderAlert: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    borderRadius: 12,
+    marginBottom: 16,
+  },
+  newOrderIcon: {
+    fontSize: 28,
+    marginRight: 12,
+  },
+  newOrderInfo: {
+    flex: 1,
+  },
+  newOrderTitle: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  newOrderSubtitle: {
+    color: 'rgba(255,255,255,0.9)',
+    fontSize: 14,
+  },
+  newOrderClose: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  newOrderCloseText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   statusCard: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -463,6 +820,94 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontSize: 18,
+    fontWeight: '600',
+  },
+  wsIndicator: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 12,
+  },
+  wsDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginRight: 4,
+  },
+  wsText: {
+    fontSize: 12,
+  },
+  realtimeOrderCard: {
+    borderRadius: 16,
+    marginBottom: 16,
+    borderWidth: 2,
+    borderColor: '#FF6B00',
+    overflow: 'hidden',
+  },
+  realtimeOrderHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FF6B00',
+    padding: 12,
+  },
+  realtimeOrderIcon: {
+    fontSize: 20,
+    marginRight: 8,
+  },
+  realtimeOrderTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  realtimeOrderDetails: {
+    padding: 16,
+  },
+  realtimeOrderRestaurant: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  realtimeOrderAddress: {
+    fontSize: 14,
+    marginBottom: 12,
+  },
+  realtimeOrderMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  realtimeOrderFee: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  realtimeOrderDistance: {
+    fontSize: 14,
+  },
+  realtimeOrderActions: {
+    flexDirection: 'row',
+    padding: 12,
+    paddingTop: 0,
+  },
+  acceptOrderButton: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginRight: 8,
+  },
+  acceptOrderButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  rejectOrderButton: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    borderWidth: 1,
+  },
+  rejectOrderButtonText: {
+    fontSize: 16,
     fontWeight: '600',
   },
   toggleButton: {

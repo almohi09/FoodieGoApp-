@@ -41,6 +41,7 @@ export const LoginOptionsScreen: React.FC = () => {
     <KeyboardAvoidingView
       style={[styles.container, { backgroundColor: colors.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      testID="login-options-screen"
     >
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -48,23 +49,59 @@ export const LoginOptionsScreen: React.FC = () => {
       >
         <View style={[styles.content, { paddingTop: insets.top + 18 }]}>
           <View style={styles.hero}>
-            <Text style={[styles.brand, { color: colors.textPrimary }]}>FoodieGo</Text>
-            <Text style={[styles.heroTitle, { color: colors.textPrimary }]}>Order food in minutes</Text>
-            <Text style={[styles.heroSubtitle, { color: colors.textSecondary }]}>Choose your role and continue</Text>
+            <Text style={[styles.brand, { color: colors.textPrimary }]}>
+              FoodieGo
+            </Text>
+            <Text style={[styles.heroTitle, { color: colors.textPrimary }]}>
+              Order food in minutes
+            </Text>
+            <Text
+              style={[styles.heroSubtitle, { color: colors.textSecondary }]}
+            >
+              Choose your role and continue
+            </Text>
           </View>
 
-          <View style={[styles.card, { backgroundColor: colors.surface }]}> 
-            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>User Login</Text>
-            <Text style={[styles.cardSubtitle, { color: colors.textSecondary }]}>Continue with phone OTP</Text>
+          <View style={[styles.card, { backgroundColor: colors.surface }]}>
+            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>
+              User Login
+            </Text>
+            <Text
+              style={[styles.cardSubtitle, { color: colors.textSecondary }]}
+            >
+              Continue with phone OTP
+            </Text>
 
-            <View style={[styles.inputContainer, { backgroundColor: colors.surfaceSecondary, borderColor: colors.border }]}> 
-              <View style={[styles.countryCode, { borderRightColor: colors.border }]}>
-                <Text style={[styles.countryCodeText, { color: colors.textPrimary }]}>+91</Text>
+            <View
+              style={[
+                styles.inputContainer,
+                {
+                  backgroundColor: colors.surfaceSecondary,
+                  borderColor: colors.border,
+                },
+              ]}
+            >
+              <View
+                style={[
+                  styles.countryCode,
+                  { borderRightColor: colors.border },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.countryCodeText,
+                    { color: colors.textPrimary },
+                  ]}
+                >
+                  +91
+                </Text>
               </View>
               <TextInput
                 style={[styles.phoneInput, { color: colors.textPrimary }]}
                 value={phone}
-                onChangeText={(text) => setPhone(text.replace(/[^0-9]/g, '').slice(0, 10))}
+                onChangeText={text =>
+                  setPhone(text.replace(/[^0-9]/g, '').slice(0, 10))
+                }
                 placeholder="Phone number"
                 placeholderTextColor={colors.textTertiary}
                 keyboardType="phone-pad"
@@ -73,7 +110,10 @@ export const LoginOptionsScreen: React.FC = () => {
             </View>
 
             <TouchableOpacity
-              style={[styles.primaryButton, { backgroundColor: colors.primary }]}
+              style={[
+                styles.primaryButton,
+                { backgroundColor: colors.primary },
+              ]}
               onPress={handleSendOTP}
             >
               <Text style={styles.primaryButtonText}>Continue with OTP</Text>
@@ -83,40 +123,110 @@ export const LoginOptionsScreen: React.FC = () => {
               style={[styles.secondaryButton, { borderColor: colors.border }]}
               onPress={() => navigation.navigate('PhoneEntry')}
             >
-              <Text style={[styles.secondaryButtonText, { color: colors.textPrimary }]}>Open User Login Screen</Text>
+              <Text
+                style={[
+                  styles.secondaryButtonText,
+                  { color: colors.textPrimary },
+                ]}
+              >
+                Open User Login Screen
+              </Text>
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.card, { backgroundColor: colors.surface }]}> 
-            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>Restaurant Partner</Text>
-            <Text style={[styles.cardSubtitle, { color: colors.textSecondary }]}>Login or register as seller</Text>
+          <View style={[styles.card, { backgroundColor: colors.surface }]}>
+            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>
+              Restaurant Partner
+            </Text>
+            <Text
+              style={[styles.cardSubtitle, { color: colors.textSecondary }]}
+            >
+              Login or register as seller
+            </Text>
 
             <View style={styles.rowButtons}>
               <TouchableOpacity
-                style={[styles.halfButton, { backgroundColor: colors.surfaceSecondary }]}
+                style={[
+                  styles.halfButton,
+                  { backgroundColor: colors.surfaceSecondary },
+                ]}
                 onPress={() => navigation.navigate('SellerLogin')}
+                testID="login-options-seller-button"
               >
-                <Text style={[styles.halfButtonText, { color: colors.textPrimary }]}>Seller Login</Text>
+                <Text
+                  style={[styles.halfButtonText, { color: colors.textPrimary }]}
+                >
+                  Seller Login
+                </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={[styles.halfButton, { backgroundColor: colors.surfaceSecondary }]}
-                onPress={() => navigation.navigate('SellerRegister', { phone: '' })}
+                style={[
+                  styles.halfButton,
+                  { backgroundColor: colors.surfaceSecondary },
+                ]}
+                onPress={() =>
+                  navigation.navigate('SellerRegister', { phone: '' })
+                }
               >
-                <Text style={[styles.halfButtonText, { color: colors.textPrimary }]}>Register</Text>
+                <Text
+                  style={[styles.halfButtonText, { color: colors.textPrimary }]}
+                >
+                  Register
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
 
-          <View style={[styles.card, { backgroundColor: colors.surface }]}> 
-            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>Admin</Text>
-            <Text style={[styles.cardSubtitle, { color: colors.textSecondary }]}>Platform management portal</Text>
+          <View style={[styles.card, { backgroundColor: colors.surface }]}>
+            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>
+              Admin
+            </Text>
+            <Text
+              style={[styles.cardSubtitle, { color: colors.textSecondary }]}
+            >
+              Platform management portal
+            </Text>
 
             <TouchableOpacity
               style={[styles.secondaryButton, { borderColor: colors.border }]}
               onPress={() => navigation.navigate('AdminLogin')}
+              testID="login-options-admin-button"
             >
-              <Text style={[styles.secondaryButtonText, { color: colors.textPrimary }]}>Admin Login</Text>
+              <Text
+                style={[
+                  styles.secondaryButtonText,
+                  { color: colors.textPrimary },
+                ]}
+              >
+                Admin Login
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={[styles.card, { backgroundColor: colors.surface }]}>
+            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>
+              Delivery Partner
+            </Text>
+            <Text
+              style={[styles.cardSubtitle, { color: colors.textSecondary }]}
+            >
+              Deliver orders and earn money
+            </Text>
+
+            <TouchableOpacity
+              style={[styles.secondaryButton, { borderColor: colors.border }]}
+              onPress={() => navigation.navigate('RiderLogin')}
+              testID="login-options-rider-button"
+            >
+              <Text
+                style={[
+                  styles.secondaryButtonText,
+                  { color: colors.textPrimary },
+                ]}
+              >
+                Rider Login
+              </Text>
             </TouchableOpacity>
           </View>
 
@@ -125,7 +235,9 @@ export const LoginOptionsScreen: React.FC = () => {
             onPress={() => navigation.navigate('MainTabs')}
             testID="login-continue-guest"
           >
-            <Text style={[styles.guestText, { color: colors.textSecondary }]}>Continue as Guest</Text>
+            <Text style={[styles.guestText, { color: colors.textSecondary }]}>
+              Continue as Guest
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -254,4 +366,3 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-

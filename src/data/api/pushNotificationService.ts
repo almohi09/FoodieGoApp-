@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { OrderStatus } from '../../domain/types';
+import { OrderStatus } from '../../domain/types';
+
 import appEnv from '../../config/env';
 
 const API_BASE_URL = appEnv.apiBaseUrl;
@@ -66,11 +67,14 @@ class PushNotificationService {
           body: JSON.stringify({ userId, token }),
         },
       );
-      const data = await response.json();
+      const data = (await response.json()) as {
+        success?: boolean;
+        error?: string;
+      };
       if (data.success) {
         await this.setToken(token);
       }
-      return data;
+      return { success: data.success ?? false, error: data.error };
     } catch {
       return {
         success: false,
@@ -241,4 +245,3 @@ class PushNotificationService {
 
 export const pushNotificationService = new PushNotificationService();
 export default pushNotificationService;
-

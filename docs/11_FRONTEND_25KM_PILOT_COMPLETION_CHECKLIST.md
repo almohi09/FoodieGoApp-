@@ -4,6 +4,12 @@ Date: April 7, 2026
 
 Purpose: Define what remains on the mobile frontend to be considered "frontend-complete" for a small controlled launch area (~25 km).
 
+Status note (April 7, 2026 end-of-day):
+- This checklist is historical baseline planning and is now superseded by:
+  - `docs/06_FRONTEND_IMPLEMENTATION_STATUS.md` (current implementation status)
+  - `docs/08_FEATURE_VERIFICATION_GUIDE.md` (latest verification results)
+- Latest gate reruns in this workspace passed for lint, unit tests, smoke e2e, and backend release gate.
+
 ---
 
 ## A) Auth and Session UX

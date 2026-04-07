@@ -62,7 +62,9 @@ export const RestaurantDetailScreen: React.FC = () => {
 
       if (menuResult.success && menuResult.menu) {
         setMenuItems(menuResult.menu);
-        const categories = [...new Set(menuResult.menu.map(item => item.category))];
+        const categories = [
+          ...new Set(menuResult.menu.map(item => item.category)),
+        ];
         setActiveCategory(categories[0] || null);
       }
 
@@ -557,6 +559,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#FFF',
   },
+  bottomSpacer: {
+    height: 40,
+  },
 });
-
-

@@ -4,6 +4,13 @@ Date: April 7, 2026
 
 This document maps frontend API service calls to backend endpoints for quick reference.
 
+## Build Status
+
+- Frontend TypeScript: **0 errors** ✅
+- Backend TypeScript: **0 errors** ✅
+- All critical flows wired
+- Verification rerun (April 7, 2026): `npm run lint`, `npm test -- --runInBand --watchAll=false --forceExit`, `npm run test:e2e:smoke`, and `cd backend && npm run release:gate:strict` are passing.
+
 ---
 
 ## Auth Endpoints
@@ -115,43 +122,67 @@ This document maps frontend API service calls to backend endpoints for quick ref
 | `sellerMenuService.updateItemStock()`            | `PATCH /api/v1/seller/restaurants/:id/menu/:id/stock`        | ✅ Implemented    |
 | `sellerMenuService.getLowStockItems()`           | `GET /api/v1/seller/restaurants/:id/low-stock`               | ✅ Implemented    |
 | `sellerEarningsService.getEarningsSummary()`     | `GET /api/v1/seller/restaurants/:id/earnings/summary`        | ✅ Implemented    |
-| `sellerEarningsService.getEarningsChart()`       | `GET /api/v1/seller/restaurants/:id/earnings/chart`          | ❌ NOT in backend |
-| `sellerEarningsService.getTransactions()`        | `GET /api/v1/seller/restaurants/:id/earnings/transactions`   | ❌ NOT in backend |
-| `sellerEarningsService.getPayouts()`             | `GET /api/v1/seller/restaurants/:id/payouts`                 | ❌ NOT in backend |
-| `sellerEarningsService.getBankDetails()`         | `GET /api/v1/seller/restaurants/:id/bank-details`            | ❌ NOT in backend |
-| `sellerEarningsService.updateBankDetails()`      | `PUT /api/v1/seller/restaurants/:id/bank-details`            | ❌ NOT in backend |
-| `sellerEarningsService.getCommissionBreakdown()` | `GET /api/v1/seller/restaurants/:id/commission`              | ❌ NOT in backend |
-| `sellerEarningsService.downloadInvoice()`        | `GET /api/v1/seller/restaurants/:id/invoice`                 | ❌ NOT in backend |
+| `sellerEarningsService.getEarningsChart()`       | `GET /api/v1/seller/restaurants/:id/earnings/chart`          | ✅ Implemented    |
+| `sellerEarningsService.getTransactions()`        | `GET /api/v1/seller/restaurants/:id/earnings/transactions`   | ✅ Implemented    |
+| `sellerEarningsService.getPayouts()`             | `GET /api/v1/seller/restaurants/:id/payouts`                 | ✅ Implemented    |
+| `sellerEarningsService.getBankDetails()`         | `GET /api/v1/seller/restaurants/:id/bank-details`            | ✅ Implemented    |
+| `sellerEarningsService.updateBankDetails()`      | `PUT /api/v1/seller/restaurants/:id/bank-details`            | ✅ Implemented    |
+| `sellerEarningsService.getCommissionBreakdown()` | `GET /api/v1/seller/restaurants/:id/commission`              | ✅ Implemented    |
+| `sellerEarningsService.downloadInvoice()`        | `GET /api/v1/seller/restaurants/:id/invoice`                 | ✅ Implemented    |
 
 ---
 
 ## Admin Endpoints
 
-| Frontend Method                             | Backend Endpoint                                | Status            |
-| ------------------------------------------- | ----------------------------------------------- | ----------------- |
-| `adminDashboardService.getDashboardStats()` | `GET /api/v1/admin/dashboard/stats`             | ✅ Implemented    |
-| `adminDashboardService.getOrderMetrics()`   | `GET /api/v1/admin/dashboard/order-metrics`     | ❌ NOT in backend |
-| `adminDashboardService.getSLAMetrics()`     | `GET /api/v1/admin/dashboard/sla-metrics`       | ❌ NOT in backend |
-| `adminDashboardService.getRevenueChart()`   | `GET /api/v1/admin/dashboard/revenue-chart`     | ❌ NOT in backend |
-| `adminDashboardService.getAlerts()`         | `GET /api/v1/admin/alerts`                      | ✅ Implemented    |
-| `adminUserService.getUsers()`               | `GET /api/v1/admin/users`                       | ✅ Implemented    |
-| `adminUserService.suspendUser()`            | `POST /api/v1/admin/users/:id/suspend`          | ✅ Implemented    |
-| `adminUserService.reactivateUser()`         | `POST /api/v1/admin/users/:id/reactivate`       | ✅ Implemented    |
-| `adminUserService.getSellers()`             | `GET /api/v1/admin/sellers`                     | ✅ Implemented    |
-| `adminUserService.suspendSeller()`          | `POST /api/v1/admin/sellers/:id/suspend`        | ✅ Implemented    |
-| `adminUserService.reactivateSeller()`       | `POST /api/v1/admin/sellers/:id/reactivate`     | ✅ Implemented    |
-| `adminModerationService.getReportedItems()` | `GET /api/v1/admin/reports`                     | ✅ Implemented    |
-| `adminModerationService.getApprovalQueue()` | `GET /api/v1/admin/approvals`                   | ❌ NOT in backend |
-| `adminPayoutService.getPayoutSummary()`     | `GET /api/v1/admin/payouts/summary`             | ✅ Implemented    |
-| `adminPayoutService.getPayoutQueue()`       | `GET /api/v1/admin/payouts`                     | ✅ Implemented    |
-| `adminPayoutService.markProcessing()`       | `POST /api/v1/admin/payouts/:id/processing`     | ✅ Implemented    |
-| `adminPayoutService.markPaid()`             | `POST /api/v1/admin/payouts/:id/paid`           | ✅ Implemented    |
-| `adminPayoutService.holdPayout()`           | `POST /api/v1/admin/payouts/:id/hold`           | ✅ Implemented    |
-| `adminAuditService.recordEvent()`           | `POST /api/v1/admin/audit-logs`                 | ✅ Implemented    |
-| `adminAuditService.getRecentLogs()`         | `GET /api/v1/admin/audit-logs`                  | ✅ Implemented    |
-| `dispatchService.getDispatchBoard()`        | `GET /api/v1/admin/dispatch/board`              | ✅ Implemented    |
-| `dispatchService.assignRider()`             | `POST /api/v1/admin/dispatch/orders/:id/assign` | ✅ Implemented    |
-| `dispatchService.updateStatus()`            | `POST /api/v1/admin/dispatch/orders/:id/status` | ✅ Implemented    |
+| Frontend Method                             | Backend Endpoint                                | Status         |
+| ------------------------------------------- | ----------------------------------------------- | -------------- |
+| `adminDashboardService.getDashboardStats()` | `GET /api/v1/admin/dashboard/stats`             | ✅ Implemented |
+| `adminDashboardService.getOrderMetrics()`   | `GET /api/v1/admin/dashboard/order-metrics`     | ✅ Implemented |
+| `adminDashboardService.getSLAMetrics()`     | `GET /api/v1/admin/dashboard/sla-metrics`       | ✅ Implemented |
+| `adminDashboardService.getRevenueChart()`   | `GET /api/v1/admin/dashboard/revenue-chart`     | ✅ Implemented |
+| `adminDashboardService.getAlerts()`         | `GET /api/v1/admin/alerts`                      | ✅ Implemented |
+| `adminUserService.getUsers()`               | `GET /api/v1/admin/users`                       | ✅ Implemented |
+| `adminUserService.suspendUser()`            | `POST /api/v1/admin/users/:id/suspend`          | ✅ Implemented |
+| `adminUserService.reactivateUser()`         | `POST /api/v1/admin/users/:id/reactivate`       | ✅ Implemented |
+| `adminUserService.getSellers()`             | `GET /api/v1/admin/sellers`                     | ✅ Implemented |
+| `adminUserService.suspendSeller()`          | `POST /api/v1/admin/sellers/:id/suspend`        | ✅ Implemented |
+| `adminUserService.reactivateSeller()`       | `POST /api/v1/admin/sellers/:id/reactivate`     | ✅ Implemented |
+| `adminModerationService.getReportedItems()` | `GET /api/v1/admin/reports`                     | ✅ Implemented |
+| `adminModerationService.getApprovalQueue()` | `GET /api/v1/admin/approvals`                   | ✅ Implemented |
+| `adminPayoutService.getPayoutSummary()`     | `GET /api/v1/admin/payouts/summary`             | ✅ Implemented |
+| `adminPayoutService.getPayoutQueue()`       | `GET /api/v1/admin/payouts`                     | ✅ Implemented |
+| `adminPayoutService.markProcessing()`       | `POST /api/v1/admin/payouts/:id/processing`     | ✅ Implemented |
+| `adminPayoutService.markPaid()`             | `POST /api/v1/admin/payouts/:id/paid`           | ✅ Implemented |
+| `adminPayoutService.holdPayout()`           | `POST /api/v1/admin/payouts/:id/hold`           | ✅ Implemented |
+| `adminAuditService.recordEvent()`           | `POST /api/v1/admin/audit-logs`                 | ✅ Implemented |
+| `adminAuditService.getRecentLogs()`         | `GET /api/v1/admin/audit-logs`                  | ✅ Implemented |
+| `dispatchService.getDispatchBoard()`        | `GET /api/v1/admin/dispatch/board`              | ✅ Implemented |
+| `dispatchService.assignRider()`             | `POST /api/v1/admin/dispatch/orders/:id/assign` | ✅ Implemented |
+| `dispatchService.updateStatus()`            | `POST /api/v1/admin/dispatch/orders/:id/status` | ✅ Implemented |
+
+---
+
+## Rider Endpoints
+
+| Frontend Method                     | Backend Endpoint                               | Status         |
+| ----------------------------------- | ---------------------------------------------- | -------------- |
+| `riderService.getAssignedOrders()`  | `GET /api/v1/rider/orders/assigned`            | ✅ Implemented |
+| `riderService.getOrderDetails()`    | `GET /api/v1/rider/orders/:id`                 | ✅ Implemented |
+| `riderService.acceptOrder()`        | `POST /api/v1/rider/orders/:id/accept`         | ✅ Implemented |
+| `riderService.rejectOrder()`        | `POST /api/v1/rider/orders/:id/reject`         | ✅ Implemented |
+| `riderService.startPickup()`        | `POST /api/v1/rider/orders/:id/start-pickup`   | ✅ Implemented |
+| `riderService.confirmPickup()`      | `POST /api/v1/rider/orders/:id/confirm-pickup` | ✅ Implemented |
+| `riderService.startDelivery()`      | `POST /api/v1/rider/orders/:id/start-delivery` | ✅ Implemented |
+| `riderService.confirmDelivery()`    | `POST /api/v1/rider/orders/:id/deliver`        | ✅ Implemented |
+| `riderService.cancelDelivery()`     | `POST /api/v1/rider/orders/:id/cancel`         | ✅ Implemented |
+| `riderService.updateLocation()`     | `POST /api/v1/rider/location`                  | ✅ Implemented |
+| `riderService.getStats()`           | `GET /api/v1/rider/stats`                      | ✅ Implemented |
+| `riderService.getEarnings()`        | `GET /api/v1/rider/earnings`                   | ✅ Implemented |
+| `riderService.getDeliveryHistory()` | `GET /api/v1/rider/orders/history`             | ✅ Implemented |
+| `riderService.getProfile()`         | `GET /api/v1/rider/profile`                    | ✅ Implemented |
+| `riderService.updateProfile()`      | `PATCH /api/v1/rider/profile`                  | ✅ Implemented |
+| `riderService.setOnlineStatus()`    | `POST /api/v1/rider/status`                    | ✅ Implemented |
+| `riderService.uploadProofPhoto()`   | `POST /api/v1/rider/orders/:id/upload-proof`   | ✅ Implemented |
 
 ---
 
@@ -161,23 +192,34 @@ This document maps frontend API service calls to backend endpoints for quick ref
 
 - None - all critical paths are implemented
 
-### High Priority (Affects Seller/Admin Experience)
+### Optional Analytics (Previously Missing - Now Implemented)
 
-- Seller menu CRUD (create/update/delete menu items)
-- Seller earnings chart and transactions
-- Seller bank details management
-- Seller commission breakdown
-- Admin order metrics and SLA metrics
-- Admin approval queue
+- [x] Seller earnings chart
+- [x] Seller transactions
+- [x] Seller payouts
+- [x] Seller bank details
+- [x] Seller commission
+- [x] Admin order metrics
+- [x] Admin SLA metrics
+- [x] Admin revenue chart
+- [x] Admin approval queue
 
-### Low Priority (Nice to Have)
+---
 
-- Seller invoice generation
-- Admin revenue chart
-- Admin reports (delivery delays, prep time breaches)
+## Connection Status
+
+| Module   | Backend | Frontend | Status      |
+| -------- | ------- | -------- | ----------- |
+| Auth     | ✅      | ✅       | Fully wired |
+| Catalog  | ✅      | ✅       | Fully wired |
+| Orders   | ✅      | ✅       | Fully wired |
+| Payments | ✅      | ✅       | Fully wired |
+| Seller   | ✅      | ✅       | Fully wired |
+| Admin    | ✅      | ✅       | Fully wired |
+| Rider    | ✅      | ✅       | Fully wired |
 
 ---
 
 ## Last Updated
 
-April 7, 2026 - Initial contract summary created
+April 7, 2026 - All modules fully wired

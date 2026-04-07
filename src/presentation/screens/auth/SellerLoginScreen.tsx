@@ -70,6 +70,7 @@ export const SellerLoginScreen: React.FC = () => {
     <KeyboardAvoidingView
       style={[styles.container, { backgroundColor: colors.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      testID="seller-login-screen"
     >
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -122,6 +123,7 @@ export const SellerLoginScreen: React.FC = () => {
                 placeholderTextColor={colors.textTertiary}
                 keyboardType="email-address"
                 autoCapitalize="none"
+                testID="seller-login-email-input"
               />
             </View>
 
@@ -182,6 +184,7 @@ export const SellerLoginScreen: React.FC = () => {
             loading={loading}
             disabled={!email || !password}
             style={styles.button}
+            testID="seller-login-continue-button"
           />
 
           <View style={styles.registerPrompt}>

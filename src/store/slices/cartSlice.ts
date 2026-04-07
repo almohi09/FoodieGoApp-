@@ -8,6 +8,9 @@ interface CartState {
   couponCode: string | null;
   couponDiscount: number;
   deliveryFee: number;
+  packagingFee: number;
+  taxes: number;
+  subtotal: number;
   isLoading: boolean;
 }
 
@@ -18,13 +21,16 @@ const initialState: CartState = {
   couponCode: null,
   couponDiscount: 0,
   deliveryFee: 40,
+  packagingFee: 0,
+  taxes: 0,
+  subtotal: 0,
   isLoading: false,
 };
 
 const calculateItemPrice = (
   basePrice: number,
   customizations: SelectedCustomization[],
-  quantity: number
+  quantity: number,
 ): number => {
   return basePrice * quantity;
 };
@@ -41,9 +47,10 @@ const cartSlice = createSlice({
         restaurantName: string;
         quantity: number;
         customizations: SelectedCustomization[];
-      }>
+      }>,
     ) => {
-      const { item, restaurantId, restaurantName, quantity, customizations } = action.payload;
+      const { item, restaurantId, restaurantName, quantity, customizations } =
+        action.payload;
 
       if (state.restaurantId && state.restaurantId !== restaurantId) {
         state.items = [];
@@ -57,7 +64,8 @@ const cartSlice = createSlice({
       const existingIndex = state.items.findIndex(
         cartItem =>
           cartItem.item.id === item.id &&
-          JSON.stringify(cartItem.customizations) === JSON.stringify(customizations)
+          JSON.stringify(cartItem.customizations) ===
+            JSON.stringify(customizations),
       );
 
       if (existingIndex >= 0) {
@@ -65,7 +73,7 @@ const cartSlice = createSlice({
         state.items[existingIndex].totalPrice = calculateItemPrice(
           item.price,
           state.items[existingIndex].customizations,
-          state.items[existingIndex].quantity
+          state.items[existingIndex].quantity,
         );
       } else {
         const newItem: CartItem = {
@@ -82,7 +90,11 @@ const cartSlice = createSlice({
     },
     updateQuantity: (
       state,
-      action: PayloadAction<{ itemId: string; quantity: number; customizations?: SelectedCustomization[] }>
+      action: PayloadAction<{
+        itemId: string;
+        quantity: number;
+        customizations?: SelectedCustomization[];
+      }>,
     ) => {
       const { itemId, quantity, customizations } = action.payload;
       const index = state.items.findIndex(
@@ -90,7 +102,8 @@ const cartSlice = createSlice({
           item.id === itemId ||
           (customizations &&
             item.item.id === itemId &&
-            JSON.stringify(item.customizations) === JSON.stringify(customizations))
+            JSON.stringify(item.customizations) ===
+              JSON.stringify(customizations)),
       );
 
       if (index >= 0) {
@@ -101,7 +114,7 @@ const cartSlice = createSlice({
           state.items[index].totalPrice = calculateItemPrice(
             state.items[index].item.price,
             state.items[index].customizations,
-            quantity
+            quantity,
           );
         }
       }
@@ -123,23 +136,38 @@ const cartSlice = createSlice({
         state.couponDiscount = 0;
       }
     },
-    clearCart: (state) => {
+    clearCart: state => {
       state.items = [];
       state.restaurantId = null;
       state.restaurantName = null;
       state.couponCode = null;
       state.couponDiscount = 0;
     },
-    applyCoupon: (state, action: PayloadAction<{ code: string; discount: number }>) => {
+    applyCoupon: (
+      state,
+      action: PayloadAction<{ code: string; discount: number }>,
+    ) => {
       state.couponCode = action.payload.code;
       state.couponDiscount = action.payload.discount;
     },
-    removeCoupon: (state) => {
+    removeCoupon: state => {
       state.couponCode = null;
       state.couponDiscount = 0;
     },
     setDeliveryFee: (state, action: PayloadAction<number>) => {
       state.deliveryFee = action.payload;
+    },
+    setQuoteDetails: (
+      state,
+      action: PayloadAction<{
+        subtotal: number;
+        packagingFee: number;
+        taxes: number;
+      }>,
+    ) => {
+      state.subtotal = action.payload.subtotal;
+      state.packagingFee = action.payload.packagingFee;
+      state.taxes = action.payload.taxes;
     },
   },
 });
@@ -152,6 +180,7 @@ export const {
   applyCoupon,
   removeCoupon,
   setDeliveryFee,
+  setQuoteDetails,
 } = cartSlice.actions;
 
 export const selectCartItems = (state: { cart: CartState }) => state.cart.items;
@@ -159,5 +188,15 @@ export const selectCartTotal = (state: { cart: CartState }) =>
   state.cart.items.reduce((sum, item) => sum + item.totalPrice, 0);
 export const selectCartItemCount = (state: { cart: CartState }) =>
   state.cart.items.reduce((sum, item) => sum + item.quantity, 0);
+export const selectQuoteDetails = (state: { cart: CartState }) => ({
+  subtotal: state.cart.subtotal,
+  packagingFee: state.cart.packagingFee,
+  taxes: state.cart.taxes,
+});
+export const selectFinalTotal = (state: { cart: CartState }) => {
+  const { subtotal, packagingFee, taxes, deliveryFee, couponDiscount } =
+    state.cart;
+  return subtotal + packagingFee + taxes + deliveryFee - couponDiscount;
+};
 
 export default cartSlice.reducer;

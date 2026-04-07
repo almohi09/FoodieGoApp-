@@ -206,6 +206,35 @@ export const ProfileScreen: React.FC = () => {
 
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
+          Partner Hub
+        </Text>
+        <View style={[styles.menuCard, { backgroundColor: colors.surface }]}>
+          <MenuItem
+            icon="🏪"
+            title="Seller Dashboard"
+            subtitle="Manage your restaurant"
+            onPress={() => navigation.navigate('SellerDashboard')}
+            colors={colors}
+          />
+          <MenuItem
+            icon="🚴"
+            title="Rider Dashboard"
+            subtitle="Deliveries and earnings"
+            onPress={() => navigation.navigate('RiderDashboard')}
+            colors={colors}
+          />
+          <MenuItem
+            icon="👨‍💼"
+            title="Admin Dashboard"
+            subtitle="Platform management"
+            onPress={() => navigation.navigate('AdminDashboard')}
+            colors={colors}
+          />
+        </View>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
           Preferences
         </Text>
         <View style={[styles.menuCard, { backgroundColor: colors.surface }]}>
@@ -498,5 +527,7 @@ const styles = StyleSheet.create({
   appVersion: {
     fontSize: 12,
   },
+  bottomSpacer: {
+    height: 40,
+  },
 });
-

@@ -33,9 +33,20 @@ import { OrderTrackingScreen } from '../screens/cart/OrderTrackingScreen';
 import { OrderConfirmedScreen } from '../screens/cart/OrderConfirmedScreen';
 
 import { SellerDashboardScreen } from '../screens/seller/SellerDashboardScreen';
+import { SellerMenuScreen } from '../screens/seller/SellerMenuScreen';
+import { SellerMenuItemFormScreen } from '../screens/seller/SellerMenuItemFormScreen';
+import { SellerStoreHoursScreen } from '../screens/seller/SellerStoreHoursScreen';
+import { SellerNotificationPreferencesScreen } from '../screens/seller/SellerNotificationPreferencesScreen';
 import { AdminDashboardScreen } from '../screens/admin/AdminDashboardScreen';
+import { AdminModerationScreen } from '../screens/admin/AdminModerationScreen';
+import { AdminModerationDetailScreen } from '../screens/admin/AdminModerationDetailScreen';
+import { AdminDispatchBoardScreen } from '../screens/admin/AdminDispatchBoardScreen';
+import { AdminAuditLogScreen } from '../screens/admin/AdminAuditLogScreen';
+import { AdminSLABreachScreen } from '../screens/admin/AdminSLABreachScreen';
+import { AdminNotificationPreferencesScreen } from '../screens/admin/AdminNotificationPreferencesScreen';
 import {
   RiderLoginScreen,
+  RiderOTPVerifyScreen,
   RiderDashboardScreen,
   RiderTaskDetailScreen,
   RiderEarningsScreen,
@@ -53,6 +64,7 @@ export type RootStackParamList = {
   SellerRegister: { phone: string };
   AdminLogin: undefined;
   RiderLogin: undefined;
+  RiderOTPVerify: { phone: string };
   MainTabs: undefined;
   RestaurantDetail: { restaurantId: string };
   Cart: undefined;
@@ -60,7 +72,17 @@ export type RootStackParamList = {
   OrderTracking: { orderId: string };
   OrderConfirmed: { orderId: string };
   SellerDashboard: undefined;
+  SellerMenu: undefined;
+  SellerMenuItemForm: { restaurantId: string; item?: any; isEditing?: boolean };
+  SellerStoreHours: undefined;
+  SellerNotificationPreferences: undefined;
   AdminDashboard: undefined;
+  AdminModeration: undefined;
+  AdminModerationDetail: { item?: any };
+  AdminDispatchBoard: undefined;
+  AdminAuditLog: undefined;
+  AdminSLABreach: undefined;
+  AdminNotificationPreferences: undefined;
   RiderDashboard: undefined;
   RiderTaskDetail: { orderId: string; order: any };
   RiderEarnings: undefined;
@@ -200,13 +222,68 @@ export const AppNavigator: React.FC = () => {
           options={{ animation: 'slide_from_right' }}
         />
         <Stack.Screen
+          name="SellerMenu"
+          component={SellerMenuScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
+          name="SellerMenuItemForm"
+          component={SellerMenuItemFormScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
+          name="SellerStoreHours"
+          component={SellerStoreHoursScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
+          name="SellerNotificationPreferences"
+          component={SellerNotificationPreferencesScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
           name="AdminDashboard"
           component={AdminDashboardScreen}
           options={{ animation: 'slide_from_right' }}
         />
         <Stack.Screen
+          name="AdminModeration"
+          component={AdminModerationScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
+          name="AdminModerationDetail"
+          component={AdminModerationDetailScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
+          name="AdminDispatchBoard"
+          component={AdminDispatchBoardScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
+          name="AdminAuditLog"
+          component={AdminAuditLogScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
+          name="AdminSLABreach"
+          component={AdminSLABreachScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
+          name="AdminNotificationPreferences"
+          component={AdminNotificationPreferencesScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
           name="RiderLogin"
           component={RiderLoginScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
+          name="RiderOTPVerify"
+          component={RiderOTPVerifyScreen}
           options={{ animation: 'slide_from_right' }}
         />
         <Stack.Screen

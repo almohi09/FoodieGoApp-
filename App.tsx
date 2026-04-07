@@ -9,6 +9,7 @@ import { AppErrorBoundary } from './src/presentation/components/common/AppErrorB
 import { installGlobalErrorHandlers } from './src/monitoring/errorCenter';
 import { trackEvent } from './src/monitoring/telemetry';
 import { analyticsService } from './src/data/api/analyticsService';
+import { sentryService } from './src/data/services/sentryService';
 import appEnv from './src/config/env';
 import { setObservabilityContext } from './src/monitoring/observabilityContext';
 import { store } from './src/store';
@@ -21,6 +22,9 @@ const App: React.FC = () => {
       appVersion: appEnv.appVersion,
       buildType: __DEV__ ? 'debug' : 'release',
     });
+
+    sentryService.initialize({ releaseVersion: appEnv.release });
+
     installGlobalErrorHandlers();
     trackEvent('app_open');
 

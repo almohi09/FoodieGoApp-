@@ -15,7 +15,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '../../../context/ThemeContext';
 import { RootStackParamList } from '../../navigation/AppNavigator';
-import { sellerOrderService, SellerOrder } from '../../../data/api/sellerOrderService';
+import {
+  sellerOrderService,
+  SellerOrder,
+} from '../../../data/api/sellerOrderService';
 import { sellerMenuService } from '../../../data/api/sellerMenuService';
 import { sellerEarningsService } from '../../../data/api/sellerEarningsService';
 import { sellerRestaurantService } from '../../../data/api/sellerRestaurantService';
@@ -47,21 +50,37 @@ const StatCard: React.FC<StatCardProps> = ({
   colors,
 }) => (
   <View style={[styles.statCard, { backgroundColor: colors.surface }]}>
-    <View style={[styles.statIconContainer, { backgroundColor: colors.primary + '15' }]}>
+    <View
+      style={[
+        styles.statIconContainer,
+        { backgroundColor: colors.primary + '15' },
+      ]}
+    >
       <Text style={styles.statIcon}>{icon}</Text>
     </View>
-    <Text style={[styles.statValue, { color: colors.textPrimary }]}>{value}</Text>
-    <Text style={[styles.statTitle, { color: colors.textSecondary }]}>{title}</Text>
+    <Text style={[styles.statValue, { color: colors.textPrimary }]}>
+      {value}
+    </Text>
+    <Text style={[styles.statTitle, { color: colors.textSecondary }]}>
+      {title}
+    </Text>
     {trend && (
       <View
         style={[
           styles.trendBadge,
           {
-            backgroundColor: trendUp ? colors.success + '20' : colors.error + '20',
+            backgroundColor: trendUp
+              ? colors.success + '20'
+              : colors.error + '20',
           },
         ]}
       >
-        <Text style={[styles.trendText, { color: trendUp ? colors.success : colors.error }]}>
+        <Text
+          style={[
+            styles.trendText,
+            { color: trendUp ? colors.success : colors.error },
+          ]}
+        >
           {trend}
         </Text>
       </View>
@@ -117,7 +136,8 @@ export const SellerDashboardScreen: React.FC = () => {
     const init = async () => {
       const sellerRaw = await AsyncStorage.getItem('seller_data');
       const seller = sellerRaw ? JSON.parse(sellerRaw) : null;
-      const resolvedRestaurantId = seller?.restaurantId || seller?.id || 'restaurant_1';
+      const resolvedRestaurantId =
+        seller?.restaurantId || seller?.id || 'restaurant_1';
       setRestaurantId(resolvedRestaurantId);
       await refresh(resolvedRestaurantId);
     };
@@ -130,6 +150,10 @@ export const SellerDashboardScreen: React.FC = () => {
       index: 0,
       routes: [{ name: 'LoginOptions' }],
     });
+  };
+
+  const handleManageMenu = () => {
+    navigation.navigate('SellerMenu');
   };
 
   const handleStoreStatusToggle = async () => {
@@ -150,7 +174,10 @@ export const SellerDashboardScreen: React.FC = () => {
         outcome: 'success',
       });
       setIsStoreOpen(response.status.isOpen);
-      Alert.alert('Store Status', response.status.isOpen ? 'Store is now OPEN' : 'Store is now CLOSED');
+      Alert.alert(
+        'Store Status',
+        response.status.isOpen ? 'Store is now OPEN' : 'Store is now CLOSED',
+      );
     } else {
       await adminAuditService.recordEvent({
         actorRole: 'seller',
@@ -188,7 +215,10 @@ export const SellerDashboardScreen: React.FC = () => {
       success = res.success;
       error = res.error || '';
     } else if (action === 'start_prep') {
-      const res = await sellerOrderService.startPreparing(restaurantId, orderId);
+      const res = await sellerOrderService.startPreparing(
+        restaurantId,
+        orderId,
+      );
       success = res.success;
       error = res.error || '';
     } else if (action === 'ready') {
@@ -241,7 +271,10 @@ export const SellerDashboardScreen: React.FC = () => {
         errorCode: toggleResult.errorCode,
         details: toggleResult.error,
       });
-      Alert.alert('Stock Update', toggleResult.error || 'Unable to update item');
+      Alert.alert(
+        'Stock Update',
+        toggleResult.error || 'Unable to update item',
+      );
       setActionLoadingId(null);
       return;
     }
@@ -252,7 +285,9 @@ export const SellerDashboardScreen: React.FC = () => {
     await adminAuditService.recordEvent({
       actorRole: 'seller',
       actorId: restaurantId,
-      action: targetAvailability ? 'menu_restock_enable' : 'menu_mark_unavailable',
+      action: targetAvailability
+        ? 'menu_restock_enable'
+        : 'menu_mark_unavailable',
       targetType: 'menu_item',
       targetId: item.id,
       outcome: 'success',
@@ -265,6 +300,7 @@ export const SellerDashboardScreen: React.FC = () => {
     <ScrollView
       style={[styles.container, { backgroundColor: colors.background }]}
       contentContainerStyle={{ paddingTop: insets.top }}
+      testID="seller-dashboard-screen"
     >
       <View style={[styles.header, { backgroundColor: colors.primary }]}>
         <View style={styles.headerTop}>
@@ -281,11 +317,17 @@ export const SellerDashboardScreen: React.FC = () => {
           </View>
           <View style={styles.headerInfo}>
             <Text style={styles.restaurantName}>Seller Operations</Text>
-            <View style={[styles.statusBadge, { backgroundColor: colors.surface }]}>
+            <View
+              style={[styles.statusBadge, { backgroundColor: colors.surface }]}
+            >
               <View
                 style={[
                   styles.statusDot,
-                  { backgroundColor: isStoreOpen ? colors.success : colors.error },
+                  {
+                    backgroundColor: isStoreOpen
+                      ? colors.success
+                      : colors.error,
+                  },
                 ]}
               />
               <Text style={[styles.statusText, { color: colors.textPrimary }]}>
@@ -297,14 +339,81 @@ export const SellerDashboardScreen: React.FC = () => {
       </View>
 
       <View style={styles.statsGrid}>
-        <StatCard title="Today's Orders" value={stats.todayOrders} icon="Orders" trend="+12%" trendUp colors={colors} />
-        <StatCard title="Revenue" value={stats.revenue} icon="INR" trend="+8%" trendUp colors={colors} />
-        <StatCard title="Avg Order Value" value={stats.avgOrderValue} icon="AOV" colors={colors} />
-        <StatCard title="Pending" value={stats.pending} icon="Queue" colors={colors} />
+        <StatCard
+          title="Today's Orders"
+          value={stats.todayOrders}
+          icon="Orders"
+          trend="+12%"
+          trendUp
+          colors={colors}
+        />
+        <StatCard
+          title="Revenue"
+          value={stats.revenue}
+          icon="INR"
+          trend="+8%"
+          trendUp
+          colors={colors}
+        />
+        <StatCard
+          title="Avg Order Value"
+          value={stats.avgOrderValue}
+          icon="AOV"
+          colors={colors}
+        />
+        <StatCard
+          title="Pending"
+          value={stats.pending}
+          icon="Queue"
+          colors={colors}
+        />
       </View>
 
       <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Store Control</Text>
+        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
+          Menu
+        </Text>
+        <View style={[styles.actionCard, { backgroundColor: colors.surface }]}>
+          <TouchableOpacity
+            style={styles.menuManagementBtn}
+            onPress={handleManageMenu}
+            testID="seller-menu-management-button"
+          >
+            <Text style={styles.menuManagementIcon}>🍽️</Text>
+            <View style={styles.menuManagementInfo}>
+              <Text
+                style={[
+                  styles.menuManagementTitle,
+                  { color: colors.textPrimary },
+                ]}
+              >
+                Menu Management
+              </Text>
+              <Text
+                style={[
+                  styles.menuManagementSub,
+                  { color: colors.textSecondary },
+                ]}
+              >
+                Add, edit, or remove items
+              </Text>
+            </View>
+            <Text
+              style={[
+                styles.menuManagementArrow,
+                { color: colors.textTertiary },
+              ]}
+            >
+              →
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
+          Store Control
+        </Text>
         <View style={[styles.actionCard, { backgroundColor: colors.surface }]}>
           <Text style={[styles.actionTitle, { color: colors.textPrimary }]}>
             Operational Status: {isStoreOpen ? 'OPEN' : 'CLOSED'}
@@ -316,6 +425,7 @@ export const SellerDashboardScreen: React.FC = () => {
             ]}
             onPress={handleStoreStatusToggle}
             disabled={actionLoadingId === 'store-status'}
+            testID="seller-store-status-toggle"
           >
             {actionLoadingId === 'store-status' ? (
               <ActivityIndicator color="#FFF" />
@@ -325,37 +435,98 @@ export const SellerDashboardScreen: React.FC = () => {
               </Text>
             )}
           </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.storeHoursButton, { borderColor: colors.primary }]}
+            onPress={() => navigation.navigate('SellerStoreHours')}
+          >
+            <Text
+              style={[styles.storeHoursButtonText, { color: colors.primary }]}
+            >
+              Set Store Hours
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.storeHoursButton, { borderColor: colors.primary }]}
+            onPress={() => navigation.navigate('SellerNotificationPreferences')}
+          >
+            <Text
+              style={[styles.storeHoursButtonText, { color: colors.primary }]}
+            >
+              Notifications
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
 
       <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Pending Queue Actions</Text>
+        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
+          Pending Queue Actions
+        </Text>
         <View style={[styles.actionCard, { backgroundColor: colors.surface }]}>
           {pendingOrders.length === 0 ? (
-            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>No pending orders right now.</Text>
+            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
+              No pending orders right now.
+            </Text>
           ) : (
             pendingOrders.slice(0, 5).map(order => (
-              <View key={order.id} style={[styles.queueRow, { borderBottomColor: colors.border }]}>
+              <View
+                key={order.id}
+                style={[styles.queueRow, { borderBottomColor: colors.border }]}
+              >
                 <View style={styles.queueMeta}>
-                  <Text style={[styles.queueOrderId, { color: colors.textPrimary }]}>
+                  <Text
+                    style={[styles.queueOrderId, { color: colors.textPrimary }]}
+                  >
                     #{order.id.slice(0, 8)}
                   </Text>
-                  <Text style={[styles.queueSub, { color: colors.textSecondary }]}>
+                  <Text
+                    style={[styles.queueSub, { color: colors.textSecondary }]}
+                  >
                     {formatOrderLine(order)}
                   </Text>
+                  {order.prepSLAMinutes && order.status === 'preparing' && (
+                    <View style={styles.slaIndicator}>
+                      <Text style={styles.slaText}>
+                        ⏱️ Prep SLA: {order.prepSLAMinutes} min
+                      </Text>
+                      {order.prepDeadline && (
+                        <Text
+                          style={[
+                            styles.slaDeadline,
+                            {
+                              color:
+                                new Date(order.prepDeadline) < new Date()
+                                  ? colors.error
+                                  : colors.warning,
+                            },
+                          ]}
+                        >
+                          {new Date(order.prepDeadline) < new Date()
+                            ? '⚠️ OVERDUE'
+                            : `Due ${new Date(order.prepDeadline).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}
+                        </Text>
+                      )}
+                    </View>
+                  )}
                 </View>
                 <View style={styles.queueActions}>
                   {order.status === 'pending' && (
                     <>
                       <TouchableOpacity
-                        style={[styles.queueActionBtn, { backgroundColor: colors.success }]}
+                        style={[
+                          styles.queueActionBtn,
+                          { backgroundColor: colors.success },
+                        ]}
                         onPress={() => handleOrderAction(order.id, 'accept')}
                         disabled={actionLoadingId === `accept-${order.id}`}
                       >
                         <Text style={styles.queueActionText}>Accept</Text>
                       </TouchableOpacity>
                       <TouchableOpacity
-                        style={[styles.queueActionBtn, { backgroundColor: colors.error }]}
+                        style={[
+                          styles.queueActionBtn,
+                          { backgroundColor: colors.error },
+                        ]}
                         onPress={() => handleOrderAction(order.id, 'reject')}
                         disabled={actionLoadingId === `reject-${order.id}`}
                       >
@@ -365,7 +536,10 @@ export const SellerDashboardScreen: React.FC = () => {
                   )}
                   {order.status === 'confirmed' && (
                     <TouchableOpacity
-                      style={[styles.queueActionBtn, { backgroundColor: colors.primary }]}
+                      style={[
+                        styles.queueActionBtn,
+                        { backgroundColor: colors.primary },
+                      ]}
                       onPress={() => handleOrderAction(order.id, 'start_prep')}
                       disabled={actionLoadingId === `start_prep-${order.id}`}
                     >
@@ -374,7 +548,10 @@ export const SellerDashboardScreen: React.FC = () => {
                   )}
                   {order.status === 'preparing' && (
                     <TouchableOpacity
-                      style={[styles.queueActionBtn, { backgroundColor: colors.success }]}
+                      style={[
+                        styles.queueActionBtn,
+                        { backgroundColor: colors.success },
+                      ]}
                       onPress={() => handleOrderAction(order.id, 'ready')}
                       disabled={actionLoadingId === `ready-${order.id}`}
                     >
@@ -389,21 +566,37 @@ export const SellerDashboardScreen: React.FC = () => {
       </View>
 
       <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Low Stock Quick Fix</Text>
+        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
+          Low Stock Quick Fix
+        </Text>
         <View style={[styles.actionCard, { backgroundColor: colors.surface }]}>
           {lowStockItems.length === 0 ? (
-            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>No low stock alerts.</Text>
+            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
+              No low stock alerts.
+            </Text>
           ) : (
             lowStockItems.slice(0, 5).map(item => (
-              <View key={item.id} style={[styles.queueRow, { borderBottomColor: colors.border }]}>
+              <View
+                key={item.id}
+                style={[styles.queueRow, { borderBottomColor: colors.border }]}
+              >
                 <View style={styles.queueMeta}>
-                  <Text style={[styles.queueOrderId, { color: colors.textPrimary }]}>{item.name}</Text>
-                  <Text style={[styles.queueSub, { color: colors.textSecondary }]}>
+                  <Text
+                    style={[styles.queueOrderId, { color: colors.textPrimary }]}
+                  >
+                    {item.name}
+                  </Text>
+                  <Text
+                    style={[styles.queueSub, { color: colors.textSecondary }]}
+                  >
                     Status: {item.isAvailable ? 'Available' : 'Unavailable'}
                   </Text>
                 </View>
                 <TouchableOpacity
-                  style={[styles.queueActionBtn, { backgroundColor: colors.primary }]}
+                  style={[
+                    styles.queueActionBtn,
+                    { backgroundColor: colors.primary },
+                  ]}
                   onPress={() => handleStockQuickAction(item)}
                   disabled={actionLoadingId === `stock-${item.id}`}
                 >
@@ -552,6 +745,29 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingLeft: 4,
   },
+  menuManagementBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 4,
+  },
+  menuManagementIcon: {
+    fontSize: 32,
+    marginRight: 12,
+  },
+  menuManagementInfo: {
+    flex: 1,
+  },
+  menuManagementTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  menuManagementSub: {
+    fontSize: 12,
+    marginTop: 2,
+  },
+  menuManagementArrow: {
+    fontSize: 20,
+  },
   actionCard: {
     borderRadius: 16,
     padding: 14,
@@ -571,6 +787,18 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '700',
+  },
+  storeHoursButton: {
+    marginTop: 12,
+    paddingVertical: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  storeHoursButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
   },
   emptyText: {
     fontSize: 13,
@@ -618,6 +846,20 @@ const styles = StyleSheet.create({
   },
   bottomSpacer: {
     height: 32,
+  },
+  slaIndicator: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 4,
+    gap: 8,
+  },
+  slaText: {
+    fontSize: 11,
+    color: '#666',
+  },
+  slaDeadline: {
+    fontSize: 11,
+    fontWeight: '600',
   },
 });
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -10,12 +10,27 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { colors, spacing, typography, borderRadius, shadows } from '../../../theme';
+import {
+  colors,
+  spacing,
+  typography,
+  borderRadius,
+  shadows,
+} from '../../../theme';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import { Button, EmptyState } from '../../components/common';
 import { useAppSelector, useAppDispatch } from '../../hooks/useRedux';
-import { updateQuantity, removeFromCart, clearCart } from '../../../store/slices/cartSlice';
-import { selectCartItems, selectCartTotal } from '../../../store/slices/cartSlice';
+import {
+  updateQuantity,
+  removeFromCart,
+  clearCart,
+  selectCartItems,
+  selectCartTotal,
+  selectQuoteDetails,
+  selectFinalTotal,
+  addToCart,
+} from '../../../store/slices/cartSlice';
+import { useAppStore } from '../../../data/storage/appStore';
 
 type CartNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Cart'>;
 
@@ -25,9 +40,58 @@ export const CartScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector(selectCartItems);
   const cartTotal = useAppSelector(selectCartTotal);
-  const { restaurantName, couponDiscount, deliveryFee } = useAppSelector(state => state.cart);
+  const {
+    restaurantName,
+    couponDiscount,
+    deliveryFee,
+    packagingFee: pkgFee,
+    taxes: taxAmt,
+  } = useAppSelector(state => state.cart);
+  const quoteDetails = useAppSelector(selectQuoteDetails);
+  const finalTotal =
+    useAppSelector(selectFinalTotal) ||
+    cartTotal + deliveryFee - couponDiscount;
 
-  const finalTotal = cartTotal + deliveryFee - couponDiscount;
+  const packagingFee = pkgFee || quoteDetails.packagingFee;
+  const taxes = taxAmt || quoteDetails.taxes;
+
+  const [showRecoveryBanner, setShowRecoveryBanner] = useState(false);
+  const { loadCheckoutRecovery, clearCheckoutRecovery } = useAppStore();
+
+  useEffect(() => {
+    const checkRecovery = async () => {
+      const recovery = await loadCheckoutRecovery();
+      if (recovery && recovery.cartItems && recovery.cartItems.length > 0) {
+        setShowRecoveryBanner(true);
+      }
+    };
+    checkRecovery();
+  }, [loadCheckoutRecovery]);
+
+  const handleResumeCheckout = async () => {
+    const recovery = await loadCheckoutRecovery();
+    if (recovery && recovery.cartItems && recovery.cartItems.length > 0) {
+      for (const item of recovery.cartItems) {
+        dispatch(
+          addToCart({
+            item: item.item,
+            restaurantId: item.restaurantId,
+            restaurantName: item.restaurantName,
+            quantity: item.quantity,
+            customizations: item.customizations || [],
+          }),
+        );
+      }
+      await clearCheckoutRecovery();
+      setShowRecoveryBanner(false);
+      navigation.navigate('Checkout');
+    }
+  };
+
+  const handleDismissRecovery = async () => {
+    await clearCheckoutRecovery();
+    setShowRecoveryBanner(false);
+  };
 
   const handleUpdateQuantity = (itemId: string, quantity: number) => {
     dispatch(updateQuantity({ itemId, quantity }));
@@ -56,14 +120,19 @@ export const CartScreen: React.FC = () => {
           title="Your cart is empty"
           message="Add items from a restaurant to get started"
           actionLabel="Browse Restaurants"
-          onAction={() => navigation.navigate('MainTabs', { screen: 'Home' } as any)}
+          onAction={() =>
+            navigation.navigate('MainTabs', { screen: 'Home' } as any)
+          }
         />
       </View>
     );
   }
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]} testID="cart-screen">
+    <View
+      style={[styles.container, { paddingTop: insets.top }]}
+      testID="cart-screen"
+    >
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={styles.backIcon}>←</Text>
@@ -74,6 +143,36 @@ export const CartScreen: React.FC = () => {
         </TouchableOpacity>
       </View>
 
+      {showRecoveryBanner && (
+        <View style={styles.recoveryBanner}>
+          <View style={styles.recoveryContent}>
+            <Text style={styles.recoveryIcon}>↩️</Text>
+            <View style={styles.recoveryTextContainer}>
+              <Text style={styles.recoveryTitle}>
+                Continue your previous order?
+              </Text>
+              <Text style={styles.recoverySubtext}>
+                You have items from a previous session
+              </Text>
+            </View>
+            <View style={styles.recoveryActions}>
+              <TouchableOpacity
+                style={styles.recoveryDismiss}
+                onPress={handleDismissRecovery}
+              >
+                <Text style={styles.recoveryDismissText}>Dismiss</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.recoveryResume}
+                onPress={handleResumeCheckout}
+              >
+                <Text style={styles.recoveryResumeText}>Resume</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      )}
+
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.restaurantBanner}>
           <Text style={styles.restaurantIcon}>🏪</Text>
@@ -81,21 +180,32 @@ export const CartScreen: React.FC = () => {
         </View>
 
         <View style={styles.itemsSection}>
-          {cartItems.map((item) => (
+          {cartItems.map(item => (
             <View key={item.id} style={styles.cartItem}>
-              <Image source={{ uri: item.item.image }} style={styles.itemImage} />
+              <Image
+                source={{ uri: item.item.image }}
+                style={styles.itemImage}
+              />
               <View style={styles.itemInfo}>
                 <View style={styles.itemHeader}>
                   <View
                     style={[
                       styles.vegBadge,
-                      { borderColor: item.item.isVeg ? colors.veg : colors.nonVeg },
+                      {
+                        borderColor: item.item.isVeg
+                          ? colors.veg
+                          : colors.nonVeg,
+                      },
                     ]}
                   >
                     <View
                       style={[
                         styles.vegDot,
-                        { backgroundColor: item.item.isVeg ? colors.veg : colors.nonVeg },
+                        {
+                          backgroundColor: item.item.isVeg
+                            ? colors.veg
+                            : colors.nonVeg,
+                        },
                       ]}
                     />
                   </View>
@@ -119,7 +229,9 @@ export const CartScreen: React.FC = () => {
                   <Text style={styles.quantity}>{item.quantity}</Text>
                   <TouchableOpacity
                     style={styles.quantityButton}
-                    onPress={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                    onPress={() =>
+                      handleUpdateQuantity(item.id, item.quantity + 1)
+                    }
                   >
                     <Text style={styles.quantityButtonText}>+</Text>
                   </TouchableOpacity>
@@ -138,6 +250,14 @@ export const CartScreen: React.FC = () => {
           <View style={styles.billRow}>
             <Text style={styles.billLabel}>Delivery Fee</Text>
             <Text style={styles.billValue}>₹{deliveryFee}</Text>
+          </View>
+          <View style={styles.billRow}>
+            <Text style={styles.billLabel}>Packaging Fee</Text>
+            <Text style={styles.billValue}>₹{packagingFee}</Text>
+          </View>
+          <View style={styles.billRow}>
+            <Text style={styles.billLabel}>Taxes (GST)</Text>
+            <Text style={styles.billValue}>₹{taxes}</Text>
           </View>
           {couponDiscount > 0 && (
             <View style={styles.billRow}>
@@ -173,7 +293,9 @@ export const CartScreen: React.FC = () => {
         <View style={styles.bottomSpacer} />
       </ScrollView>
 
-      <View style={[styles.footer, { paddingBottom: insets.bottom + spacing.md }]}>
+      <View
+        style={[styles.footer, { paddingBottom: insets.bottom + spacing.md }]}
+      >
         <View style={styles.totalContainer}>
           <Text style={styles.footerTotalLabel}>Total</Text>
           <Text style={styles.footerTotalValue}>₹{finalTotal}</Text>
@@ -403,5 +525,59 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.xxl,
   },
+  recoveryBanner: {
+    backgroundColor: colors.primaryLight || '#E3F2FD',
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.primary,
+  },
+  recoveryContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  recoveryIcon: {
+    fontSize: 24,
+    marginRight: spacing.md,
+  },
+  recoveryTextContainer: {
+    flex: 1,
+  },
+  recoveryTitle: {
+    ...typography.bodyMedium,
+    color: colors.textPrimary,
+  },
+  recoverySubtext: {
+    ...typography.small,
+    color: colors.textSecondary,
+  },
+  recoveryActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  recoveryDismiss: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  recoveryDismissText: {
+    ...typography.bodyMedium,
+    color: colors.textSecondary,
+  },
+  recoveryResume: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    borderRadius: borderRadius.md,
+    marginLeft: spacing.sm,
+  },
+  recoveryResumeText: {
+    ...typography.bodyMedium,
+    color: colors.textInverse,
+  },
+  headerSpacer: {
+    width: 40,
+  },
+  bottomSpacer: {
+    height: 40,
+  },
 });
-

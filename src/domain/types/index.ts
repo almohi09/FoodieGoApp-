@@ -159,6 +159,9 @@ export interface Order {
   rider?: Rider;
   userId: string;
   sellerId?: string;
+  prepStartTime?: string;
+  prepDeadline?: string;
+  prepSLAMinutes?: number;
 }
 
 export type OrderStatus =

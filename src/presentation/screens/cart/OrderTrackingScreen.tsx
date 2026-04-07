@@ -1,20 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Linking,
+  Alert,
 } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { colors, spacing, typography, borderRadius, shadows } from '../../../theme';
+import {
+  colors,
+  spacing,
+  typography,
+  borderRadius,
+  shadows,
+} from '../../../theme';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import { trackingService } from '../../../data/api/trackingService';
 import { OrderStatus } from '../../../domain/types';
+import { MapView } from '../../components/common/MapView';
 
-type OrderTrackingNavigationProp = NativeStackNavigationProp<RootStackParamList, 'OrderTracking'>;
+type OrderTrackingNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'OrderTracking'
+>;
 type OrderTrackingRouteProp = RouteProp<RootStackParamList, 'OrderTracking'>;
 
 const ORDER_STEPS = [
@@ -32,19 +44,64 @@ export const OrderTrackingScreen: React.FC = () => {
 
   const [currentStatus, setCurrentStatus] = useState<OrderStatus>('confirmed');
   const [eta, setEta] = useState(25);
-  const [riderLocation] = useState({ lat: 28.62, lng: 77.36 });
+  const [riderLocation, setRiderLocation] = useState({
+    lat: 28.62,
+    lng: 77.36,
+  });
+  const [restaurantLocation] = useState({ lat: 28.61, lng: 77.35 });
+  const [deliveryLocation] = useState({ lat: 28.63, lng: 77.37 });
   const [trackingError, setTrackingError] = useState<string | null>(null);
+  const [riderInfo] = useState({
+    name: 'Rajesh Kumar',
+    phone: '+919876543210',
+  });
+  const [deliveryProof] = useState({
+    otp: '1234',
+    signature: null,
+    photo: null,
+  });
+  const [showProof, setShowProof] = useState(false);
+
+  const handleCallRider = useCallback(() => {
+    const phoneUrl = `tel:${riderInfo.phone}`;
+    Linking.canOpenURL(phoneUrl).then(supported => {
+      if (supported) {
+        Linking.openURL(phoneUrl);
+      } else {
+        Alert.alert(
+          'Call not supported',
+          'Your device does not support phone calls.',
+        );
+      }
+    });
+  }, [riderInfo.phone]);
+
+  const handleChatRider = useCallback(() => {
+    const smsUrl = `sms:${riderInfo.phone}`;
+    Linking.canOpenURL(smsUrl).then(supported => {
+      if (supported) {
+        Linking.openURL(smsUrl);
+      } else {
+        Alert.alert('SMS not supported', 'Your device does not support SMS.');
+      }
+    });
+  }, [riderInfo.phone]);
 
   useEffect(() => {
     let stopTracking: (() => void) | null = null;
 
     const initRealtimeTracking = async () => {
       await trackingService.subscribeToPushNotifications(orderId);
-      stopTracking = trackingService.startRealtimeTracking(orderId, {
-        onStatusChange: status => setCurrentStatus(status),
-        onETAUpdate: etaMinutes => setEta(etaMinutes),
-        onError: errorMessage => setTrackingError(errorMessage),
-      }, 8000);
+      stopTracking = trackingService.startRealtimeTracking(
+        orderId,
+        {
+          onStatusChange: status => setCurrentStatus(status),
+          onETAUpdate: etaMinutes => setEta(etaMinutes),
+          onRiderLocationUpdate: location => setRiderLocation(location),
+          onError: errorMessage => setTrackingError(errorMessage),
+        },
+        8000,
+      );
     };
 
     initRealtimeTracking();
@@ -87,14 +144,14 @@ export const OrderTrackingScreen: React.FC = () => {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.mapContainer}>
-          <View style={styles.mapPlaceholder}>
-            <Text style={styles.mapIcon}>🗺️</Text>
-            <Text style={styles.mapText}>Live Map</Text>
-            <Text style={styles.mapCoords}>
-              {riderLocation.lat.toFixed(4)}, {riderLocation.lng.toFixed(4)}
-            </Text>
-          </View>
-          
+          <MapView
+            origin={restaurantLocation}
+            destination={deliveryLocation}
+            riderLocation={riderLocation}
+            showRoute={true}
+            height={220}
+          />
+
           <View style={styles.etaCard}>
             <Text style={styles.etaLabel}>Estimated Arrival</Text>
             <View style={styles.etaRow}>
@@ -109,14 +166,20 @@ export const OrderTrackingScreen: React.FC = () => {
             <Text style={styles.riderEmoji}>🏍️</Text>
           </View>
           <View style={styles.riderInfo}>
-            <Text style={styles.riderName}>Rajesh Kumar</Text>
+            <Text style={styles.riderName}>{riderInfo.name}</Text>
             <Text style={styles.riderSubtext}>Your delivery partner</Text>
           </View>
           <View style={styles.riderActions}>
-            <TouchableOpacity style={styles.riderButton}>
+            <TouchableOpacity
+              style={styles.riderButton}
+              onPress={handleCallRider}
+            >
               <Text style={styles.riderButtonIcon}>📞</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.riderButton}>
+            <TouchableOpacity
+              style={styles.riderButton}
+              onPress={handleChatRider}
+            >
               <Text style={styles.riderButtonIcon}>💬</Text>
             </TouchableOpacity>
           </View>
@@ -124,7 +187,9 @@ export const OrderTrackingScreen: React.FC = () => {
 
         <View style={styles.stepsCard}>
           <Text style={styles.stepsTitle}>Order Status</Text>
-          {trackingError && <Text style={styles.errorText}>{trackingError}</Text>}
+          {trackingError && (
+            <Text style={styles.errorText}>{trackingError}</Text>
+          )}
           <View style={styles.stepsContainer}>
             {ORDER_STEPS.map((step, index) => {
               const status = getStepStatus(index);
@@ -178,17 +243,43 @@ export const OrderTrackingScreen: React.FC = () => {
         <View style={styles.orderCard}>
           <View style={styles.orderHeader}>
             <Text style={styles.orderTitle}>Order #{orderId}</Text>
-            <TouchableOpacity>
-              <Text style={styles.orderDetails}>View Details</Text>
+            <TouchableOpacity onPress={() => setShowProof(!showProof)}>
+              <Text style={styles.orderDetails}>
+                {showProof ? 'Hide Proof' : 'Delivery Proof'}
+              </Text>
             </TouchableOpacity>
           </View>
           <View style={styles.restaurantInfo}>
             <Text style={styles.restaurantIcon}>🍕</Text>
             <View>
               <Text style={styles.restaurantName}>Pizza Palace</Text>
-              <Text style={styles.orderItems}>1x Margherita Pizza, 1x Garlic Bread</Text>
+              <Text style={styles.orderItems}>
+                1x Margherita Pizza, 1x Garlic Bread
+              </Text>
             </View>
           </View>
+          {showProof && currentStatus === 'delivered' && (
+            <View style={styles.proofSection}>
+              <View style={styles.proofRow}>
+                <Text style={styles.proofLabel}>OTP Verified</Text>
+                <Text style={[styles.proofValue, { color: colors.success }]}>
+                  ✓ {deliveryProof.otp}
+                </Text>
+              </View>
+              {deliveryProof.signature && (
+                <View style={styles.proofRow}>
+                  <Text style={styles.proofLabel}>Signature</Text>
+                  <Text style={styles.proofValue}>Received</Text>
+                </View>
+              )}
+              {deliveryProof.photo && (
+                <View style={styles.proofRow}>
+                  <Text style={styles.proofLabel}>Photo Proof</Text>
+                  <Text style={styles.proofValue}>Captured</Text>
+                </View>
+              )}
+            </View>
+          )}
         </View>
 
         <View style={styles.bottomSpacer} />
@@ -436,5 +527,27 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     marginTop: 2,
   },
+  bottomSpacer: {
+    height: 40,
+  },
+  proofSection: {
+    marginTop: spacing.md,
+    paddingTop: spacing.md,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+  },
+  proofRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.sm,
+  },
+  proofLabel: {
+    ...typography.caption,
+    color: colors.textSecondary,
+  },
+  proofValue: {
+    ...typography.bodyMedium,
+    color: colors.textPrimary,
+  },
 });
-

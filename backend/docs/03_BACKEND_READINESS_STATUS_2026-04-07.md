@@ -6,6 +6,7 @@
 - Deployment readiness: **DEPLOYED** ✅
 - Live URL: `https://foodiegoapp-backend.onrender.com/api/v1`
 - Release-gate status from this workspace on April 7, 2026: **PASS** ✅
+- TypeScript: **0 errors** ✅ (all fixed)
 
 ## Verification Results
 
@@ -39,7 +40,7 @@ curl https://foodiegoapp-backend.onrender.com/api/v1/health
 Expected response:
 
 ```json
-{ "status": "ok", "version": "0.1.0" }
+{ "ok": true, "service": "foodiego-backend", "timestamp": "2026-04-07T15:58:02.606Z" }
 ```
 
 ## Implemented Features (100% Complete)

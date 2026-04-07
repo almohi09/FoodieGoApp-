@@ -1,18 +1,25 @@
-export type UserRole = "customer" | "seller" | "admin" | "rider";
+export type UserRole = 'customer' | 'seller' | 'admin' | 'rider';
 export type OrderStatus =
-  | "pending"
-  | "confirmed"
-  | "preparing"
-  | "out_for_delivery"
-  | "delivered"
-  | "cancelled"
-  | "refunded";
-export type PaymentMethod = "upi" | "card" | "wallet" | "cod";
-export type PaymentStatusState = "pending" | "completed" | "failed" | "cancelled";
+  | 'pending'
+  | 'confirmed'
+  | 'preparing'
+  | 'ready_for_pickup'
+  | 'assigned'
+  | 'picked_up'
+  | 'out_for_delivery'
+  | 'delivered'
+  | 'cancelled'
+  | 'refunded';
+export type PaymentMethod = 'upi' | 'card' | 'wallet' | 'cod';
+export type PaymentStatusState =
+  | 'pending'
+  | 'completed'
+  | 'failed'
+  | 'cancelled';
 
 export interface Address {
   id: string;
-  label: "home" | "work" | "other";
+  label: 'home' | 'work' | 'other';
   address: string;
   landmark?: string;
   lat: number;
@@ -26,7 +33,7 @@ export interface User {
   name?: string;
   email?: string;
   role: UserRole;
-  status: "active" | "suspended" | "deleted";
+  status: 'active' | 'suspended' | 'deleted';
   createdAt: string;
   lastLoginAt?: string;
   orderCount: number;
@@ -40,8 +47,8 @@ export interface Seller {
   name: string;
   email: string;
   businessName: string;
-  businessType: "restaurant" | "grocery" | "pharmacy" | "other";
-  status: "pending" | "approved" | "rejected" | "suspended";
+  businessType: 'restaurant' | 'grocery' | 'pharmacy' | 'other';
+  status: 'pending' | 'approved' | 'rejected' | 'suspended';
   rating?: number;
   totalOrders: number;
   totalRevenue: number;
@@ -54,7 +61,7 @@ export interface Admin {
   id: string;
   email: string;
   name: string;
-  role: "super_admin" | "support" | "operations";
+  role: 'super_admin' | 'support' | 'operations';
   permissions: string[];
 }
 
@@ -73,6 +80,7 @@ export interface Restaurant {
     packaging?: number;
     delivery?: number;
   };
+  address?: string;
 }
 
 export interface MenuItem {
@@ -121,6 +129,8 @@ export interface Order {
   acceptedAt?: string;
   startedPrepAt?: string;
   readyAt?: string;
+  riderId?: string;
+  riderName?: string;
 }
 
 export interface TrackingEvent {
@@ -139,7 +149,7 @@ export interface PaymentRecord {
   status: PaymentStatusState;
   method: PaymentMethod;
   transactionId?: string;
-  source: "webhook" | "gateway" | "unknown";
+  source: 'webhook' | 'gateway' | 'unknown';
   lastUpdatedAt: string;
 }
 
@@ -148,7 +158,7 @@ export interface PayoutItem {
   sellerId: string;
   sellerName: string;
   amount: number;
-  status: "pending" | "processing" | "paid" | "on_hold" | "failed";
+  status: 'pending' | 'processing' | 'paid' | 'on_hold' | 'failed';
   cycle?: string;
   createdAt?: string;
 }
@@ -165,11 +175,11 @@ export interface DispatchOrder {
   restaurantName: string;
   amount: number;
   status:
-    | "ready_for_pickup"
-    | "assigned"
-    | "picked_up"
-    | "out_for_delivery"
-    | "delivered";
+    | 'ready_for_pickup'
+    | 'assigned'
+    | 'picked_up'
+    | 'out_for_delivery'
+    | 'delivered';
   riderId?: string;
   riderName?: string;
   proofOtp?: string;
@@ -178,12 +188,12 @@ export interface DispatchOrder {
 
 export interface AuditLogItem {
   id: string;
-  actorRole: "admin" | "seller" | "system";
+  actorRole: 'admin' | 'seller' | 'system';
   actorId?: string;
   action: string;
   targetType: string;
   targetId: string;
-  outcome: "success" | "failure";
+  outcome: 'success' | 'failure';
   errorCode?: string;
   details?: string;
   createdAt: string;
@@ -194,6 +204,7 @@ export interface Session {
   refreshToken: string;
   userId: string;
   role: UserRole;
+  phone?: string;
   createdAt: string;
   deviceId?: string;
   accessExpiresAt?: string;

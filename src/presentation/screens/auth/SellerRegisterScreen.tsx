@@ -259,6 +259,7 @@ export const SellerRegisterScreen: React.FC = () => {
     <KeyboardAvoidingView
       style={[styles.container, { backgroundColor: colors.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      testID="seller-register-screen"
     >
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -461,4 +462,3 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-

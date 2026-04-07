@@ -39,7 +39,7 @@ export const RiderLoginScreen: React.FC = () => {
       const result = await authService.sendOTP(formattedPhone);
 
       if (result.success) {
-        navigation.navigate('OTPVerify', { phone: formattedPhone });
+        navigation.navigate('RiderOTPVerify', { phone: formattedPhone });
       } else {
         Alert.alert('Error', result.message || 'Failed to send OTP');
       }
@@ -54,6 +54,7 @@ export const RiderLoginScreen: React.FC = () => {
     <KeyboardAvoidingView
       style={[styles.container, { backgroundColor: colors.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      testID="rider-login-screen"
     >
       <ScrollView
         contentContainerStyle={[
@@ -99,6 +100,7 @@ export const RiderLoginScreen: React.FC = () => {
             style={[styles.button, { backgroundColor: colors.primary }]}
             onPress={handleSendOTP}
             disabled={loading}
+            testID="rider-login-get-otp-button"
           >
             {loading ? (
               <Text style={[styles.buttonText, { color: colors.surface }]}>

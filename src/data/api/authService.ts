@@ -21,7 +21,11 @@ import {
   recordGuardedFailure,
 } from './securityGuard';
 
-const USER_ROLES: readonly UserRole[] = ['customer', 'seller', 'admin'] as const;
+const USER_ROLES: readonly UserRole[] = [
+  'customer',
+  'seller',
+  'admin',
+] as const;
 
 const parseAuthSuccess = (value: unknown, path: string) => {
   const data = asObject(value, path);
@@ -37,7 +41,9 @@ const parseAuthSuccess = (value: unknown, path: string) => {
 };
 
 const parseAddresses = (value: unknown, path: string): Address[] =>
-  asArray(value, path, (item, itemPath) => asTypedObject<Address>(item, itemPath));
+  asArray(value, path, (item, itemPath) =>
+    asTypedObject<Address>(item, itemPath),
+  );
 
 class AuthService {
   private api = createApiClient();
@@ -65,7 +71,10 @@ class AuthService {
       blockedMessage: 'Too many OTP requests',
     });
     if (!localGuard.allowed) {
-      return { success: false, message: localGuard.message || 'Try again later' };
+      return {
+        success: false,
+        message: localGuard.message || 'Try again later',
+      };
     }
 
     try {
@@ -77,7 +86,8 @@ class AuthService {
       await clearGuardState('otp_send');
       return {
         success: data.success,
-        message: data.message || (data.success ? 'OTP sent' : 'Failed to send OTP'),
+        message:
+          data.message || (data.success ? 'OTP sent' : 'Failed to send OTP'),
       };
     } catch (error) {
       await recordGuardedFailure('otp_send');
@@ -95,7 +105,13 @@ class AuthService {
   async verifyOTP(
     phone: string,
     otp: string,
-  ): Promise<{ success: boolean; token?: string; user?: User; message?: string }> {
+  ): Promise<{
+    success: boolean;
+    token?: string;
+    refreshToken?: string;
+    user?: User;
+    message?: string;
+  }> {
     const localGuard = await enforceLocalVelocityGuard('otp_verify', {
       maxAttempts: 8,
       windowSec: 600,
@@ -111,7 +127,12 @@ class AuthService {
       const data = parseAuthSuccess(response.data, 'auth.verifyOTP');
       await persistSessionTokens(data.token, data.refreshToken);
       await clearGuardState('otp_verify');
-      return { success: data.success, token: data.token, user: data.user };
+      return {
+        success: data.success,
+        token: data.token,
+        refreshToken: data.refreshToken,
+        user: data.user,
+      };
     } catch (error) {
       await recordGuardedFailure('otp_verify');
       const parsed = parseRateLimitMessage(
@@ -228,11 +249,7 @@ class AuthService {
 
   async logout(): Promise<void> {
     await clearSessionTokens();
-    await AsyncStorage.multiRemove([
-      'user_data',
-      'seller_data',
-      'admin_data',
-    ]);
+    await AsyncStorage.multiRemove(['user_data', 'seller_data', 'admin_data']);
   }
 
   async getCurrentUser(): Promise<User | null> {
@@ -265,7 +282,10 @@ class AuthService {
       const data = asObject(response.data, 'auth.addAddress');
       return {
         success: asBoolean(data.success, 'auth.addAddress.success'),
-        address: asTypedObject<Address>(data.address, 'auth.addAddress.address'),
+        address: asTypedObject<Address>(
+          data.address,
+          'auth.addAddress.address',
+        ),
       };
     } catch {
       return { success: false };
@@ -300,7 +320,10 @@ class AuthService {
       const data = asObject(response.data, 'auth.getAddresses');
       return {
         success: true,
-        addresses: parseAddresses(data.addresses || [], 'auth.getAddresses.addresses'),
+        addresses: parseAddresses(
+          data.addresses || [],
+          'auth.getAddresses.addresses',
+        ),
       };
     } catch (error: any) {
       return {
@@ -345,7 +368,10 @@ class AuthService {
       const response = await this.api.post('/auth/check-phone', { phone });
       const data = asObject(response.data, 'auth.isPhoneRegistered');
       return {
-        registered: asBoolean(data.registered, 'auth.isPhoneRegistered.registered'),
+        registered: asBoolean(
+          data.registered,
+          'auth.isPhoneRegistered.registered',
+        ),
         role:
           data.role === undefined
             ? undefined
