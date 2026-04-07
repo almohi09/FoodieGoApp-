@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'https://api.foodiego.in/api/v1';
+export const API_BASE_URL = 'https://foodiegoapp-backend.onrender.com/api/v1';
 
 export const APP_NAME = 'FoodieGo';
 export const APP_TAGLINE = 'Delicious food, delivered fast';
@@ -20,7 +20,7 @@ export const MAX_DELIVERY_SCHEDULE_HOURS = 24;
 
 export const DEFAULT_LOCATION = {
   lat: 28.6139,
-  lng: 77.2090,
+  lng: 77.209,
   address: 'New Delhi, India',
 };
 
@@ -41,19 +41,22 @@ export const ONBOARDING_SLIDES = [
   {
     id: '1',
     title: 'Order from Best Restaurants',
-    description: 'Discover thousands of restaurants and order your favorite dishes with just a few taps.',
+    description:
+      'Discover thousands of restaurants and order your favorite dishes with just a few taps.',
     icon: '🍕',
   },
   {
     id: '2',
     title: 'Fast Delivery',
-    description: 'Get your food delivered at your doorstep within 30-45 minutes or schedule for later.',
+    description:
+      'Get your food delivered at your doorstep within 30-45 minutes or schedule for later.',
     icon: '🚀',
   },
   {
     id: '3',
     title: 'Earn Rewards',
-    description: 'Earn FoodieCoins on every order and redeem them for discounts. Get FoodiePass for exclusive benefits!',
+    description:
+      'Earn FoodieCoins on every order and redeem them for discounts. Get FoodiePass for exclusive benefits!',
     icon: '🎁',
   },
 ];

@@ -8,7 +8,7 @@ export interface AppEnvConfig {
   appVersion: string;
 }
 
-const DEFAULT_API_BASE_URL = 'https://api.foodiego.in/api/v1';
+const DEFAULT_API_BASE_URL = 'https://foodiegoapp-backend.onrender.com/api/v1';
 const RESOLVED_API_BASE_URL =
   (typeof process !== 'undefined' ? process.env?.API_BASE_URL : undefined) ||
   DEFAULT_API_BASE_URL;
