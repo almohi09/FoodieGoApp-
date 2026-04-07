@@ -18,11 +18,13 @@ router.post("/auth/send-otp", async (req, res) => {
     return sendApiError(res, 400, "VALIDATION_ERROR", parsed.message, parsed.details);
   }
   const phone = parsed.data.phone;
+  const appVerifierToken =
+    typeof req.body?.appVerifierToken === "string" ? req.body.appVerifierToken.trim() : undefined;
   const gate = abuseGuard.checkOtpSend(phone);
   if (!gate.ok) {
     return sendApiError(res, 429, "RATE_LIMITED", "Too many OTP requests", { retryAfterSec: gate.retryAfterSec });
   }
-  const issued = await otpProvider.send(phone);
+  const issued = await otpProvider.send(phone, appVerifierToken);
   abuseGuard.noteOtpSend(phone);
   return res.json({ success: true, message: "OTP sent", provider: issued.provider });
 });
@@ -33,13 +35,15 @@ router.post("/auth/resend-otp", async (req, res) => {
     return sendApiError(res, 400, "VALIDATION_ERROR", parsed.message, parsed.details);
   }
   const phone = parsed.data.phone;
+  const appVerifierToken =
+    typeof req.body?.appVerifierToken === "string" ? req.body.appVerifierToken.trim() : undefined;
   const gate = abuseGuard.checkOtpSend(phone);
   if (!gate.ok) {
     return sendApiError(res, 429, "RATE_LIMITED", "Too many OTP resend requests", {
       retryAfterSec: gate.retryAfterSec,
     });
   }
-  const issued = await otpProvider.send(phone);
+  const issued = await otpProvider.send(phone, appVerifierToken);
   abuseGuard.noteOtpSend(phone);
   return res.json({ success: true, message: "OTP resent", provider: issued.provider });
 });

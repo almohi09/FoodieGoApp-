@@ -67,6 +67,20 @@ These are not optional if target is Zomato/Swiggy-grade:
    - `vitest` or `jest` (backend test framework)
    - `supertest` (API integration tests)
 
+## Free-Tier Startup Alternative (No Paid Requirement)
+
+For early development and pilot validation, use managed free tiers instead of paid infra:
+
+1. Database:
+   - Supabase Postgres free tier (use its `DATABASE_URL`)
+2. Runtime:
+   - Render free web service (backend API)
+3. Image storage:
+   - Supabase Storage free tier
+4. OTP:
+   - Start with `OTP_PROVIDER=mock` for zero-cost integration testing
+   - Upgrade to Firebase-backed OTP adapter when real OTP traffic is required
+
 ## Compatibility Policy
 
 1. Keep Node major pinned to LTS (`22.x`) for both local and CI.

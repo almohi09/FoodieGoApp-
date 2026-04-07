@@ -1,8 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { parseSecurityActionError } from './securityGuard';
+import appEnv from '../../config/env';
 
-const API_BASE_URL = 'https://api.foodiego.in/api/v1';
+const API_BASE_URL = appEnv.apiBaseUrl;
 
 export interface User {
   id: string;
@@ -340,3 +341,4 @@ class AdminUserService {
 
 export const adminUserService = new AdminUserService();
 export default adminUserService;
+

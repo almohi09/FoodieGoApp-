@@ -75,15 +75,24 @@ const parsePaymentStatus = (value: unknown, path: string): PaymentStatus => {
   return {
     success: asBoolean(data.success, `${path}.success`),
     status: asEnum(data.status, `${path}.status`, PAYMENT_STATUSES),
-    transactionId: asOptionalString(data.transactionId, `${path}.transactionId`),
+    transactionId: asOptionalString(
+      data.transactionId,
+      `${path}.transactionId`,
+    ),
     error: asOptionalString(data.error, `${path}.error`),
     errorCode: asOptionalString(data.errorCode, `${path}.errorCode`),
-    retryAfterSec: asOptionalNumber(data.retryAfterSec, `${path}.retryAfterSec`),
+    retryAfterSec: asOptionalNumber(
+      data.retryAfterSec,
+      `${path}.retryAfterSec`,
+    ),
     source:
       data.source === undefined
         ? undefined
         : asEnum(data.source, `${path}.source`, PAYMENT_STATUS_SOURCES),
-    lastUpdatedAt: asOptionalString(data.lastUpdatedAt, `${path}.lastUpdatedAt`),
+    lastUpdatedAt: asOptionalString(
+      data.lastUpdatedAt,
+      `${path}.lastUpdatedAt`,
+    ),
     reconciliationRequired: asOptionalBoolean(
       data.reconciliationRequired,
       `${path}.reconciliationRequired`,
@@ -104,6 +113,8 @@ class PaymentService {
     upiDeepLink?: string;
     transactionId?: string;
     error?: string;
+    errorCode?: string;
+    retryAfterSec?: number;
   }> {
     try {
       const response = await this.api.post('/payments/upi/initiate', request);
@@ -140,7 +151,10 @@ class PaymentService {
       );
       return parsePaymentStatus(response.data, 'payments.verifyUPIPayment');
     } catch (error: any) {
-      const parsed = parseSecurityActionError(error, 'Payment verification failed');
+      const parsed = parseSecurityActionError(
+        error,
+        'Payment verification failed',
+      );
       return {
         success: false,
         status: 'failed',
@@ -156,6 +170,8 @@ class PaymentService {
     paymentUrl?: string;
     transactionId?: string;
     error?: string;
+    errorCode?: string;
+    retryAfterSec?: number;
   }> {
     try {
       const response = await this.api.post('/payments/card/initiate', request);
@@ -192,7 +208,10 @@ class PaymentService {
       );
       return parsePaymentStatus(response.data, 'payments.verifyCardPayment');
     } catch (error: any) {
-      const parsed = parseSecurityActionError(error, 'Payment verification failed');
+      const parsed = parseSecurityActionError(
+        error,
+        'Payment verification failed',
+      );
       return {
         success: false,
         status: 'failed',
@@ -227,7 +246,10 @@ class PaymentService {
       const response = await this.api.get(`/payments/status/${orderId}`);
       return parsePaymentStatus(response.data, 'payments.getPaymentStatus');
     } catch (error: any) {
-      const parsed = parseSecurityActionError(error, 'Failed to get payment status');
+      const parsed = parseSecurityActionError(
+        error,
+        'Failed to get payment status',
+      );
       return {
         success: false,
         status: 'failed',
@@ -356,18 +378,25 @@ class PaymentService {
     error?: string;
   }> {
     try {
-      const response = await this.api.post(`/payments/refund/${orderId}`, {
-        amount,
-        reason,
-      }, {
-        headers: {
-          'Idempotency-Key': newIdempotencyKey(`refund-${orderId}`),
+      const response = await this.api.post(
+        `/payments/refund/${orderId}`,
+        {
+          amount,
+          reason,
         },
-      });
+        {
+          headers: {
+            'Idempotency-Key': newIdempotencyKey(`refund-${orderId}`),
+          },
+        },
+      );
       const data = asObject(response.data, 'payments.refundPayment');
       return {
         success: true,
-        refundId: asOptionalString(data.refundId, 'payments.refundPayment.refundId'),
+        refundId: asOptionalString(
+          data.refundId,
+          'payments.refundPayment.refundId',
+        ),
       };
     } catch (error: any) {
       return {
@@ -389,7 +418,11 @@ class PaymentService {
       const data = asObject(response.data, 'payments.getRefundStatus');
       return {
         success: true,
-        status: asEnum(data.status, 'payments.getRefundStatus.status', REFUND_STATUSES),
+        status: asEnum(
+          data.status,
+          'payments.getRefundStatus.status',
+          REFUND_STATUSES,
+        ),
       };
     } catch (error: any) {
       return {

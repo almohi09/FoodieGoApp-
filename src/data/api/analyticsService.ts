@@ -1,7 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import appEnv from '../../config/env';
 
-const API_BASE_URL = 'https://api.foodiego.in/api/v1';
+const API_BASE_URL = appEnv.apiBaseUrl;
 
 export type EventName =
   | 'app_open'
@@ -327,3 +328,4 @@ class AnalyticsService {
 
 export const analyticsService = new AnalyticsService();
 export default analyticsService;
+

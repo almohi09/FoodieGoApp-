@@ -85,7 +85,8 @@ class TrackingService {
   private api = createApiClient();
   private pollingIntervals: Map<string, ReturnType<typeof setInterval>> =
     new Map();
-  private socketConnections: Map<string, WebSocket> = new Map();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private socketConnections: Map<string, any> = new Map();
   private runtimeStates: Map<string, TrackingRuntimeState> = new Map();
 
   constructor() {
@@ -103,9 +104,14 @@ class TrackingService {
       const data = asObject(response.data, 'tracking.getOrderTracking');
       return {
         success: true,
-        order: asTypedObject<Order>(data.order, 'tracking.getOrderTracking.order'),
-        events: asArray(data.events || [], 'tracking.getOrderTracking.events', (item, path) =>
-          asTypedObject<TrackingUpdate>(item, path),
+        order: asTypedObject<Order>(
+          data.order,
+          'tracking.getOrderTracking.order',
+        ),
+        events: asArray(
+          data.events || [],
+          'tracking.getOrderTracking.events',
+          (item, path) => asTypedObject<TrackingUpdate>(item, path),
         ),
       };
     } catch (error: any) {
@@ -128,7 +134,11 @@ class TrackingService {
       const data = asObject(response.data, 'tracking.getCurrentStatus');
       return {
         success: true,
-        status: asEnum(data.status, 'tracking.getCurrentStatus.status', ORDER_STATUSES),
+        status: asEnum(
+          data.status,
+          'tracking.getCurrentStatus.status',
+          ORDER_STATUSES,
+        ),
         estimatedDelivery: asOptionalString(
           data.estimatedDelivery,
           'tracking.getCurrentStatus.estimatedDelivery',
@@ -163,7 +173,10 @@ class TrackingService {
     return created;
   }
 
-  private rememberEventId(state: TrackingRuntimeState, eventId: string): boolean {
+  private rememberEventId(
+    state: TrackingRuntimeState,
+    eventId: string,
+  ): boolean {
     if (state.seenEventIds.has(eventId)) {
       return false;
     }
@@ -182,7 +195,10 @@ class TrackingService {
     payload: Record<string, unknown>,
   ): boolean {
     const state = this.getOrCreateRuntimeState(orderId);
-    const eventId = asOptionalString(payload.eventId, 'tracking.wsMessage.eventId');
+    const eventId = asOptionalString(
+      payload.eventId,
+      'tracking.wsMessage.eventId',
+    );
     if (eventId && !this.rememberEventId(state, eventId)) {
       return false;
     }
@@ -260,7 +276,10 @@ class TrackingService {
     state.reconnectTimer = undefined;
   }
 
-  private scheduleReconnect(orderId: string, callbacks: TrackingCallbacks): void {
+  private scheduleReconnect(
+    orderId: string,
+    callbacks: TrackingCallbacks,
+  ): void {
     const state = this.getOrCreateRuntimeState(orderId);
     if (!state.active || state.reconnectTimer) {
       return;
@@ -269,10 +288,11 @@ class TrackingService {
     const attempt = state.reconnectAttempt + 1;
     state.reconnectAttempt = attempt;
     const jitter = Math.floor(Math.random() * 400);
-    const delay = Math.min(
-      MAX_RECONNECT_DELAY_MS,
-      BASE_RECONNECT_DELAY_MS * 2 ** Math.min(6, attempt - 1),
-    ) + jitter;
+    const delay =
+      Math.min(
+        MAX_RECONNECT_DELAY_MS,
+        BASE_RECONNECT_DELAY_MS * 2 ** Math.min(6, attempt - 1),
+      ) + jitter;
 
     state.reconnectTimer = setTimeout(() => {
       state.reconnectTimer = undefined;
@@ -329,10 +349,9 @@ class TrackingService {
   connectWebSocket(orderId: string, callbacks: TrackingCallbacks): void {
     this.disconnectWebSocket(orderId);
 
-    const wsUrl = appEnv.apiBaseUrl.replace('https://', 'wss://').replace(
-      'http://',
-      'ws://',
-    );
+    const wsUrl = appEnv.apiBaseUrl
+      .replace('https://', 'wss://')
+      .replace('http://', 'ws://');
     const socket = new WebSocket(
       `${wsUrl}${appEnv.trackingSocketPath}/${orderId}/live`,
     );
@@ -374,7 +393,10 @@ class TrackingService {
       return;
     }
 
-    const messageType = asOptionalString(payload.type, 'tracking.wsMessage.type');
+    const messageType = asOptionalString(
+      payload.type,
+      'tracking.wsMessage.type',
+    );
     const timestampMs =
       parseTimestampMs(payload.timestamp) ??
       parseTimestampMs(payload.eventTimestamp) ??

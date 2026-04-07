@@ -3,15 +3,20 @@
 Date: April 7, 2026
 
 Status legend:
+
 - `[x]` complete
 - `[ ]` pending
 
 ## OTP Provider Cutover
 
-- [ ] `OTP_PROVIDER=http` in production runtime config.
-- [ ] `OTP_PROVIDER_HTTP_URL` points to approved provider endpoint.
-- [ ] `OTP_PROVIDER_HTTP_TOKEN` sourced from secret manager.
-- [ ] `OTP_BYPASS_CODE` unset in production.
+- [x] Backend enforcement: `OTP_PROVIDER=mock` is blocked in production.
+- [x] Backend enforcement: `OTP_BYPASS_CODE` is blocked in production.
+- [ ] `OTP_PROVIDER` is `http` or `firebase` in production runtime config.
+- [ ] If `OTP_PROVIDER=http`: `OTP_PROVIDER_HTTP_URL` points to approved provider endpoint.
+- [ ] If `OTP_PROVIDER=http`: `OTP_PROVIDER_HTTP_TOKEN` sourced from secret manager.
+- [x] If `OTP_PROVIDER=firebase`: Backend supports `FIREBASE_WEB_API_KEY` from env.
+- [x] Validation script: `npm run firebase:otp:drill`
+- [ ] Firebase console setup: Create project, enable Phone provider, get Web API key.
 - [ ] Provider callback/signature verification contract reviewed and signed by security.
 - [ ] Provider rate limits and abuse policy approved by compliance.
 

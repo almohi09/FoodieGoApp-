@@ -13,6 +13,7 @@ Backend API service for FoodieGo mobile app integration.
   - `src/modules/payments`
   - `src/modules/seller`
   - `src/modules/admin`
+  - `src/modules/storage`
 
 ## Important Note
 
@@ -36,6 +37,8 @@ Backend API service for FoodieGo mobile app integration.
 1. Build container stack: `docker compose -f backend/docker-compose.yml up --build`
 2. Run deploy verification: `cd backend && npm run deploy:verify`
 3. Stop stack: `docker compose -f backend/docker-compose.yml down`
+4. Free-tier rollout profile and env contract:
+   - `backend/docs/13_FREE_TIER_STACK_RENDER_SUPABASE_FIREBASE.md`
 
 ## Worker Operations
 
@@ -65,16 +68,23 @@ Backend API service for FoodieGo mobile app integration.
 1. OTP provider abstraction + abuse controls (`OTP_PROVIDER`, send/verify lockout windows).
 2. External monitoring sink + trace context (`traceparent` propagation).
 3. Kubernetes baseline manifests in `backend/infra/k8s/`.
+4. Firebase OTP provider mode supported (`OTP_PROVIDER=firebase`, `FIREBASE_WEB_API_KEY`).
+5. Supabase signed upload URL endpoint supported (`POST /api/v1/storage/signed-upload`).
 
 ## Backend Docs
 
 1. `backend/docs/00_BACKEND_INDEX.md`
 2. `backend/docs/01_BACKEND_ARCHITECTURE.md`
 3. `backend/docs/02_BACKEND_PRODUCTION_REQUIREMENTS.md`
-4. `backend/docs/03_BACKEND_READINESS_STATUS_2026-04-06.md`
+4. `backend/docs/03_BACKEND_READINESS_STATUS_2026-04-07.md`
 5. `backend/docs/04_BACKEND_DEPENDENCIES_AND_INSTALL.md`
 6. `backend/docs/05_BACKEND_NO_COMPROMISE_CHECKLIST.md`
 7. `backend/docs/06_BACKEND_90_DAY_EXECUTION_PLAN.md`
 8. `backend/docs/07_BACKEND_NEXT_IMPLEMENTATIONS_TRACKER.md`
 9. `backend/docs/08_BACKEND_DEPLOYMENT_RUNBOOK_AND_EVIDENCE.md`
 10. `backend/docs/09_BACKEND_MONITORING_ALERT_RUNBOOK.md`
+11. `backend/docs/10_BACKEND_ENTERPRISE_HARDENING_PACK.md`
+12. `backend/docs/11_BACKEND_DOCS_MAINTENANCE.md`
+13. `backend/docs/12_PARTNER_CUTOVER_COMPLIANCE_CHECKLIST.md`
+14. `backend/docs/13_FREE_TIER_STACK_RENDER_SUPABASE_FIREBASE.md`
+15. `backend/docs/14_BACKEND_100_PERCENT_EXECUTION_CHECKLIST.md`

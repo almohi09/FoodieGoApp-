@@ -7,6 +7,7 @@ type OtpEntry = {
 };
 
 const otpState = new Map<string, OtpEntry>();
+const firebaseSessionByPhone = new Map<string, { sessionInfo: string; expiresAt: number }>();
 
 const upsertOtp = (phone: string, code: string) => {
   const expiresAt = Date.now() + env.otpTtlSec * 1000;
@@ -26,6 +27,25 @@ const getOtp = (phone: string): OtpEntry | undefined => {
 };
 
 const generateOtpCode = () => String(Math.floor(100000 + Math.random() * 900000));
+
+const upsertFirebaseSession = (phone: string, sessionInfo: string) => {
+  firebaseSessionByPhone.set(phone, {
+    sessionInfo,
+    expiresAt: Date.now() + env.otpTtlSec * 1000,
+  });
+};
+
+const getFirebaseSession = (phone: string): string | undefined => {
+  const existing = firebaseSessionByPhone.get(phone);
+  if (!existing) {
+    return undefined;
+  }
+  if (existing.expiresAt < Date.now()) {
+    firebaseSessionByPhone.delete(phone);
+    return undefined;
+  }
+  return existing.sessionInfo;
+};
 
 const callProvider = async (path: string, body: Record<string, unknown>) => {
   if (!env.otpProviderHttpUrl) {
@@ -47,9 +67,67 @@ const callProvider = async (path: string, body: Record<string, unknown>) => {
   return parsed;
 };
 
+const callFirebase = async (method: "send" | "verify", body: Record<string, unknown>) => {
+  if (!env.firebaseWebApiKey) {
+    throw new Error("FIREBASE_WEB_API_KEY is required for OTP_PROVIDER=firebase");
+  }
+  const endpoint =
+    method === "send"
+      ? "accounts:sendVerificationCode"
+      : "accounts:signInWithPhoneNumber";
+  const response = await fetch(
+    `https://identitytoolkit.googleapis.com/v1/${endpoint}?key=${encodeURIComponent(env.firebaseWebApiKey)}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    },
+  );
+  const text = await response.text();
+  const parsed = text ? JSON.parse(text) : {};
+  if (!response.ok) {
+    throw new Error(`Firebase OTP request failed (${response.status})`);
+  }
+  return parsed;
+};
+
 export const otpProvider = {
-  async send(phone: string) {
+  async send(phone: string, appVerifierToken?: string) {
     const code = env.otpBypassCode || generateOtpCode();
+    if (env.otpProvider === "firebase") {
+      try {
+        const token = appVerifierToken || env.firebaseOtpRecaptchaBypassToken;
+        if (!token) {
+          throw new Error("Firebase recaptcha/app-verifier token is required");
+        }
+        const response = await callFirebase("send", {
+          phoneNumber: phone,
+          recaptchaToken: token,
+        });
+        const sessionInfo = String(response?.sessionInfo || "");
+        if (!sessionInfo) {
+          throw new Error("Firebase OTP send did not return sessionInfo");
+        }
+        upsertFirebaseSession(phone, sessionInfo);
+        if (env.otpBypassCode) {
+          upsertOtp(phone, code);
+        }
+        return {
+          provider: "firebase",
+          messageId: String(response?.sessionInfo || ""),
+        };
+      } catch {
+        if (env.nodeEnv === "production") {
+          throw new Error("Firebase OTP send failed");
+        }
+        upsertOtp(phone, code);
+        return {
+          provider: "mock",
+          messageId: `mock_${Date.now()}`,
+        };
+      }
+    }
+
     if (env.otpProvider === "http") {
       const response = await callProvider("/send", env.otpBypassCode ? { phone, code } : { phone });
       upsertOtp(phone, code);
@@ -66,6 +144,29 @@ export const otpProvider = {
   },
 
   async verify(phone: string, otp: string) {
+    if (env.otpProvider === "firebase") {
+      try {
+        const sessionInfo = getFirebaseSession(phone);
+        if (!sessionInfo) {
+          return false;
+        }
+        const response = await callFirebase("verify", {
+          sessionInfo,
+          code: otp,
+        });
+        if (response?.idToken) {
+          firebaseSessionByPhone.delete(phone);
+          otpState.delete(phone);
+          db.otpByPhone.delete(phone);
+          return true;
+        }
+      } catch {
+        if (env.nodeEnv === "production") {
+          return false;
+        }
+      }
+    }
+
     if (env.otpProvider === "http") {
       try {
         const response = await callProvider("/verify", { phone, otp });

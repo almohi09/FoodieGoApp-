@@ -1,7 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_BASE_URL = 'https://api.foodiego.in/api/v1';
+import appEnv from '../../config/env';
+
+const API_BASE_URL = appEnv.apiBaseUrl;
 
 export interface EarningsSummary {
   totalEarnings: number;
@@ -10,6 +12,7 @@ export interface EarningsSummary {
   thisWeek: number;
   thisMonth: number;
   lastMonth: number;
+  averageOrderValue?: number;
 }
 
 export interface Payout {

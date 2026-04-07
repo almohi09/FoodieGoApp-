@@ -1,9 +1,10 @@
 import axios, { AxiosInstance } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Restaurant } from '../../domain/types';
-import { mockRestaurants, mockMenuItems } from './mockData';
+import { mockRestaurants, mockMenuItems } from './mockData';
+import appEnv from '../../config/env';
 
-const API_BASE_URL = 'https://api.foodiego.in/api/v1';
+const API_BASE_URL = appEnv.apiBaseUrl;
 
 export interface SearchResult {
   restaurants: Restaurant[];
@@ -272,3 +273,4 @@ class EnhancedSearchService {
 
 export const enhancedSearchService = new EnhancedSearchService();
 export default enhancedSearchService;
+

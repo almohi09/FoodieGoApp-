@@ -1,5 +1,6 @@
 type NodeEnv = "development" | "test" | "production";
-type OtpProvider = "mock" | "http";
+type OtpProvider = "mock" | "http" | "firebase";
+type ImageStorageProvider = "inline" | "supabase";
 
 const parseNodeEnv = (value: string | undefined): NodeEnv => {
   const resolved = (value || "development").toLowerCase();
@@ -36,12 +37,30 @@ const parseNumber = (value: string | undefined, defaultValue: number, name: stri
   return parsed;
 };
 
+const parseCsvList = (value: string | undefined, defaults: string[]): string[] => {
+  if (!value || value.trim().length === 0) {
+    return defaults;
+  }
+  return value
+    .split(",")
+    .map((part) => part.trim())
+    .filter((part) => part.length > 0);
+};
+
 const parseOtpProvider = (value: string | undefined): OtpProvider => {
   const resolved = (value || "mock").toLowerCase();
-  if (resolved === "mock" || resolved === "http") {
+  if (resolved === "mock" || resolved === "http" || resolved === "firebase") {
     return resolved;
   }
-  throw new Error(`Invalid OTP_PROVIDER "${value}". Allowed: mock | http.`);
+  throw new Error(`Invalid OTP_PROVIDER "${value}". Allowed: mock | http | firebase.`);
+};
+
+const parseImageStorageProvider = (value: string | undefined): ImageStorageProvider => {
+  const resolved = (value || "inline").toLowerCase();
+  if (resolved === "inline" || resolved === "supabase") {
+    return resolved;
+  }
+  throw new Error(`Invalid IMAGE_STORAGE_PROVIDER "${value}". Allowed: inline | supabase.`);
 };
 
 const getRequired = (name: string): string => {
@@ -55,6 +74,7 @@ const getRequired = (name: string): string => {
 const nodeEnv = parseNodeEnv(process.env.NODE_ENV);
 const usePostgres = parseBoolean(process.env.USE_POSTGRES, false);
 const otpProvider = parseOtpProvider(process.env.OTP_PROVIDER);
+const imageStorageProvider = parseImageStorageProvider(process.env.IMAGE_STORAGE_PROVIDER);
 const monitoringEmitRequestEvents = parseBoolean(process.env.MONITORING_EMIT_REQUEST_EVENTS, false);
 const otpBypassCode = (
   process.env.OTP_BYPASS_CODE !== undefined
@@ -74,11 +94,16 @@ if (nodeEnv === "production") {
   }
   getRequired("DATABASE_URL");
   getRequired("PAYMENT_WEBHOOK_SECRET");
-  if (otpProvider !== "http") {
-    throw new Error('OTP_PROVIDER must be set to "http" in production.');
+  if (otpProvider === "mock") {
+    throw new Error('OTP_PROVIDER must be set to "http" or "firebase" in production.');
   }
-  getRequired("OTP_PROVIDER_HTTP_URL");
-  getRequired("OTP_PROVIDER_HTTP_TOKEN");
+  if (otpProvider === "http") {
+    getRequired("OTP_PROVIDER_HTTP_URL");
+    getRequired("OTP_PROVIDER_HTTP_TOKEN");
+  }
+  if (otpProvider === "firebase") {
+    getRequired("FIREBASE_WEB_API_KEY");
+  }
   if (otpBypassCode.length > 0) {
     throw new Error("OTP_BYPASS_CODE must not be configured in production.");
   }
@@ -86,6 +111,11 @@ if (nodeEnv === "production") {
   getRequired("MONITORING_SINK_AUTH_TOKEN");
   if (!monitoringEmitRequestEvents) {
     throw new Error("MONITORING_EMIT_REQUEST_EVENTS must be true in production.");
+  }
+  if (imageStorageProvider === "supabase") {
+    getRequired("SUPABASE_URL");
+    getRequired("SUPABASE_STORAGE_BUCKET");
+    getRequired("SUPABASE_SERVICE_ROLE_KEY");
   }
 }
 
@@ -106,6 +136,8 @@ export const env = {
   otpProvider,
   otpProviderHttpUrl: (process.env.OTP_PROVIDER_HTTP_URL || "").trim(),
   otpProviderHttpToken: (process.env.OTP_PROVIDER_HTTP_TOKEN || "").trim(),
+  firebaseWebApiKey: (process.env.FIREBASE_WEB_API_KEY || "").trim(),
+  firebaseOtpRecaptchaBypassToken: (process.env.FIREBASE_OTP_RECAPTCHA_BYPASS_TOKEN || "").trim(),
   otpBypassCode,
   otpTtlSec: parseNumber(process.env.OTP_TTL_SEC, 300, "OTP_TTL_SEC"),
   otpSendWindowSec: parseNumber(process.env.OTP_SEND_WINDOW_SEC, 600, "OTP_SEND_WINDOW_SEC"),
@@ -113,6 +145,29 @@ export const env = {
   otpVerifyFailWindowSec: parseNumber(process.env.OTP_VERIFY_FAIL_WINDOW_SEC, 600, "OTP_VERIFY_FAIL_WINDOW_SEC"),
   otpVerifyFailMax: parseNumber(process.env.OTP_VERIFY_FAIL_MAX, 5, "OTP_VERIFY_FAIL_MAX"),
   otpVerifyLockSec: parseNumber(process.env.OTP_VERIFY_LOCK_SEC, 900, "OTP_VERIFY_LOCK_SEC"),
+  imageStorageProvider,
+  supabaseUrl: (process.env.SUPABASE_URL || "").trim(),
+  supabaseStorageBucket: (process.env.SUPABASE_STORAGE_BUCKET || "").trim(),
+  supabaseServiceRoleKey: (process.env.SUPABASE_SERVICE_ROLE_KEY || "").trim(),
+  supabaseSignedUploadTtlSec: parseNumber(
+    process.env.SUPABASE_SIGNED_UPLOAD_TTL_SEC,
+    300,
+    "SUPABASE_SIGNED_UPLOAD_TTL_SEC",
+  ),
+  supabaseAllowedUploadMimeTypes: parseCsvList(process.env.SUPABASE_ALLOWED_UPLOAD_MIME_TYPES, [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+  ]),
+  supabaseAllowedUploadFolders: parseCsvList(process.env.SUPABASE_ALLOWED_UPLOAD_FOLDERS, [
+    "general",
+    "menu",
+    "profile",
+    "support",
+    "kyc",
+    "moderation",
+  ]),
+  supabaseUploadMaxBytes: parseNumber(process.env.SUPABASE_UPLOAD_MAX_BYTES, 5 * 1024 * 1024, "SUPABASE_UPLOAD_MAX_BYTES"),
 };
 
 export default env;

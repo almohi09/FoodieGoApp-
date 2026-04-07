@@ -30,7 +30,7 @@ const withProdBaseEnv = () => {
 test("production env rejects mock OTP provider", async () => {
   withProdBaseEnv();
   process.env.OTP_PROVIDER = "mock";
-  await assert.rejects(loadEnvModule, /OTP_PROVIDER must be set to "http" in production\./);
+  await assert.rejects(loadEnvModule, /OTP_PROVIDER must be set to "http" or "firebase" in production\./);
 });
 
 test("production env rejects configured OTP bypass code", async () => {
@@ -46,6 +46,34 @@ test("production env loads when cutover requirements are satisfied", async () =>
   assert.equal(loaded.default.otpProvider, "http");
   assert.equal(loaded.default.otpBypassCode, "");
   assert.equal(loaded.default.monitoringEmitRequestEvents, true);
+});
+
+test("production env rejects firebase otp provider without api key", async () => {
+  withProdBaseEnv();
+  process.env.OTP_PROVIDER = "firebase";
+  delete process.env.FIREBASE_WEB_API_KEY;
+  await assert.rejects(loadEnvModule, /Missing required environment variable: FIREBASE_WEB_API_KEY/);
+});
+
+test("production env loads with firebase otp provider when api key exists", async () => {
+  withProdBaseEnv();
+  process.env.OTP_PROVIDER = "firebase";
+  process.env.FIREBASE_WEB_API_KEY = "firebase_web_api_key";
+  delete process.env.OTP_PROVIDER_HTTP_URL;
+  delete process.env.OTP_PROVIDER_HTTP_TOKEN;
+  const loaded = await loadEnvModule();
+  assert.equal(loaded.default.nodeEnv, "production");
+  assert.equal(loaded.default.otpProvider, "firebase");
+  assert.equal(loaded.default.firebaseWebApiKey, "firebase_web_api_key");
+});
+
+test("production env rejects supabase storage mode without service role key", async () => {
+  withProdBaseEnv();
+  process.env.IMAGE_STORAGE_PROVIDER = "supabase";
+  process.env.SUPABASE_URL = "https://example.supabase.co";
+  process.env.SUPABASE_STORAGE_BUCKET = "foodiego-public";
+  delete process.env.SUPABASE_SERVICE_ROLE_KEY;
+  await assert.rejects(loadEnvModule, /Missing required environment variable: SUPABASE_SERVICE_ROLE_KEY/);
 });
 
 test.after(() => {

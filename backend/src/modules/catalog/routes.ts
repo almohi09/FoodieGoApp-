@@ -1,9 +1,20 @@
 import { Router } from "express";
 import catalogRepository from "../../db/repositories/catalogRepository.js";
 import { getRestaurantMenuItem } from "../../lib/core.js";
+import { resolveImageUrl } from "../../lib/imageUrl.js";
 import { db } from "../../store.js";
 
 const router = Router();
+
+const mapRestaurantImage = (restaurant: any) => ({
+  ...restaurant,
+  image: resolveImageUrl(restaurant?.image),
+});
+
+const mapMenuItemImage = (item: any) => ({
+  ...item,
+  image: resolveImageUrl(item?.image),
+});
 
 router.get("/restaurants", async (_req, res) => {
   if (catalogRepository.isEnabled()) {
@@ -12,7 +23,7 @@ router.get("/restaurants", async (_req, res) => {
       return res.json({ restaurants });
     }
   }
-  return res.json({ restaurants: Array.from(db.restaurants.values()) });
+  return res.json({ restaurants: Array.from(db.restaurants.values()).map(mapRestaurantImage) });
 });
 
 router.get("/restaurants/featured", async (_req, res) => {
@@ -22,7 +33,7 @@ router.get("/restaurants/featured", async (_req, res) => {
       return res.json({ restaurants: restaurants.slice(0, 5) });
     }
   }
-  return res.json({ restaurants: Array.from(db.restaurants.values()).slice(0, 5) });
+  return res.json({ restaurants: Array.from(db.restaurants.values()).slice(0, 5).map(mapRestaurantImage) });
 });
 
 router.get("/restaurants/search", async (req, res) => {
@@ -40,11 +51,11 @@ router.get("/restaurants/search", async (req, res) => {
     }
     return restaurant.name.toLowerCase().includes(q) || restaurant.cuisines.some((c) => c.toLowerCase().includes(q));
   });
-  res.json({ restaurants, total: restaurants.length });
+  res.json({ restaurants: restaurants.map(mapRestaurantImage), total: restaurants.length });
 });
 
 router.get("/restaurants/nearby", (_req, res) => {
-  res.json({ restaurants: Array.from(db.restaurants.values()) });
+  res.json({ restaurants: Array.from(db.restaurants.values()).map(mapRestaurantImage) });
 });
 
 router.get("/restaurants/:restaurantId", async (req, res) => {
@@ -58,7 +69,7 @@ router.get("/restaurants/:restaurantId", async (req, res) => {
   if (!restaurant) {
     return res.status(404).json({ message: "Restaurant not found" });
   }
-  return res.json({ restaurant });
+  return res.json({ restaurant: mapRestaurantImage(restaurant) });
 });
 
 router.get("/restaurants/:restaurantId/menu", async (req, res) => {
@@ -70,7 +81,8 @@ router.get("/restaurants/:restaurantId/menu", async (req, res) => {
     }
   }
   const categories = Array.from(new Set(menu.map((m) => m.category)));
-  res.json({ menu, categories, items: menu });
+  const mapped = menu.map(mapMenuItemImage);
+  res.json({ menu: mapped, categories, items: mapped });
 });
 
 router.get("/restaurants/:restaurantId/status", (req, res) => {

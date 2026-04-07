@@ -105,30 +105,32 @@ export const createApiClient = (): AxiosInstance => {
     },
   });
 
-  client.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
-    const token = await getAccessToken();
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+  client.interceptors.request.use(
+    async (config: InternalAxiosRequestConfig) => {
+      const token = await getAccessToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
 
-    const deviceId = await getDeviceId();
-    config.headers['X-Device-Id'] = deviceId;
-    config.headers['X-Api-Version'] = appEnv.apiVersion;
-    if (!config.headers['X-Trace-Id']) {
-      config.headers['X-Trace-Id'] = createTraceId('req');
-    }
+      const deviceId = await getDeviceId();
+      config.headers['X-Device-Id'] = deviceId;
+      config.headers['X-Api-Version'] = appEnv.apiVersion;
+      if (!config.headers['X-Trace-Id']) {
+        config.headers['X-Trace-Id'] = createTraceId('req');
+      }
 
-    if (
-      isIdempotentEligible(config.method) &&
-      !config.headers['Idempotency-Key']
-    ) {
-      config.headers['Idempotency-Key'] = newIdempotencyKey(
-        String(config.url || 'request'),
-      );
-    }
+      if (
+        isIdempotentEligible(config.method) &&
+        !config.headers['Idempotency-Key']
+      ) {
+        config.headers['Idempotency-Key'] = newIdempotencyKey(
+          String(config.url || 'request'),
+        );
+      }
 
-    return config;
-  });
+      return config;
+    },
+  );
 
   client.interceptors.response.use(
     response => response,
@@ -164,10 +166,7 @@ export const createApiClient = (): AxiosInstance => {
         return Promise.reject(error);
       }
 
-      originalRequest.headers = {
-        ...originalRequest.headers,
-        Authorization: `Bearer ${nextToken}`,
-      };
+      originalRequest.headers.set('Authorization', `Bearer ${nextToken}`);
       return client(originalRequest as AxiosRequestConfig);
     },
   );
@@ -175,7 +174,9 @@ export const createApiClient = (): AxiosInstance => {
   return client;
 };
 
-const refreshAccessToken = async (client: AxiosInstance): Promise<string | null> => {
+const refreshAccessToken = async (
+  client: AxiosInstance,
+): Promise<string | null> => {
   if (refreshPromise) {
     return refreshPromise;
   }
@@ -187,15 +188,21 @@ const refreshAccessToken = async (client: AxiosInstance): Promise<string | null>
     }
 
     try {
-      const response = await client.post('/auth/refresh-token', { refreshToken }, {
-        headers: {
-          Authorization: '',
-          'Idempotency-Key': newIdempotencyKey('auth-refresh'),
+      const response = await client.post(
+        '/auth/refresh-token',
+        { refreshToken },
+        {
+          headers: {
+            Authorization: '',
+            'Idempotency-Key': newIdempotencyKey('auth-refresh'),
+          },
         },
-      });
+      );
 
       const nextAccessToken = response.data?.token as string | undefined;
-      const nextRefreshToken = response.data?.refreshToken as string | undefined;
+      const nextRefreshToken = response.data?.refreshToken as
+        | string
+        | undefined;
 
       if (!nextAccessToken) {
         return null;

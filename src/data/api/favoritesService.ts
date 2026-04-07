@@ -1,8 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Restaurant } from '../../domain/types';
+import { Restaurant } from '../../domain/types';
+import appEnv from '../../config/env';
 
-const API_BASE_URL = 'https://api.foodiego.in/api/v1';
+const API_BASE_URL = appEnv.apiBaseUrl;
 const FAVORITES_STORAGE_KEY = '@favorites_cache';
 
 export interface FavoriteRestaurant extends Restaurant {
@@ -182,3 +183,4 @@ class FavoritesService {
 
 export const favoritesService = new FavoritesService();
 export default favoritesService;
+

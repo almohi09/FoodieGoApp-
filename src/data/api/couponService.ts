@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Coupon } from '../../domain/types';
+import appEnv from '../../config/env';
 import {
   clearGuardState,
   enforceLocalVelocityGuard,
@@ -8,7 +9,7 @@ import {
   recordGuardedFailure,
 } from './securityGuard';
 
-const API_BASE_URL = 'https://api.foodiego.in/api/v1';
+const API_BASE_URL = appEnv.apiBaseUrl;
 
 export interface CouponValidation {
   valid: boolean;
@@ -262,3 +263,4 @@ class CouponService {
 
 export const couponService = new CouponService();
 export default couponService;
+

@@ -1,6 +1,4 @@
-import "dotenv/config";
 import type { AddressInfo } from "node:net";
-import app from "../src/app.js";
 
 type Sample = {
   status: number;
@@ -11,6 +9,19 @@ const REQUESTS = Number(process.env.PERF_REQUESTS || 120);
 const CONCURRENCY = Number(process.env.PERF_CONCURRENCY || 8);
 const MAX_P95_MS = Number(process.env.PERF_MAX_P95_MS || 450);
 const MAX_ERROR_RATE = Number(process.env.PERF_MAX_ERROR_RATE || 0.02);
+
+const ensurePerfEnv = () => {
+  process.env.NODE_ENV = process.env.NODE_ENV || "test";
+  process.env.PORT = process.env.PORT || "4000";
+  process.env.API_PREFIX = process.env.API_PREFIX || "/api/v1";
+  process.env.PAYMENT_WEBHOOK_SECRET = process.env.PAYMENT_WEBHOOK_SECRET || "dev_webhook_secret";
+  process.env.OTP_PROVIDER = process.env.OTP_PROVIDER || "mock";
+  process.env.OTP_BYPASS_CODE = process.env.OTP_BYPASS_CODE || "123456";
+  process.env.MONITORING_SINK_URL = "";
+  process.env.MONITORING_SINK_AUTH_TOKEN = "";
+  process.env.MONITORING_EMIT_REQUEST_EVENTS = "false";
+  process.env.USE_POSTGRES = process.env.USE_POSTGRES || "false";
+};
 
 const percentile = (values: number[], p: number) => {
   if (!values.length) {
@@ -37,6 +48,8 @@ const runBatch = async (baseUrl: string, count: number): Promise<Sample[]> => {
 };
 
 const main = async () => {
+  ensurePerfEnv();
+  const { default: app } = await import("../src/app.js");
   const server = app.listen(0);
   await new Promise<void>((resolve) => server.once("listening", () => resolve()));
   const address = server.address() as AddressInfo;
@@ -83,4 +96,3 @@ main().catch((err) => {
   console.error(err);
   process.exit(1);
 });
-

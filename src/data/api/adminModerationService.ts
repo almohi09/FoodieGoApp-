@@ -1,7 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import appEnv from '../../config/env';
 
-const API_BASE_URL = 'https://api.foodiego.in/api/v1';
+const API_BASE_URL = appEnv.apiBaseUrl;
 
 export interface ReportedItem {
   id: string;
@@ -392,3 +393,4 @@ class AdminModerationService {
 
 export const adminModerationService = new AdminModerationService();
 export default adminModerationService;
+

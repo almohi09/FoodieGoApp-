@@ -2,8 +2,9 @@ import axios, { AxiosInstance } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MenuItem } from '../../domain/types';
 import { parseSecurityActionError } from './securityGuard';
+import appEnv from '../../config/env';
 
-const API_BASE_URL = 'https://api.foodiego.in/api/v1';
+const API_BASE_URL = appEnv.apiBaseUrl;
 
 export interface CreateMenuItemData {
   name: string;
@@ -312,6 +313,8 @@ class SellerMenuService {
   ): Promise<{
     success: boolean;
     error?: string;
+    errorCode?: string;
+    retryAfterSec?: number;
   }> {
     try {
       await this.api.patch(

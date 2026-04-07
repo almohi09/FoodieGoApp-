@@ -88,3 +88,16 @@ logs
 # OS / misc
 .DS_Store
 Thumbs.db
+# Android build/cache
+android/.gradle-user/
+android/build/
+android/app/build/
+
+# Gradle
+.gradle/
+
+# React Native
+android/.cxx/
+
+# Logs
+*.log

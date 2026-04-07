@@ -2,8 +2,9 @@ import axios, { AxiosInstance } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Order, OrderStatus } from '../../domain/types';
 import { parseSecurityActionError } from './securityGuard';
+import appEnv from '../../config/env';
 
-const API_BASE_URL = 'https://api.foodiego.in/api/v1';
+const API_BASE_URL = appEnv.apiBaseUrl;
 
 export interface SellerOrder extends Order {
   acceptedAt?: string;
@@ -116,6 +117,8 @@ class SellerOrderService {
     success: boolean;
     order?: SellerOrder;
     error?: string;
+    errorCode?: string;
+    retryAfterSec?: number;
   }> {
     try {
       const response = await this.api.post(
@@ -176,7 +179,10 @@ class SellerOrderService {
       );
       return { success: true, order: response.data.order };
     } catch (error: any) {
-      const parsed = parseSecurityActionError(error, 'Failed to start preparing');
+      const parsed = parseSecurityActionError(
+        error,
+        'Failed to start preparing',
+      );
       return {
         success: false,
         error: parsed.message,

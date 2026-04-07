@@ -8,6 +8,7 @@ Date: April 6, 2026
    - provider modes:
      - `OTP_PROVIDER=mock`
      - `OTP_PROVIDER=http`
+     - `OTP_PROVIDER=firebase`
    - OTP controls:
      - send rate window + cap
      - verify failure window + lockout
@@ -44,6 +45,8 @@ Date: April 6, 2026
    - `OTP_PROVIDER`
    - `OTP_PROVIDER_HTTP_URL`
    - `OTP_PROVIDER_HTTP_TOKEN`
+   - `FIREBASE_WEB_API_KEY`
+   - `FIREBASE_OTP_RECAPTCHA_BYPASS_TOKEN`
    - `OTP_BYPASS_CODE`
    - `OTP_TTL_SEC`
    - `OTP_SEND_WINDOW_SEC`

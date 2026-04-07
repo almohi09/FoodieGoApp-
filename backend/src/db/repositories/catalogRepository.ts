@@ -1,9 +1,10 @@
 import { prisma, usePostgres } from "../prismaClient.js";
+import { resolveImageUrl } from "../../lib/imageUrl.js";
 
 const toRestaurantDto = (row: any) => ({
   id: row.id,
   name: row.name,
-  image: row.image,
+  image: resolveImageUrl(row.image),
   rating: row.rating,
   reviewCount: row.reviewCount,
   deliveryTime: row.deliveryTime,
@@ -18,7 +19,7 @@ const toMenuItemDto = (row: any) => ({
   name: row.name,
   description: row.description,
   price: row.price,
-  image: row.image,
+  image: resolveImageUrl(row.image),
   category: row.category,
   isVeg: row.isVeg,
   isCustomizable: row.isCustomizable,

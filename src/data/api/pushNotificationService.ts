@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { OrderStatus } from '../../domain/types';
+import { OrderStatus } from '../../domain/types';
+import appEnv from '../../config/env';
 
-const API_BASE_URL = 'https://api.foodiego.in/api/v1';
+const API_BASE_URL = appEnv.apiBaseUrl;
 const PUSH_TOKEN_KEY = '@push_token';
 const NOTIFICATION_SETTINGS_KEY = '@notification_settings';
 
@@ -240,3 +241,4 @@ class PushNotificationService {
 
 export const pushNotificationService = new PushNotificationService();
 export default pushNotificationService;
+

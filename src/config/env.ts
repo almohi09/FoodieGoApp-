@@ -9,9 +9,12 @@ export interface AppEnvConfig {
 }
 
 const DEFAULT_API_BASE_URL = 'https://api.foodiego.in/api/v1';
+const RESOLVED_API_BASE_URL =
+  (typeof process !== 'undefined' ? process.env?.API_BASE_URL : undefined) ||
+  DEFAULT_API_BASE_URL;
 
 export const appEnv: AppEnvConfig = {
-  apiBaseUrl: DEFAULT_API_BASE_URL,
+  apiBaseUrl: RESOLVED_API_BASE_URL,
   requestTimeoutMs: 30000,
   trackingSocketPath: '/orders',
   apiVersion: 'v1',

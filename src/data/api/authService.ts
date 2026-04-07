@@ -54,7 +54,10 @@ class AuthService {
     );
   }
 
-  async sendOTP(phone: string): Promise<{ success: boolean; message: string }> {
+  async sendOTP(
+    phone: string,
+    appVerifierToken?: string,
+  ): Promise<{ success: boolean; message: string }> {
     const localGuard = await enforceLocalVelocityGuard('otp_send', {
       maxAttempts: 5,
       windowSec: 300,
@@ -66,7 +69,10 @@ class AuthService {
     }
 
     try {
-      const response = await this.api.post('/auth/send-otp', { phone });
+      const response = await this.api.post('/auth/send-otp', {
+        phone,
+        ...(appVerifierToken ? { appVerifierToken } : {}),
+      });
       const data = parseAuthSuccess(response.data, 'auth.sendOTP');
       await clearGuardState('otp_send');
       return {
@@ -304,7 +310,10 @@ class AuthService {
     }
   }
 
-  async resendOTP(phone: string): Promise<{ success: boolean; message?: string }> {
+  async resendOTP(
+    phone: string,
+    appVerifierToken?: string,
+  ): Promise<{ success: boolean; message?: string }> {
     const localGuard = await enforceLocalVelocityGuard('otp_resend', {
       maxAttempts: 4,
       windowSec: 300,
@@ -316,7 +325,10 @@ class AuthService {
     }
 
     try {
-      await this.api.post('/auth/resend-otp', { phone });
+      await this.api.post('/auth/resend-otp', {
+        phone,
+        ...(appVerifierToken ? { appVerifierToken } : {}),
+      });
       await clearGuardState('otp_resend');
       return { success: true };
     } catch (error) {

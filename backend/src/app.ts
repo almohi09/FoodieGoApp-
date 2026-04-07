@@ -8,6 +8,7 @@ import catalogRoutes from "./modules/catalog/routes.js";
 import orderRoutes from "./modules/orders/routes.js";
 import paymentRoutes from "./modules/payments/routes.js";
 import sellerRoutes from "./modules/seller/routes.js";
+import storageRoutes from "./modules/storage/routes.js";
 import { getMetricsSnapshot, getMonitoringSnapshot, observabilityMiddleware } from "./monitoring/observability.js";
 import { util } from "./store.js";
 
@@ -36,6 +37,7 @@ app.use(env.apiPrefix, orderRoutes);
 app.use(env.apiPrefix, paymentRoutes);
 app.use(env.apiPrefix, sellerRoutes);
 app.use(env.apiPrefix, adminRoutes);
+app.use(env.apiPrefix, storageRoutes);
 
 app.use((err: unknown, req: Request, res: Response, _next: NextFunction) => {
   console.error(err);

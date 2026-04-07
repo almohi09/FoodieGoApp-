@@ -1,4 +1,8 @@
-# Implementation Status (April 6, 2026)
+# Implementation Status (April 6, 2026) - SUPERSEDED
+
+> **⚠️ SUPERSEDED**: This file is deprecated. See `docs/06_FRONTEND_IMPLEMENTATION_STATUS.md` for the current frontend implementation status.
+
+> **NOTE**: Backend is now at 100% readiness (see `backend/docs/03_BACKEND_READINESS_STATUS_2026-04-06.md`). This document only tracks frontend work.
 
 This document records what was implemented in this pass for the production roadmap.
 
@@ -13,6 +17,7 @@ This document records what was implemented in this pass for the production roadm
 ## Completed in this pass
 
 ### 1) Core transaction path wiring
+
 - Added shared API client: `src/data/api/httpClient.ts`
   - Token persistence/clear helpers.
   - Refresh token retry flow.
@@ -31,6 +36,7 @@ This document records what was implemented in this pass for the production roadm
   - `src/presentation/screens/cart/OrderTrackingScreen.tsx`
 
 ### 2) Checkout reliability guards
+
 - Added checks before order placement:
   - Cart/inventory validation.
   - Restaurant open/close validation.
@@ -41,6 +47,7 @@ This document records what was implemented in this pass for the production roadm
 - Added idempotency for critical write flows in checkout/payment services.
 
 ### 3) Real-time tracking fallback chain
+
 - Added realtime tracking setup with:
   - WebSocket live updates.
   - Polling recovery fallback.
@@ -48,6 +55,7 @@ This document records what was implemented in this pass for the production roadm
 - Implemented in `trackingService.startRealtimeTracking(...)`.
 
 ### 4) Seller/Admin operational dashboard wiring
+
 - Seller dashboard switched from static placeholders to live service calls:
   - Order stats, pending queue, low stock, earnings snapshots.
   - File: `src/presentation/screens/seller/SellerDashboardScreen.tsx`
@@ -56,6 +64,7 @@ This document records what was implemented in this pass for the production roadm
   - File: `src/presentation/screens/admin/AdminDashboardScreen.tsx`
 
 ### 5) Observability, growth and quality scaffolding
+
 - Added telemetry wrapper: `src/monitoring/telemetry.ts`
 - Integrated analytics tracking at app and checkout funnel points.
 - Added CI workflow: `.github/workflows/ci.yml`
@@ -64,6 +73,7 @@ This document records what was implemented in this pass for the production roadm
 - Added infra unit test: `__tests__/httpClient.test.ts`
 
 ### 6) API contract hardening (roadmap item started)
+
 - Added shared runtime validators: `src/data/api/contracts.ts`.
 - Added response contract checks to critical services:
   - `authService.ts`
@@ -77,6 +87,7 @@ This document records what was implemented in this pass for the production roadm
   - `src/data/api/httpClient.ts` (`X-Api-Version`)
 
 ### 7) E2E smoke gate foundation (roadmap item started)
+
 - Added CI smoke gate job:
   - `.github/workflows/ci.yml` (`e2e-smoke` job)
 - Added smoke test harness:
@@ -100,6 +111,7 @@ This document records what was implemented in this pass for the production roadm
     - `home-screen-root`
 
 ### 8) Realtime tracking resilience hardening (roadmap item started)
+
 - Upgraded `src/data/api/trackingService.ts` with:
   - WebSocket reconnect using exponential backoff + jitter.
   - Event deduplication by `eventId`.
@@ -109,6 +121,7 @@ This document records what was implemented in this pass for the production roadm
 - Polling and WebSocket updates now pass through shared guarded emitters.
 
 ### 9) Detox journey expansion (roadmap item #2 progressed)
+
 - Expanded Detox flow in `e2e/detox/app.detox.e2e.js` to cover:
   - onboarding -> guest login -> home
   - open featured restaurant
@@ -128,6 +141,7 @@ This document records what was implemented in this pass for the production roadm
 - Added network-resilience fallback for restaurant/menu/search in `restaurantService.ts` using `mockData.ts`.
 
 ### 10) Observability baseline (pilot plan item started)
+
 - Added observability context module:
   - `src/monitoring/observabilityContext.ts`
 - App startup now sets release context:
@@ -139,6 +153,7 @@ This document records what was implemented in this pass for the production roadm
 - API error capture now includes trace/tags for request correlation.
 
 ### 11) Payment reconciliation foundation (pilot plan item started)
+
 - Extended payment status model in `paymentService.ts` with:
   - source (`webhook` | `gateway` | `unknown`)
   - `lastUpdatedAt`
@@ -154,6 +169,7 @@ This document records what was implemented in this pass for the production roadm
   - `__tests__/paymentReconciliationService.test.ts`
 
 ### 12) Seller operational actions (pilot plan item started)
+
 - Added seller restaurant operational status service:
   - `src/data/api/sellerRestaurantService.ts`
 - Upgraded seller dashboard for live actions:
@@ -165,6 +181,7 @@ This document records what was implemented in this pass for the production roadm
     - toggle availability, quick restock enable flow.
 
 ### 13) Admin operational controls + payouts (pilot plan item started)
+
 - Added admin payout service:
   - `src/data/api/adminPayoutService.ts`
   - payout summary/queue and actions:
@@ -180,6 +197,7 @@ This document records what was implemented in this pass for the production roadm
 - Fixed moderation count source mismatch (`reported items` now uses `items` response shape).
 
 ### 14) App-side abuse and rate-limit guards (pilot plan item started)
+
 - Added shared security guard utility:
   - `src/data/api/securityGuard.ts`
   - local velocity/cooldown guard support.
@@ -194,6 +212,7 @@ This document records what was implemented in this pass for the production roadm
   - `src/presentation/screens/auth/OTPVerifyScreen.tsx`
 
 ### 15) Server-driven lockout UX standardization (pilot plan item progressed)
+
 - Added unified security action parser:
   - `parseSecurityActionError(...)` in `src/data/api/securityGuard.ts`
   - Normalizes: `message`, `errorCode`, `retryAfterSec`, rate-limit/risk-block flags.
@@ -207,6 +226,7 @@ This document records what was implemented in this pass for the production roadm
 - Result: 429/risk responses now return consistent retry/cooldown messaging across customer/seller/admin action flows.
 
 ### 16) Sensitive-action audit logs (pilot security control progressed)
+
 - Added audit service:
   - `src/data/api/adminAuditService.ts`
   - Records admin/seller sensitive actions with local persistence fallback.
@@ -222,6 +242,7 @@ This document records what was implemented in this pass for the production roadm
   - Displays source (`remote` or `local`) to indicate backend readiness.
 
 ### 17) Pilot dispatch workflow + delivery proof metadata (pilot delivery ops progressed)
+
 - Added dispatch operations service:
   - `src/data/api/dispatchService.ts`
   - Dispatch board fetch with remote-first and local fallback state.
@@ -239,6 +260,7 @@ This document records what was implemented in this pass for the production roadm
 - All dispatch actions are audit-logged through `adminAuditService`.
 
 ### 18) Backend implementation started in-repo (new)
+
 - Created backend service workspace:
   - `backend/package.json`
   - `backend/tsconfig.json`
@@ -256,6 +278,7 @@ This document records what was implemented in this pass for the production roadm
 - Current backend persistence is in-memory seed state for contract integration velocity; DB/migrations remain next.
 
 ### 19) Backend modularization + production documentation system (new)
+
 - Refactored backend from monolithic route file into domain modules:
   - `backend/src/modules/auth/routes.ts`
   - `backend/src/modules/catalog/routes.ts`
@@ -278,6 +301,7 @@ This document records what was implemented in this pass for the production roadm
   - `backend/docs/06_BACKEND_90_DAY_EXECUTION_PLAN.md`
 
 ### 20) PostgreSQL + Prisma foundation implementation started (new)
+
 - Added Prisma dependencies and scripts in `backend/package.json`:
   - `@prisma/client`, `prisma`
   - `prisma:generate`, `prisma:migrate:dev`, `prisma:migrate:deploy`, `prisma:db:push`, `db:seed`
@@ -297,6 +321,7 @@ This document records what was implemented in this pass for the production roadm
   - backend overall readiness updated from `18%` to `26%`.
 
 ### 21) Postgres-backed auth/profile consistency + orders persistence slice (new)
+
 - Fixed auth profile response consistency:
   - `backend/src/modules/auth/routes.ts`
   - `/auth/me` now resolves Postgres users correctly when `USE_POSTGRES=true`.
@@ -325,6 +350,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `26%` to `34%` (remaining `66%` to reach 100%).
 
 ### 22) Payments persistence foundation slice (new)
+
 - Added payment persistence schema:
   - `backend/prisma/schema.prisma`
   - new models: `PaymentTransaction`, `Refund`, `PaymentWebhookEvent`.
@@ -349,6 +375,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `34%` to `43%` (remaining `57%` to reach 100%).
 
 ### 23) Session lifecycle persistence + refresh rotation slice (new)
+
 - Added session persistence schema:
   - `backend/prisma/schema.prisma`
   - new model: `UserSession`.
@@ -373,6 +400,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `43%` to `50%` (remaining `50%` to reach 100%).
 
 ### 24) Idempotency persistence baseline for critical writes (new)
+
 - Added idempotency persistence schema:
   - `backend/prisma/schema.prisma`
   - new model: `IdempotencyKey`.
@@ -396,6 +424,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `50%` to `56%` (remaining `44%` to reach 100%).
 
 ### 25) Validation/error contracts + webhook verification baseline (new)
+
 - Added shared backend error contract helper:
   - `backend/src/lib/httpErrors.ts`
   - standardized shape: `success=false` + `{ error: { code, message, details? } }`.
@@ -423,6 +452,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `56%` to `64%` (remaining `36%` to reach 100%).
 
 ### 26) Seller/Admin core persistence migration (new)
+
 - Added seller persistence repository:
   - `backend/src/db/repositories/sellerRepository.ts`
   - restaurant operational status persistence.
@@ -445,6 +475,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `64%` to `70%` (remaining `30%` to reach 100%).
 
 ### 27) Backend integration test baseline (new)
+
 - Added backend integration test suite:
   - `backend/src/tests/integration/coreFlows.test.ts`
   - Uses app-level HTTP integration tests against live Express instance.
@@ -459,6 +490,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `70%` to `74%` (remaining `26%` to reach 100%).
 
 ### 28) Dispatch/payout/audit persistence migration (new)
+
 - Extended backend persistence schema:
   - `backend/prisma/schema.prisma`
   - new models: `Payout`, `AuditLog`, `DispatchRider`, `DispatchOrder`.
@@ -487,6 +519,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `74%` to `80%` (remaining `20%` to reach 100%).
 
 ### 29) Observability and operational safety baseline (new)
+
 - Added observability middleware:
   - `backend/src/monitoring/observability.ts`
   - request correlation id generation/propagation (`X-Request-Id`).
@@ -505,6 +538,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `80%` to `84%` (remaining `16%` to reach 100%).
 
 ### 30) Release-hardening integration expansion (new)
+
 - Extended integration suite coverage:
   - `backend/src/tests/integration/coreFlows.test.ts`
   - added webhook replay protection test.
@@ -520,6 +554,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `84%` to `87%` (remaining `13%` to reach 100%).
 
 ### 31) Release hardening perf/security gates (new)
+
 - Added release gate scripts:
   - `backend/package.json`
   - `perf:smoke`
@@ -542,6 +577,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `87%` to `92%` (remaining `8%` to reach 100%).
 
 ### 32) CI/CD hardening + deployment evidence (new)
+
 - Extended CI workflow with backend strict release gate:
   - `.github/workflows/ci.yml`
   - added `backend-release-gate` job with PostgreSQL service.
@@ -561,6 +597,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `92%` to `94%` (remaining `6%` to reach 100%).
 
 ### 33) Deployment manifests + env hardening baseline (new)
+
 - Added backend deployment runtime assets:
   - `backend/Dockerfile`
   - `backend/.dockerignore`
@@ -584,6 +621,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `94%` to `96%` (remaining `4%` to reach 100%).
 
 ### 34) Async worker + dead-letter resilience baseline (new)
+
 - Added persistent worker foundation in Prisma:
   - `backend/prisma/schema.prisma`
   - new models: `AsyncJob`, `DeadLetterJob`
@@ -620,6 +658,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `96%` to `98%` (remaining `2%` to reach 100%).
 
 ### 35) Monitoring sink + alerting integration baseline (new)
+
 - Extended observability core:
   - `backend/src/monitoring/observability.ts`
   - Added sink exporter (`MONITORING_SINK_URL`, optional auth token).
@@ -656,6 +695,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `98%` to `99%` (remaining `1%` to reach 100%).
 
 ### 36) Incident drill + backup/restore evidence automation (new)
+
 - Added incident drill automation:
   - `backend/scripts/incident-drill.ts`
   - `backend/package.json` -> `incident:drill`
@@ -675,6 +715,7 @@ This document records what was implemented in this pass for the production roadm
   - overall readiness moved from `99%` to `100%` (remaining `0%` to reach 100%).
 
 ### 37) Enterprise hardening pack (post-baseline) (new)
+
 - Implemented OTP provider abstraction + abuse controls:
   - `backend/src/services/otpProvider.ts`
   - `backend/src/security/abuseGuard.ts`
@@ -704,6 +745,7 @@ This document records what was implemented in this pass for the production roadm
     - repeated invalid verify returned `423`
 
 ## Partially complete / next needed
+
 - End-to-end order journey tests are still minimal (no Detox/Appium smoke flow yet).
 - Some older API services still use duplicated local axios setup; migrate all to `httpClient.ts`.
 - Production secret injection is scaffolded via `.env.example`, but build-time secret manager wiring is still needed.
@@ -722,6 +764,7 @@ This document records what was implemented in this pass for the production roadm
 - Detailed execution plan is documented in `docs/07_NEXT_STEPS_PRODUCTION.md`.
 
 ## Verification note
+
 - Latest run status:
   - `npm run lint`: pass (0 errors, warnings only in `SearchScreen.tsx`).
   - `npm test -- --runInBand --watchAll=false --forceExit`: pass (3/3 suites).
