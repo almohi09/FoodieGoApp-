@@ -24,9 +24,14 @@ router.post("/auth/send-otp", async (req, res) => {
   if (!gate.ok) {
     return sendApiError(res, 429, "RATE_LIMITED", "Too many OTP requests", { retryAfterSec: gate.retryAfterSec });
   }
-  const issued = await otpProvider.send(phone, appVerifierToken);
-  abuseGuard.noteOtpSend(phone);
-  return res.json({ success: true, message: "OTP sent", provider: issued.provider });
+  try {
+    const issued = await otpProvider.send(phone, appVerifierToken);
+    abuseGuard.noteOtpSend(phone);
+    return res.json({ success: true, message: "OTP sent", provider: issued.provider });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "OTP provider unavailable";
+    return sendApiError(res, 503, "INTERNAL_ERROR", message);
+  }
 });
 
 router.post("/auth/resend-otp", async (req, res) => {
@@ -43,9 +48,14 @@ router.post("/auth/resend-otp", async (req, res) => {
       retryAfterSec: gate.retryAfterSec,
     });
   }
-  const issued = await otpProvider.send(phone, appVerifierToken);
-  abuseGuard.noteOtpSend(phone);
-  return res.json({ success: true, message: "OTP resent", provider: issued.provider });
+  try {
+    const issued = await otpProvider.send(phone, appVerifierToken);
+    abuseGuard.noteOtpSend(phone);
+    return res.json({ success: true, message: "OTP resent", provider: issued.provider });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "OTP provider unavailable";
+    return sendApiError(res, 503, "INTERNAL_ERROR", message);
+  }
 });
 
 router.post("/auth/check-phone", async (req, res) => {

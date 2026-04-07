@@ -91,6 +91,46 @@ const callFirebase = async (method: "send" | "verify", body: Record<string, unkn
   return parsed;
 };
 
+const callTwilio = async (
+  path: string,
+  params: Record<string, string>,
+) => {
+  if (!env.twilioAccountSid) {
+    throw new Error('TWILIO_ACCOUNT_SID is required for OTP_PROVIDER=twilio');
+  }
+  if (!env.twilioAuthToken) {
+    throw new Error('TWILIO_AUTH_TOKEN is required for OTP_PROVIDER=twilio');
+  }
+  if (!env.twilioVerifyServiceSid) {
+    throw new Error(
+      'TWILIO_VERIFY_SERVICE_SID is required for OTP_PROVIDER=twilio',
+    );
+  }
+
+  const auth = Buffer.from(
+    `${env.twilioAccountSid}:${env.twilioAuthToken}`,
+  ).toString('base64');
+  const body = new URLSearchParams(params).toString();
+
+  const response = await fetch(
+    `https://verify.twilio.com/v2/Services/${encodeURIComponent(env.twilioVerifyServiceSid)}${path}`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic ${auth}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body,
+    },
+  );
+  const text = await response.text();
+  const parsed = text ? JSON.parse(text) : {};
+  if (!response.ok) {
+    throw new Error(`Twilio Verify request failed (${response.status})`);
+  }
+  return parsed;
+};
+
 export const otpProvider = {
   async send(phone: string, appVerifierToken?: string) {
     const code = env.otpBypassCode || generateOtpCode();
@@ -136,6 +176,25 @@ export const otpProvider = {
         messageId: String(response?.messageId || response?.id || ""),
       };
     }
+
+    if (env.otpProvider === 'twilio') {
+      if (env.otpBypassCode) {
+        upsertOtp(phone, code);
+        return {
+          provider: 'twilio',
+          messageId: `bypass_${Date.now()}`,
+        };
+      }
+      const response = await callTwilio('/Verifications', {
+        To: phone,
+        Channel: 'sms',
+      });
+      return {
+        provider: 'twilio',
+        messageId: String(response?.sid || ''),
+      };
+    }
+
     upsertOtp(phone, code);
     return {
       provider: "mock",
@@ -181,6 +240,31 @@ export const otpProvider = {
           return false;
         }
         // Fall through to local fallback to keep non-production environments stable.
+      }
+    }
+
+    if (env.otpProvider === 'twilio') {
+      if (env.otpBypassCode) {
+        const entry = getOtp(phone);
+        if (!entry) {
+          return false;
+        }
+        const valid = entry.code === otp;
+        if (valid) {
+          otpState.delete(phone);
+          db.otpByPhone.delete(phone);
+        }
+        return valid;
+      }
+      try {
+        const response = await callTwilio('/VerificationCheck', {
+          To: phone,
+          Code: otp,
+        });
+        const approved = String(response?.status || '').toLowerCase() === 'approved';
+        return approved;
+      } catch {
+        return false;
       }
     }
 

@@ -1,5 +1,5 @@
 type NodeEnv = 'development' | 'test' | 'production';
-type OtpProvider = 'mock' | 'http' | 'firebase';
+type OtpProvider = 'mock' | 'http' | 'firebase' | 'twilio';
 type ImageStorageProvider = 'inline' | 'supabase';
 
 const parseNodeEnv = (value: string | undefined): NodeEnv => {
@@ -67,11 +67,16 @@ const parseCsvList = (
 
 const parseOtpProvider = (value: string | undefined): OtpProvider => {
   const resolved = (value || 'mock').toLowerCase();
-  if (resolved === 'mock' || resolved === 'http' || resolved === 'firebase') {
+  if (
+    resolved === 'mock' ||
+    resolved === 'http' ||
+    resolved === 'firebase' ||
+    resolved === 'twilio'
+  ) {
     return resolved;
   }
   throw new Error(
-    `Invalid OTP_PROVIDER "${value}". Allowed: mock | http | firebase.`,
+    `Invalid OTP_PROVIDER "${value}". Allowed: mock | http | firebase | twilio.`,
   );
 };
 
@@ -126,7 +131,7 @@ if (nodeEnv === 'production') {
   getRequired('PAYMENT_WEBHOOK_SECRET');
   if (otpProvider === 'mock') {
     throw new Error(
-      'OTP_PROVIDER must be set to "http" or "firebase" in production.',
+      'OTP_PROVIDER must be set to "http", "firebase", or "twilio" in production.',
     );
   }
   if (otpProvider === 'http') {
@@ -135,6 +140,11 @@ if (nodeEnv === 'production') {
   }
   if (otpProvider === 'firebase') {
     getRequired('FIREBASE_WEB_API_KEY');
+  }
+  if (otpProvider === 'twilio') {
+    getRequired('TWILIO_ACCOUNT_SID');
+    getRequired('TWILIO_AUTH_TOKEN');
+    getRequired('TWILIO_VERIFY_SERVICE_SID');
   }
   if (otpBypassCode.length > 0) {
     throw new Error('OTP_BYPASS_CODE must not be configured in production.');
@@ -191,6 +201,9 @@ export const env = {
   firebaseOtpRecaptchaBypassToken: (
     process.env.FIREBASE_OTP_RECAPTCHA_BYPASS_TOKEN || ''
   ).trim(),
+  twilioAccountSid: (process.env.TWILIO_ACCOUNT_SID || '').trim(),
+  twilioAuthToken: (process.env.TWILIO_AUTH_TOKEN || '').trim(),
+  twilioVerifyServiceSid: (process.env.TWILIO_VERIFY_SERVICE_SID || '').trim(),
   otpBypassCode,
   otpTtlSec: parseNumber(process.env.OTP_TTL_SEC, 300, 'OTP_TTL_SEC'),
   otpSendWindowSec: parseNumber(
