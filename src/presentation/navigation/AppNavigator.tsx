@@ -34,6 +34,13 @@ import { OrderConfirmedScreen } from '../screens/cart/OrderConfirmedScreen';
 
 import { SellerDashboardScreen } from '../screens/seller/SellerDashboardScreen';
 import { AdminDashboardScreen } from '../screens/admin/AdminDashboardScreen';
+import {
+  RiderLoginScreen,
+  RiderDashboardScreen,
+  RiderTaskDetailScreen,
+  RiderEarningsScreen,
+  RiderHistoryScreen,
+} from '../screens/rider';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -45,6 +52,7 @@ export type RootStackParamList = {
   SellerLogin: undefined;
   SellerRegister: { phone: string };
   AdminLogin: undefined;
+  RiderLogin: undefined;
   MainTabs: undefined;
   RestaurantDetail: { restaurantId: string };
   Cart: undefined;
@@ -53,6 +61,10 @@ export type RootStackParamList = {
   OrderConfirmed: { orderId: string };
   SellerDashboard: undefined;
   AdminDashboard: undefined;
+  RiderDashboard: undefined;
+  RiderTaskDetail: { orderId: string; order: any };
+  RiderEarnings: undefined;
+  RiderHistory: undefined;
   LocationEntry: undefined;
   ErrorCenter: undefined;
 };
@@ -190,6 +202,31 @@ export const AppNavigator: React.FC = () => {
         <Stack.Screen
           name="AdminDashboard"
           component={AdminDashboardScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
+          name="RiderLogin"
+          component={RiderLoginScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
+          name="RiderDashboard"
+          component={RiderDashboardScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
+          name="RiderTaskDetail"
+          component={RiderTaskDetailScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
+          name="RiderEarnings"
+          component={RiderEarningsScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
+          name="RiderHistory"
+          component={RiderHistoryScreen}
           options={{ animation: 'slide_from_right' }}
         />
         <Stack.Screen

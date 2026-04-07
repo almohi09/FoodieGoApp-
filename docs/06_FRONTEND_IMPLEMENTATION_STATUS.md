@@ -211,15 +211,36 @@ These services exist but may not be fully integrated:
 
 ---
 
-## J) Rider App - NOT STARTED ❌
+## J) Rider App - IN PROGRESS 🚀
 
-The rider app surface is completely missing:
+### Completed ✅
 
-- [ ] Rider login and profile basics
-- [ ] Assigned jobs list and task detail
-- [ ] Status actions: pickup confirmed, out for delivery, delivered
-- [ ] Proof-capture flow
-- [ ] Rider earnings summary
+- [x] `riderService.ts` - Full API integration for rider operations
+- [x] `RiderLoginScreen.tsx` - Rider login with OTP
+- [x] `RiderDashboardScreen.tsx` - Dashboard with stats, online toggle, assigned orders
+- [x] `RiderTaskDetailScreen.tsx` - Task detail with pickup/delivery actions
+- [x] `RiderEarningsScreen.tsx` - Earnings summary and history
+- [x] `RiderHistoryScreen.tsx` - Delivery history
+- [x] Navigation routes added
+
+### Available Endpoints (Wired)
+
+- `GET /rider/orders/assigned` - Get assigned orders
+- `POST /rider/orders/:id/accept` - Accept order
+- `POST /rider/orders/:id/start-pickup` - Start pickup
+- `POST /rider/orders/:id/confirm-pickup` - Confirm pickup
+- `POST /rider/orders/:id/start-delivery` - Start delivery
+- `POST /rider/orders/:id/deliver` - Confirm delivery with proof
+- `GET /rider/stats` - Get rider stats
+- `GET /rider/earnings` - Get earnings
+- `GET /rider/orders/history` - Get delivery history
+
+### Still Needed
+
+- [ ] Rider-specific auth flow (separate from customer/seller)
+- [ ] Location tracking service
+- [ ] Push notifications for new orders
+- [ ] Real-time order assignment
 
 ---
 
@@ -233,7 +254,7 @@ The rider app surface is completely missing:
 | Admin Dashboard     | 85%        | Actions wired, filters/search/UI incomplete     |
 | Observability       | 75%        | Telemetry wired, crash transport missing        |
 | Offline/Reliability | 30%        | Not started                                     |
-| Rider App           | 0%         | Not started                                     |
+| Rider App           | 60%        | Core screens wired, needs auth & notifications  |
 | E2E Testing         | 40%        | Basic smoke wired, full journey pending         |
 | Real-time Maps      | 20%        | Placeholder exists, integration pending         |
 
@@ -241,8 +262,8 @@ The rider app surface is completely missing:
 
 ## Next Priority Items
 
-1. **P0 (Pilot Blocker)**: Rider app core flow
-2. **P0 (Pilot Blocker)**: Real map integration in tracking
+1. **P0 (Pilot Blocker)**: Real map integration in tracking
+2. **P1 (High)**: Rider location tracking service
 3. **P1 (High)**: Offline queue + resume synchronization
 4. **P1 (High)**: Sentry/Crashlytics SDK transport
 5. **P2 (Medium)**: Full seller menu CRUD screens
