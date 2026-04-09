@@ -1,0 +1,290 @@
+﻿
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\config
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        08-04-2026     02:39           1279 env.ts                                                                                        
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\context
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        08-04-2026     21:15           6630 ThemeContext.tsx                                                                              
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\data\api
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        06-04-2026     18:06           3384 adminAuditService.ts                                                                          
+-a----        07-04-2026     12:56          10616 adminDashboardService.ts                                                                      
+-a----        07-04-2026     12:56           9699 adminModerationService.ts                                                                     
+-a----        07-04-2026     13:31           5794 adminPayoutService.ts                                                                         
+-a----        07-04-2026     12:56           8617 adminUserService.ts                                                                           
+-a----        07-04-2026     12:56           7807 analyticsService.ts                                                                           
+-a----        07-04-2026     18:44          10950 authService.ts                                                                                
+-a----        06-04-2026     15:43           5623 cacheService.ts                                                                               
+-a----        06-04-2026     16:48          10121 checkoutService.ts                                                                            
+-a----        06-04-2026     16:47           2967 contracts.ts                                                                                  
+-a----        07-04-2026     12:56           6649 couponService.ts                                                                              
+-a----        07-04-2026     12:56           4918 deliveryService.ts                                                                            
+-a----        06-04-2026     18:09           6634 dispatchService.ts                                                                            
+-a----        07-04-2026     12:56           7306 enhancedSearchService.ts                                                                      
+-a----        07-04-2026     12:56           6291 experimentService.ts                                                                          
+-a----        07-04-2026     12:56           5061 favoritesService.ts                                                                           
+-a----        07-04-2026     12:56           7967 filterService.ts                                                                              
+-a----        07-04-2026     12:56           8216 fraudDetectionService.ts                                                                      
+-a----        07-04-2026     13:29           6056 httpClient.ts                                                                                 
+-a----        06-04-2026     15:43           1658 index.ts                                                                                      
+-a----        07-04-2026     12:56           3953 inventoryService.ts                                                                           
+-a----        08-04-2026     00:08           7030 locationService.ts                                                                            
+-a----        06-04-2026     15:43           8207 mockData.ts                                                                                   
+-a----        06-04-2026     16:48           6952 orderService.ts                                                                               
+-a----        06-04-2026     17:42           2375 paymentReconciliationService.ts                                                               
+-a----        07-04-2026     13:28          13240 paymentService.ts                                                                             
+-a----        07-04-2026     20:55           6647 pushNotificationService.ts                                                                    
+-a----        07-04-2026     12:56           9051 recommendationService.ts                                                                      
+-a----        07-04-2026     12:56           7256 repeatCheckoutService.ts                                                                      
+-a----        06-04-2026     17:29           8237 restaurantService.ts                                                                          
+-a----        07-04-2026     12:56           6982 reviewService.ts                                                                              
+-a----        07-04-2026     17:59          11646 riderService.ts                                                                               
+-a----        06-04-2026     15:43           2703 searchService.ts                                                                              
+-a----        06-04-2026     18:02           4925 securityGuard.ts                                                                              
+-a----        07-04-2026     13:31           8372 sellerEarningsService.ts                                                                      
+-a----        07-04-2026     13:29           8030 sellerMenuService.ts                                                                          
+-a----        07-04-2026     13:29           9155 sellerOrderService.ts                                                                         
+-a----        07-04-2026     19:55           4227 sellerRestaurantService.ts                                                                    
+-a----        07-04-2026     12:56           7813 supportService.ts                                                                             
+-a----        07-04-2026     13:29          15666 trackingService.ts                                                                            
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\data\services
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        07-04-2026     19:07           6501 offlineQueueService.ts                                                                        
+-a----        08-04-2026     00:01           6502 riderLocationService.ts                                                                       
+-a----        07-04-2026     18:53           7925 riderNotificationService.ts                                                                   
+-a----        07-04-2026     19:00           9278 riderWebSocketService.ts                                                                      
+-a----        07-04-2026     19:06           6870 sentryService.ts                                                                              
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\data\storage
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        07-04-2026     21:46           3322 appStore.ts                                                                                   
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\data\stores
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        07-04-2026     18:12           3050 riderAuthStore.ts                                                                             
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\domain\constants
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        08-04-2026     21:18           1794 index.ts                                                                                      
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\domain\types
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        07-04-2026     20:40           5673 index.ts                                                                                      
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\monitoring
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        06-04-2026     17:39           3165 errorCenter.ts                                                                                
+-a----        06-04-2026     17:38            727 observabilityContext.ts                                                                       
+-a----        06-04-2026     17:38            582 telemetry.ts                                                                                  
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\presentation\components\common
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        06-04-2026     01:51           1811 AppErrorBoundary.tsx                                                                          
+-a----        08-04-2026     20:56           6317 Badge.tsx                                                                                     
+-a----        08-04-2026     20:57           7858 Button.tsx                                                                                    
+-a----        05-04-2026     13:05           1540 EmptyState.tsx                                                                                
+-a----        08-04-2026     20:56           3442 GlassCard.tsx                                                                                 
+-a----        08-04-2026     20:50            508 index.ts                                                                                      
+-a----        05-04-2026     23:53           3264 Input.tsx                                                                                     
+-a----        08-04-2026     20:56           2602 Loading.tsx                                                                                   
+-a----        07-04-2026     19:58           9484 MapView.tsx                                                                                   
+-a----        08-04-2026     21:10           7530 MenuItemCard.tsx                                                                              
+-a----        07-04-2026     21:47           3785 OfflineIndicator.tsx                                                                          
+-a----        08-04-2026     21:08           4294 PromoBanner.tsx                                                                               
+-a----        08-04-2026     21:09          10792 RestaurantCard.tsx                                                                            
+-a----        08-04-2026     20:58           4741 Skeleton.tsx                                                                                  
+-a----        05-04-2026     13:16           2300 styles.ts                                                                                     
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\presentation\hooks
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        06-04-2026     15:41           2621 useHomeSearch.ts                                                                              
+-a----        07-04-2026     20:00           1775 useOfflineQueue.ts                                                                            
+-a----        05-04-2026     13:16            278 useRedux.ts                                                                                   
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\presentation\navigation
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        08-04-2026     21:16          12135 AppNavigator.tsx                                                                              
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\presentation\screens\admin
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        07-04-2026     19:41          11842 AdminAuditLogScreen.tsx                                                                       
+-a----        07-04-2026     19:52          35873 AdminDashboardScreen.tsx                                                                      
+-a----        07-04-2026     19:39          13743 AdminDispatchBoardScreen.tsx                                                                  
+-a----        07-04-2026     23:07          21795 AdminModerationDetailScreen.tsx                                                               
+-a----        07-04-2026     23:07          14891 AdminModerationScreen.tsx                                                                     
+-a----        07-04-2026     19:50          16309 AdminNotificationPreferencesScreen.tsx                                                        
+-a----        07-04-2026     19:46          20420 AdminSLABreachScreen.tsx                                                                      
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\presentation\screens\auth
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        08-04-2026     21:26           7243 AdminLoginScreen.tsx                                                                          
+-a----        08-04-2026     21:22           8486 LoginOptionsScreen.tsx                                                                        
+-a----        08-04-2026     21:17           6029 OnboardingScreen.tsx                                                                          
+-a----        08-04-2026     21:24           7454 OTPVerifyScreen.tsx                                                                           
+-a----        08-04-2026     21:23           5323 PhoneEntryScreen.tsx                                                                          
+-a----        08-04-2026     21:25           7255 SellerLoginScreen.tsx                                                                         
+-a----        08-04-2026     21:27          11939 SellerRegisterScreen.tsx                                                                      
+-a----        06-04-2026     15:14           2037 SplashScreen.tsx                                                                              
+-a----        08-04-2026     21:25           6881 UserRegisterScreen.tsx                                                                        
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\presentation\screens\cart
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        07-04-2026     21:47          16402 CartScreen.tsx                                                                                
+-a----        07-04-2026     20:39          26313 CheckoutScreen.tsx                                                                            
+-a----        06-04-2026     17:30           7821 OrderConfirmedScreen.tsx                                                                      
+-a----        07-04-2026     21:47          15211 OrderTrackingScreen.tsx                                                                       
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\presentation\screens\debug
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        06-04-2026     00:54           4488 ErrorCenterScreen.tsx                                                                         
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\presentation\screens\main
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        08-04-2026     21:17          36935 HomeScreen.tsx                                                                                
+-a----        06-04-2026     01:53           5210 LocationEntryScreen.tsx                                                                       
+-a----        06-04-2026     15:42           8079 OrdersScreen.tsx                                                                              
+-a----        08-04-2026     02:41          14185 ProfileScreen.tsx                                                                             
+-a----        07-04-2026     20:31          12754 RewardsScreen.tsx                                                                             
+-a----        06-04-2026     16:19          17953 SearchScreen.tsx                                                                              
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\presentation\screens\restaurant
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        07-04-2026     20:32          15093 RestaurantDetailScreen.tsx                                                                    
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\presentation\screens\rider
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        07-04-2026     18:45            366 index.ts                                                                                      
+-a----        07-04-2026     19:28          29319 RiderDashboardScreen.tsx                                                                      
+-a----        07-04-2026     19:32           9954 RiderEarningsScreen.tsx                                                                       
+-a----        07-04-2026     19:32           8783 RiderHistoryScreen.tsx                                                                        
+-a----        08-04-2026     21:27           5474 RiderLoginScreen.tsx                                                                          
+-a----        08-04-2026     21:28           9142 RiderOTPVerifyScreen.tsx                                                                      
+-a----        07-04-2026     18:09          17194 RiderTaskDetailScreen.tsx                                                                     
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\presentation\screens\seller
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        07-04-2026     20:46          25344 SellerDashboardScreen.tsx                                                                     
+-a----        07-04-2026     19:11          16595 SellerMenuItemFormScreen.tsx                                                                  
+-a----        08-04-2026     01:22          19659 SellerMenuScreen.tsx                                                                          
+-a----        07-04-2026     20:44          10017 SellerNotificationPreferencesScreen.tsx                                                       
+-a----        07-04-2026     21:47          18622 SellerStoreHoursScreen.tsx                                                                    
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\store
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        05-04-2026     13:02            540 index.ts                                                                                      
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\store\slices
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        07-04-2026     20:13           5650 cartSlice.ts                                                                                  
+-a----        05-04-2026     13:02           2043 orderSlice.ts                                                                                 
+-a----        05-04-2026     13:02           2879 userSlice.ts                                                                                  
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\theme
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        08-04-2026     21:14           6200 index.ts                                                                                      
+
+
+    Directory: C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp\src\utils
+
+
+Mode                 LastWriteTime         Length Name                                                                                          
+----                 -------------         ------ ----                                                                                          
+-a----        05-04-2026     23:56           3271 animations.ts                                                                                 
+-a----        05-04-2026     23:51           1738 responsive.ts                                                                                 
+
+

@@ -30,7 +30,9 @@ Use these files as the single source of truth for code ownership and where to ad
 15. `docs/09_PILOT_100_READINESS_PLAN.md` - Pilot 100% readiness plan
 16. `docs/10_BACKEND_BUILD_REQUIREMENTS.md` - Backend build requirements
 17. `docs/12_FREE_TIER_INFRA_DECISION.md` - Free tier infrastructure decision
+18. `docs/14_WINDOWS_ANDROID_BUILD_TROUBLESHOOTING.md` - Windows RN Android build/path-length troubleshooting
+19. `docs/15_PRODUCTION_ROLE_SEPARATION_AND_HARDENING_AUDIT.md` - Production role separation and hardening audit
 
 ## Deprecated
 
-18. `docs/07_NEXT_STEPS_PRODUCTION.md` - See `docs/06_FRONTEND_IMPLEMENTATION_STATUS.md` for current next steps
+20. `docs/07_NEXT_STEPS_PRODUCTION.md` - See `docs/06_FRONTEND_IMPLEMENTATION_STATUS.md` for current next steps

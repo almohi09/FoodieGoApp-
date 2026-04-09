@@ -16,18 +16,20 @@ npm run android
 ```
 
 Windows note:
-- If Android build fails with `Filename longer than 260 characters`, build/install from short junction path:
+- If Android build fails with `Filename longer than 260 characters`, run:
 ```powershell
-New-Item -ItemType Junction -Path C:\fg -Target C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp
-cd C:\fg\android
+cd android
 .\gradlew clean
-.\gradlew app:installDebug
+.\gradlew app:assembleDebug
+.\gradlew app:installDebug -PreactNativeDevServerPort=8081
 ```
 - Then run:
 ```powershell
 adb reverse tcp:8081 tcp:8081
 npx react-native run-android --port 8081
 ```
+- Root cause and full troubleshooting:
+  `docs/14_WINDOWS_ANDROID_BUILD_TROUBLESHOOTING.md`
 
 ## 2) Customer flow verification
 

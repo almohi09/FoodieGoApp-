@@ -1,4 +1,4 @@
-import { newIdempotencyKey } from '../src/data/api/httpClient';
+import { newIdempotencyKey } from '../src/api/httpClient';
 
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
@@ -14,3 +14,4 @@ describe('httpClient', () => {
     expect(b.startsWith('order-')).toBe(true);
   });
 });
+

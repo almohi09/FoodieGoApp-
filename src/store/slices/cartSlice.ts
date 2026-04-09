@@ -1,7 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CartItem, SelectedCustomization } from '../../domain/types';
+import { CartItem, SelectedCustomization } from '../../types';
 
-interface CartState {
+export interface CartState {
   items: CartItem[];
   restaurantId: string | null;
   restaurantName: string | null;
@@ -14,7 +13,7 @@ interface CartState {
   isLoading: boolean;
 }
 
-const initialState: CartState = {
+export const initialCartState: CartState = {
   items: [],
   restaurantId: null,
   restaurantName: null,
@@ -29,159 +28,221 @@ const initialState: CartState = {
 
 const calculateItemPrice = (
   basePrice: number,
-  customizations: SelectedCustomization[],
+  _customizations: SelectedCustomization[],
   quantity: number,
-): number => {
-  return basePrice * quantity;
+): number => basePrice * quantity;
+
+type AddToCartPayload = {
+  item: CartItem['item'];
+  restaurantId: string;
+  restaurantName: string;
+  quantity: number;
+  customizations: SelectedCustomization[];
 };
 
-const cartSlice = createSlice({
-  name: 'cart',
-  initialState,
-  reducers: {
-    addToCart: (
-      state,
-      action: PayloadAction<{
-        item: CartItem['item'];
-        restaurantId: string;
-        restaurantName: string;
-        quantity: number;
-        customizations: SelectedCustomization[];
-      }>,
-    ) => {
-      const { item, restaurantId, restaurantName, quantity, customizations } =
-        action.payload;
+type UpdateQuantityPayload = {
+  itemId: string;
+  quantity: number;
+  customizations?: SelectedCustomization[];
+};
 
-      if (state.restaurantId && state.restaurantId !== restaurantId) {
-        state.items = [];
-        state.couponCode = null;
-        state.couponDiscount = 0;
+type CartActionMap = {
+  addToCart: AddToCartPayload;
+  updateQuantity: UpdateQuantityPayload;
+  removeFromCart: string;
+  clearCart: undefined;
+  applyCoupon: { code: string; discount: number };
+  removeCoupon: undefined;
+  setDeliveryFee: number;
+  setQuoteDetails: { subtotal: number; packagingFee: number; taxes: number };
+};
+
+type ActionName = keyof CartActionMap;
+export type CartAction = {
+  [K in ActionName]: CartActionMap[K] extends undefined
+    ? { type: `cart/${K}` }
+    : { type: `cart/${K}`; payload: CartActionMap[K] };
+}[ActionName];
+
+const createAction = <K extends ActionName>(type: K) => {
+  return (payload?: CartActionMap[K]) =>
+    payload === undefined
+      ? ({ type: `cart/${type}` } as CartAction)
+      : ({ type: `cart/${type}`, payload } as CartAction);
+};
+
+export const addToCart = createAction('addToCart');
+export const updateQuantity = createAction('updateQuantity');
+export const removeFromCart = createAction('removeFromCart');
+export const clearCart = createAction('clearCart');
+export const applyCoupon = createAction('applyCoupon');
+export const removeCoupon = createAction('removeCoupon');
+export const setDeliveryFee = createAction('setDeliveryFee');
+export const setQuoteDetails = createAction('setQuoteDetails');
+
+export const reduceCartState = (
+  state: CartState,
+  action: CartAction | { type: string; payload?: unknown },
+): CartState => {
+  switch (action.type) {
+    case 'cart/addToCart': {
+      const payload = (action as Extract<CartAction, { type: 'cart/addToCart' }>).payload;
+      let nextState = { ...state, items: [...state.items] };
+
+      if (nextState.restaurantId && nextState.restaurantId !== payload.restaurantId) {
+        nextState = {
+          ...nextState,
+          items: [],
+          couponCode: null,
+          couponDiscount: 0,
+        };
       }
 
-      state.restaurantId = restaurantId;
-      state.restaurantName = restaurantName;
-
-      const existingIndex = state.items.findIndex(
+      const existingIndex = nextState.items.findIndex(
         cartItem =>
-          cartItem.item.id === item.id &&
+          cartItem.item.id === payload.item.id &&
           JSON.stringify(cartItem.customizations) ===
-            JSON.stringify(customizations),
+            JSON.stringify(payload.customizations),
       );
 
       if (existingIndex >= 0) {
-        state.items[existingIndex].quantity += quantity;
-        state.items[existingIndex].totalPrice = calculateItemPrice(
-          item.price,
-          state.items[existingIndex].customizations,
-          state.items[existingIndex].quantity,
-        );
-      } else {
-        const newItem: CartItem = {
-          id: `${item.id}_${Date.now()}`,
-          item,
-          restaurantId,
-          restaurantName,
+        const existingItem = nextState.items[existingIndex];
+        const quantity = existingItem.quantity + payload.quantity;
+        nextState.items[existingIndex] = {
+          ...existingItem,
           quantity,
-          customizations,
-          totalPrice: calculateItemPrice(item.price, customizations, quantity),
-        };
-        state.items.push(newItem);
-      }
-    },
-    updateQuantity: (
-      state,
-      action: PayloadAction<{
-        itemId: string;
-        quantity: number;
-        customizations?: SelectedCustomization[];
-      }>,
-    ) => {
-      const { itemId, quantity, customizations } = action.payload;
-      const index = state.items.findIndex(
-        item =>
-          item.id === itemId ||
-          (customizations &&
-            item.item.id === itemId &&
-            JSON.stringify(item.customizations) ===
-              JSON.stringify(customizations)),
-      );
-
-      if (index >= 0) {
-        if (quantity <= 0) {
-          state.items.splice(index, 1);
-        } else {
-          state.items[index].quantity = quantity;
-          state.items[index].totalPrice = calculateItemPrice(
-            state.items[index].item.price,
-            state.items[index].customizations,
+          totalPrice: calculateItemPrice(
+            payload.item.price,
+            existingItem.customizations,
             quantity,
-          );
+          ),
+        };
+      } else {
+        nextState.items.push({
+          id: `${payload.item.id}_${Date.now()}`,
+          item: payload.item,
+          restaurantId: payload.restaurantId,
+          restaurantName: payload.restaurantName,
+          quantity: payload.quantity,
+          customizations: payload.customizations,
+          totalPrice: calculateItemPrice(
+            payload.item.price,
+            payload.customizations,
+            payload.quantity,
+          ),
+        });
+      }
+
+      return {
+        ...nextState,
+        restaurantId: payload.restaurantId,
+        restaurantName: payload.restaurantName,
+      };
+    }
+    case 'cart/updateQuantity': {
+      const payload =
+        (action as Extract<CartAction, { type: 'cart/updateQuantity' }>).payload;
+      const items = [...state.items];
+      const index = items.findIndex(
+        item =>
+          item.id === payload.itemId ||
+          (payload.customizations &&
+            item.item.id === payload.itemId &&
+            JSON.stringify(item.customizations) ===
+              JSON.stringify(payload.customizations)),
+      );
+      if (index >= 0) {
+        if (payload.quantity <= 0) {
+          items.splice(index, 1);
+        } else {
+          const target = items[index];
+          items[index] = {
+            ...target,
+            quantity: payload.quantity,
+            totalPrice: calculateItemPrice(
+              target.item.price,
+              target.customizations,
+              payload.quantity,
+            ),
+          };
         }
       }
 
-      if (state.items.length === 0) {
-        state.restaurantId = null;
-        state.restaurantName = null;
-        state.couponCode = null;
-        state.couponDiscount = 0;
+      if (items.length === 0) {
+        return {
+          ...state,
+          items,
+          restaurantId: null,
+          restaurantName: null,
+          couponCode: null,
+          couponDiscount: 0,
+        };
       }
-    },
-    removeFromCart: (state, action: PayloadAction<string>) => {
-      state.items = state.items.filter(item => item.id !== action.payload);
 
-      if (state.items.length === 0) {
-        state.restaurantId = null;
-        state.restaurantName = null;
-        state.couponCode = null;
-        state.couponDiscount = 0;
+      return {
+        ...state,
+        items,
+      };
+    }
+    case 'cart/removeFromCart': {
+      const itemId = (action as Extract<CartAction, { type: 'cart/removeFromCart' }>).payload;
+      const items = state.items.filter(item => item.id !== itemId);
+      if (items.length === 0) {
+        return {
+          ...state,
+          items,
+          restaurantId: null,
+          restaurantName: null,
+          couponCode: null,
+          couponDiscount: 0,
+        };
       }
-    },
-    clearCart: state => {
-      state.items = [];
-      state.restaurantId = null;
-      state.restaurantName = null;
-      state.couponCode = null;
-      state.couponDiscount = 0;
-    },
-    applyCoupon: (
-      state,
-      action: PayloadAction<{ code: string; discount: number }>,
-    ) => {
-      state.couponCode = action.payload.code;
-      state.couponDiscount = action.payload.discount;
-    },
-    removeCoupon: state => {
-      state.couponCode = null;
-      state.couponDiscount = 0;
-    },
-    setDeliveryFee: (state, action: PayloadAction<number>) => {
-      state.deliveryFee = action.payload;
-    },
-    setQuoteDetails: (
-      state,
-      action: PayloadAction<{
-        subtotal: number;
-        packagingFee: number;
-        taxes: number;
-      }>,
-    ) => {
-      state.subtotal = action.payload.subtotal;
-      state.packagingFee = action.payload.packagingFee;
-      state.taxes = action.payload.taxes;
-    },
-  },
-});
-
-export const {
-  addToCart,
-  updateQuantity,
-  removeFromCart,
-  clearCart,
-  applyCoupon,
-  removeCoupon,
-  setDeliveryFee,
-  setQuoteDetails,
-} = cartSlice.actions;
+      return {
+        ...state,
+        items,
+      };
+    }
+    case 'cart/clearCart':
+      return {
+        ...state,
+        items: [],
+        restaurantId: null,
+        restaurantName: null,
+        couponCode: null,
+        couponDiscount: 0,
+      };
+    case 'cart/applyCoupon': {
+      const payload = (action as Extract<CartAction, { type: 'cart/applyCoupon' }>).payload;
+      return {
+        ...state,
+        couponCode: payload.code,
+        couponDiscount: payload.discount,
+      };
+    }
+    case 'cart/removeCoupon':
+      return {
+        ...state,
+        couponCode: null,
+        couponDiscount: 0,
+      };
+    case 'cart/setDeliveryFee':
+      return {
+        ...state,
+        deliveryFee: (action as Extract<CartAction, { type: 'cart/setDeliveryFee' }>).payload,
+      };
+    case 'cart/setQuoteDetails': {
+      const payload = (action as Extract<CartAction, { type: 'cart/setQuoteDetails' }>).payload;
+      return {
+        ...state,
+        subtotal: payload.subtotal,
+        packagingFee: payload.packagingFee,
+        taxes: payload.taxes,
+      };
+    }
+    default:
+      return state;
+  }
+};
 
 export const selectCartItems = (state: { cart: CartState }) => state.cart.items;
 export const selectCartTotal = (state: { cart: CartState }) =>
@@ -199,4 +260,3 @@ export const selectFinalTotal = (state: { cart: CartState }) => {
   return subtotal + packagingFee + taxes + deliveryFee - couponDiscount;
 };
 
-export default cartSlice.reducer;

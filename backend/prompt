@@ -1,0 +1,151 @@
+You are a senior full-stack mobile engineer. I have a React Native food delivery app called FoodieGoApp that is currently in broken prototype state. I want to transform it into a real, production-grade food delivery app similar to Zomato — but built entirely on free-tier services so there is zero cost to run and deploy.
+
+---
+
+PHASE 1 — DEEP AUDIT (do this first, do not skip)
+
+1. Run these commands and show me the full output:
+   - Get-ChildItem -Recurse (or ls -R on Mac/Linux)
+   - cat package.json
+   - cat android/build.gradle and android/app/build.gradle
+   - List all files inside /src or /app folder
+
+2. After reading the output, identify and report:
+   - All duplicate or dead files
+   - Inconsistent naming (camelCase vs snake_case folders)
+   - Missing or broken imports
+   - Outdated or conflicting package versions
+   - Any files that belong to prototype/demo that must be removed
+   - Node, React Native, Gradle, and Java version mismatches
+
+---
+
+PHASE 2 — PRODUCTION FOLDER STRUCTURE
+
+Reorganize the entire project into this exact structure:
+
+FoodieGoApp/
+├── src/
+│   ├── api/           (all API calls, Axios/fetch instances)
+│   ├── assets/        (images, fonts, icons)
+│   ├── components/    (reusable UI components)
+│   ├── config/        (env vars, constants, app config)
+│   ├── hooks/         (custom React hooks)
+│   ├── navigation/    (React Navigation stacks and tabs)
+│   ├── screens/       (one folder per screen)
+│   ├── services/      (auth, location, notification logic)
+│   ├── store/         (Redux Toolkit or Zustand state)
+│   ├── theme/         (colors, spacing, typography)
+│   └── utils/         (helper functions)
+├── android/
+├── ios/
+├── .env               (never commit this)
+├── .env.example       (commit this)
+└── package.json
+
+---
+
+PHASE 3 — FREE TIER TECH STACK (no paid services)
+
+Use ONLY these free services:
+
+Backend & Database:
+- Supabase (free tier: PostgreSQL, Auth, Realtime, Storage — 500MB, 50k MAU)
+
+Authentication:
+- Supabase Auth (email/password + Google OAuth — free)
+
+Real-time order tracking:
+- Supabase Realtime (free WebSocket subscriptions)
+
+Maps & Location:
+- React Native Maps with OpenStreetMap tiles (completely free, no API key needed)
+- OR Google Maps with $200/month free credit (enough for a startup)
+
+Push Notifications:
+- Expo Notifications (free) OR Firebase Cloud Messaging (free tier)
+
+File/Image Storage:
+- Supabase Storage (free 1GB)
+
+Deployment — Backend:
+- Supabase handles this (no separate server needed for MVP)
+
+Deployment — App:
+- Android: Google Play (one-time $25 fee) OR direct APK sideload for testing
+- Expo Go for development testing (completely free)
+
+---
+
+PHASE 4 — CORE FEATURES TO BUILD
+
+Build all of the following features, one phase at a time:
+
+[ ] User Auth — signup, login, logout, Google OAuth via Supabase
+[ ] Home Screen — featured restaurants, categories, search bar
+[ ] Restaurant Listing — filter by cuisine, rating, delivery time
+[ ] Restaurant Detail — menu sections, item cards, ratings
+[ ] Cart — add/remove items, quantity control, subtotal
+[ ] Checkout — address input, payment method selection (COD for MVP)
+[ ] Order Placement — save order to Supabase, trigger real-time update
+[ ] Order Tracking — real-time status (placed → preparing → on the way → delivered) via Supabase Realtime
+[ ] Order History — past orders screen
+[ ] User Profile — edit name, address, profile photo
+[ ] Restaurant Owner Panel (optional) — manage menu items, accept/reject orders
+
+---
+
+PHASE 5 — UI/UX REQUIREMENTS
+
+- Design language: Match Zomato's clean card-based UI
+- Color scheme: Primary red (#E23744), white background, gray (#F5F5F5) cards
+- Typography: Use Inter or Poppins font
+- Bottom tab navigation: Home, Search, Orders, Profile
+- Stack navigation inside each tab
+- All screens must be responsive for different Android screen sizes
+- Add loading skeletons (not spinners) while data fetches
+- Show empty states with illustrations when no data
+- Use React Native Paper or NativeWind (Tailwind for RN) for styling
+
+---
+
+PHASE 6 — SUPABASE DATABASE SCHEMA
+
+Create these tables in Supabase with proper relationships and RLS (Row Level Security):
+
+users — id, name, email, phone, avatar_url, created_at
+addresses — id, user_id, label, street, city, lat, lng
+restaurants — id, name, cuisine, rating, delivery_time, min_order, image_url, is_open
+menu_categories — id, restaurant_id, name, sort_order
+menu_items — id, category_id, name, description, price, image_url, is_available
+orders — id, user_id, restaurant_id, status, total, address_id, created_at
+order_items — id, order_id, menu_item_id, quantity, price
+reviews — id, user_id, restaurant_id, rating, comment, created_at
+
+Generate all SQL migration files for these tables including RLS policies.
+
+---
+
+PHASE 7 — ENVIRONMENT SETUP
+
+Create these files:
+- .env.example with all required keys (SUPABASE_URL, SUPABASE_ANON_KEY, etc.)
+- src/config/supabase.ts — Supabase client initialization
+- src/config/constants.ts — app-wide constants
+- babel.config.js — with react-native-dotenv configured
+
+---
+
+RULES FOR IMPLEMENTATION
+
+- Never use paid APIs unless they have a genuinely free tier
+- Every file must have TypeScript types — no `any`
+- All API calls must have error handling and loading states
+- No hardcoded strings — use a constants file
+- Each screen must be its own folder with index.tsx + styles.ts
+- Commit-ready code: no console.log in production code
+- Add a README.md explaining how to run the app from scratch
+
+---
+
+Start with PHASE 1 now. Show me the full audit before touching any code.

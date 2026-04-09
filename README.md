@@ -47,16 +47,19 @@ npm run android
 
 ### Windows Android Build (Recommended Stable Flow)
 
-If your project path is long, Android New Architecture C++ build can fail on Windows with
+If your project path is long, Android New Architecture C++ build can fail on Windows with:
 `Filename longer than 260 characters`.
 
-Use a short junction path before building:
+This project already includes the fix in `android/app/build.gradle` using a short CMake staging path:
+`buildStagingDirectory "C:/fgb_foodiego/cxx"`.
+
+Run this standard flow:
 
 ```powershell
-New-Item -ItemType Junction -Path C:\fg -Target C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp
-cd C:\fg\android
+cd android
 .\gradlew clean
-.\gradlew app:installDebug
+.\gradlew app:assembleDebug
+.\gradlew app:installDebug -PreactNativeDevServerPort=8081
 ```
 
 Then run Metro + app from project root:
@@ -65,6 +68,8 @@ Then run Metro + app from project root:
 adb reverse tcp:8081 tcp:8081
 npx react-native run-android --port 8081
 ```
+
+Detailed troubleshooting: [docs/14_WINDOWS_ANDROID_BUILD_TROUBLESHOOTING.md](./docs/14_WINDOWS_ANDROID_BUILD_TROUBLESHOOTING.md)
 
 ### Build APK
 
@@ -104,3 +109,4 @@ src/
 
 - Start here: `docs/00_DEV_INDEX.md`
 - Backend production blockers and required build scope: `docs/10_BACKEND_BUILD_REQUIREMENTS.md`
+- Role separation and production hardening audit: `docs/15_PRODUCTION_ROLE_SEPARATION_AND_HARDENING_AUDIT.md`

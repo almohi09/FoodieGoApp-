@@ -12,36 +12,72 @@ export interface ThemeColors {
   primary: string;
   primaryDark: string;
   primaryLight: string;
+  primaryGhost: string;
+  secondary: string;
+  secondaryLight: string;
   success: string;
   successLight: string;
   info: string;
   infoLight: string;
   loyalty: string;
   loyaltyLight: string;
+  warning: string;
+  warningLight: string;
   error: string;
   errorLight: string;
-  warning: string;
 
   background: string;
   surface: string;
   surfaceSecondary: string;
   surfaceElevated: string;
+  surfaceWarm: string;
+  surfaceCard: string;
 
   textPrimary: string;
   textSecondary: string;
   textTertiary: string;
   textInverse: string;
+  textMuted: string;
 
   border: string;
   borderLight: string;
+  borderAccent: string;
   divider: string;
 
   overlay: string;
+  overlayLight: string;
+  overlayGradient: string;
   shadow: string;
+  shadowMedium: string;
+  shadowDark: string;
 
   veg: string;
   nonVeg: string;
   jain: string;
+
+  gradient: {
+    primary: string[];
+    warm: string[];
+    dark: string[];
+    sunset: string[];
+    success: string[];
+  };
+
+  promo: {
+    gold: string;
+    orange: string;
+    red: string;
+  };
+
+  status: {
+    online: string;
+    busy: string;
+    offline: string;
+    pending: string;
+    preparing: string;
+    delivered: string;
+    cancelled: string;
+  };
 
   statusBar: 'light-content' | 'dark-content';
   tabBar: string;
@@ -53,81 +89,153 @@ export interface Theme {
 }
 
 const lightColors: ThemeColors = {
-  primary: '#E85D3F',
-  primaryDark: '#C6472F',
-  primaryLight: '#F39A7A',
-  success: '#4FA56D',
-  successLight: '#EAF5ED',
-  info: '#4E8FCB',
-  infoLight: '#E8F1FA',
-  loyalty: '#D9A441',
-  loyaltyLight: '#FBF3E2',
-  error: '#D94C4C',
-  errorLight: '#FCECEC',
-  warning: '#E3A13B',
+  primary: '#FF5A1F',
+  primaryDark: '#D9480F',
+  primaryLight: '#FF8A5B',
+  primaryGhost: '#FF5A1F1A',
+  secondary: '#FC7B45',
+  secondaryLight: '#FFE8DD',
+  success: '#1FA971',
+  successLight: '#E7F8F1',
+  info: '#2F80ED',
+  infoLight: '#E9F1FF',
+  loyalty: '#F6A609',
+  loyaltyLight: '#FFF5D9',
+  warning: '#F59E0B',
+  warningLight: '#FFF5DD',
+  error: '#E5484D',
+  errorLight: '#FFE9EB',
 
-  background: '#FFF8F1',
+  background: '#FFF8F4',
   surface: '#FFFFFF',
-  surfaceSecondary: '#F7EFE5',
+  surfaceSecondary: '#FFF1E8',
   surfaceElevated: '#FFFFFF',
+  surfaceWarm: '#FFF4EC',
+  surfaceCard: '#FFFFFF',
 
-  textPrimary: '#2F241F',
-  textSecondary: '#6E5B51',
-  textTertiary: '#9A877B',
+  textPrimary: '#1F1B16',
+  textSecondary: '#625B54',
+  textTertiary: '#9E948B',
   textInverse: '#FFFFFF',
+  textMuted: '#D8CEC5',
 
-  border: '#EADCCD',
-  borderLight: '#F4EBDD',
-  divider: '#EADCCD',
+  border: '#F0E1D5',
+  borderLight: '#F7EDE6',
+  borderAccent: '#FF5A1F',
+  divider: '#F4E8DF',
 
-  overlay: 'rgba(38, 24, 17, 0.35)',
-  shadow: 'rgba(52, 35, 26, 0.12)',
+  overlay: 'rgba(0, 0, 0, 0.4)',
+  overlayLight: 'rgba(35, 24, 14, 0.08)',
+  overlayGradient: 'rgba(255, 90, 31, 0.08)',
+  shadow: 'rgba(31, 27, 22, 0.08)',
+  shadowMedium: 'rgba(31, 27, 22, 0.14)',
+  shadowDark: 'rgba(31, 27, 22, 0.2)',
 
-  veg: '#4FA56D',
-  nonVeg: '#D94C4C',
-  jain: '#D9A441',
+  veg: '#1FA971',
+  nonVeg: '#E5484D',
+  jain: '#F6A609',
+
+  gradient: {
+    primary: ['#FF5A1F', '#FF8A5B'],
+    warm: ['#FFF8F4', '#FFF0E6'],
+    dark: ['#1F1B16', '#322A22'],
+    sunset: ['#FF5A1F', '#E5484D'],
+    success: ['#1FA971', '#0E9F6E'],
+  },
+
+  promo: {
+    gold: '#F6A609',
+    orange: '#FF5A1F',
+    red: '#E5484D',
+  },
+
+  status: {
+    online: '#1FA971',
+    busy: '#F6A609',
+    offline: '#9E948B',
+    pending: '#2F80ED',
+    preparing: '#F59E0B',
+    delivered: '#1FA971',
+    cancelled: '#E5484D',
+  },
 
   statusBar: 'dark-content',
   tabBar: '#FFFFFF',
 };
 
 const darkColors: ThemeColors = {
-  primary: '#FF7A59',
-  primaryDark: '#E06245',
-  primaryLight: '#FFA68D',
-  success: '#63C283',
-  successLight: '#2C4E3A',
-  info: '#70A8D9',
-  infoLight: '#2A3C4E',
-  loyalty: '#E1B564',
-  loyaltyLight: '#4A3A21',
-  error: '#EA6A6A',
-  errorLight: '#4B2424',
-  warning: '#E6B255',
+  primary: '#FF8A5B',
+  primaryDark: '#FF5A1F',
+  primaryLight: '#FFB291',
+  primaryGhost: '#FF8A5B33',
+  secondary: '#FF9A6D',
+  secondaryLight: '#4E2E1F',
+  success: '#35C58E',
+  successLight: '#18382C',
+  info: '#6EB0FF',
+  infoLight: '#1D3554',
+  loyalty: '#F7C14D',
+  loyaltyLight: '#4D3A18',
+  warning: '#F7B955',
+  warningLight: '#4D3717',
+  error: '#F36A70',
+  errorLight: '#4A2024',
 
-  background: '#1B1410',
-  surface: '#251B16',
-  surfaceSecondary: '#30231D',
-  surfaceElevated: '#342720',
+  background: '#19120D',
+  surface: '#2A1F17',
+  surfaceSecondary: '#33261D',
+  surfaceElevated: '#3A2B20',
+  surfaceWarm: '#2E221A',
+  surfaceCard: '#30241C',
 
-  textPrimary: '#FDF3EA',
-  textSecondary: '#D5C0B1',
-  textTertiary: '#AE9486',
-  textInverse: '#FFFFFF',
+  textPrimary: '#FFF5EE',
+  textSecondary: '#D7C3B3',
+  textTertiary: '#A88F7D',
+  textInverse: '#19120D',
+  textMuted: '#7B6455',
 
-  border: '#4A382E',
-  borderLight: '#30231D',
-  divider: '#4A382E',
+  border: '#4C3729',
+  borderLight: '#3A2B20',
+  borderAccent: '#FF8A5B',
+  divider: '#4C3729',
 
-  overlay: 'rgba(0, 0, 0, 0.62)',
-  shadow: 'rgba(0, 0, 0, 0.45)',
+  overlay: 'rgba(0, 0, 0, 0.7)',
+  overlayLight: 'rgba(0, 0, 0, 0.22)',
+  overlayGradient: 'rgba(255, 138, 91, 0.16)',
+  shadow: 'rgba(0, 0, 0, 0.3)',
+  shadowMedium: 'rgba(0, 0, 0, 0.4)',
+  shadowDark: 'rgba(0, 0, 0, 0.5)',
 
-  veg: '#63C283',
-  nonVeg: '#EA6A6A',
-  jain: '#E1B564',
+  veg: '#35C58E',
+  nonVeg: '#F36A70',
+  jain: '#F7C14D',
+
+  gradient: {
+    primary: ['#FF8A5B', '#FF5A1F'],
+    warm: ['#2A1F17', '#3A2B20'],
+    dark: ['#19120D', '#2A1F17'],
+    sunset: ['#FF8A5B', '#F36A70'],
+    success: ['#35C58E', '#0E9F6E'],
+  },
+
+  promo: {
+    gold: '#F7C14D',
+    orange: '#FF8A5B',
+    red: '#F36A70',
+  },
+
+  status: {
+    online: '#35C58E',
+    busy: '#F7C14D',
+    offline: '#A88F7D',
+    pending: '#6EB0FF',
+    preparing: '#F7B955',
+    delivered: '#35C58E',
+    cancelled: '#F36A70',
+  },
 
   statusBar: 'light-content',
-  tabBar: '#251B16',
+  tabBar: '#2A1F17',
 };
 
 interface ThemeContextType {

@@ -62,3 +62,26 @@ Roadmap
       - Caching/CDN/image optimization and offline-resilient states                                                        
   - Done criteria:                                                                                                         
       - Stable under load, measurable conversion/retention improvements.    
+
+Android Troubleshooting (Windows)
+
+- Symptom:
+    - Build fails at `:app:buildCMakeDebug[arm64-v8a]` with `Filename longer than 260 characters`.
+- Root cause:
+    - React Native New Architecture native codegen object paths exceed Windows path limits in deep project directories.
+- Project fix (already applied):
+    - `android/app/build.gradle` uses:
+      `buildStagingDirectory "C:/fgb_foodiego/cxx"`
+- Recovery steps:
+```powershell
+cd android
+.\gradlew.bat clean app:assembleDebug
+.\gradlew.bat app:installDebug -PreactNativeDevServerPort=8081
+cd ..
+adb reverse tcp:8081 tcp:8081
+npx react-native run-android --port 8081
+```
+- Additional note:
+    - If `@react-native-community/geolocation` was uninstalled, remove stale imports and use `navigator.geolocation` consistently.
+- Full reference:
+    - `docs/14_WINDOWS_ANDROID_BUILD_TROUBLESHOOTING.md`

@@ -101,3 +101,15 @@ android/.cxx/
 
 # Logs
 *.log
+
+# Audit hardening ignores
+android/build
+android/.gradle
+android/.cxx
+android/app/src/main/assets/index.android.bundle
+metro-debug.log
+android/build_log.txt
+android/build-debug.log
+backend/node_modules
+node_modules
+.env

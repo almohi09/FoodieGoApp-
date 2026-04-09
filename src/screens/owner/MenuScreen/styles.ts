@@ -1,0 +1,222 @@
+import { StyleSheet } from 'react-native';
+import { colors, spacing, typography, Shadow } from '../../../theme';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  content: {
+    padding: spacing.md,
+    paddingBottom: spacing.xxl,
+  },
+  categoryCard: {
+    backgroundColor: colors.surface,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.borderLight,
+    marginBottom: spacing.sm,
+    padding: spacing.md,
+  },
+  categoryHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  categoryHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  categoryHeaderRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: spacing.sm,
+  },
+  rowBetween: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  categoryName: {
+    ...typography.bodySemibold,
+    color: colors.textPrimary,
+    marginRight: spacing.xs,
+  },
+  countBadge: {
+    minWidth: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: colors.surfaceSecondary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 6,
+  },
+  countBadgeText: {
+    ...typography.smallMedium,
+    color: colors.textSecondary,
+  },
+  caption: {
+    ...typography.small,
+    color: colors.textSecondary,
+  },
+  tinyButton: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 8,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    marginLeft: spacing.xs,
+  },
+  inlineIconButton: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 4,
+    backgroundColor: colors.surfaceSecondary,
+  },
+  tinyButtonText: {
+    ...typography.small,
+    color: colors.textPrimary,
+  },
+  itemRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: spacing.sm,
+    borderTopWidth: 1,
+    borderTopColor: colors.borderLight,
+    paddingTop: spacing.sm,
+  },
+  itemImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 8,
+    marginRight: spacing.sm,
+    backgroundColor: colors.surfaceSecondary,
+  },
+  itemImagePlaceholder: {
+    width: 60,
+    height: 60,
+    borderRadius: 8,
+    marginRight: spacing.sm,
+    backgroundColor: colors.surfaceSecondary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  itemInfo: {
+    flex: 1,
+    marginRight: spacing.sm,
+  },
+  itemName: {
+    ...typography.captionSemibold,
+    color: colors.textPrimary,
+  },
+  itemPrice: {
+    ...typography.smallMedium,
+    color: colors.primary,
+    marginTop: 2,
+  },
+  vegDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 2,
+    marginTop: spacing.xs,
+  },
+  itemActions: {
+    alignItems: 'center',
+    marginLeft: spacing.xs,
+  },
+  iconButton: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 8,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    marginTop: spacing.xs,
+  },
+  addButton: {
+    backgroundColor: colors.primary,
+    borderRadius: 10,
+    alignItems: 'center',
+    paddingVertical: spacing.sm,
+    marginTop: spacing.sm,
+  },
+  addButtonText: {
+    ...typography.captionSemibold,
+    color: colors.textInverse,
+  },
+  modalBackdrop: {
+    flex: 1,
+    backgroundColor: colors.overlayLight,
+    justifyContent: 'flex-end',
+  },
+  sheet: {
+    backgroundColor: colors.surface,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    padding: spacing.lg,
+    maxHeight: '85%',
+  },
+  sheetTitle: {
+    ...typography.bodySemibold,
+    color: colors.textPrimary,
+    marginBottom: spacing.sm,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 10,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    color: colors.textPrimary,
+    marginBottom: spacing.sm,
+  },
+  textarea: {
+    minHeight: 84,
+    textAlignVertical: 'top',
+  },
+  selectChip: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 10,
+    padding: spacing.sm,
+    marginBottom: spacing.sm,
+  },
+  selectChipActive: {
+    borderColor: colors.primary,
+    backgroundColor: colors.primaryGhost,
+  },
+  previewCard: {
+    marginBottom: spacing.sm,
+  },
+  previewImage: {
+    width: '100%',
+    height: 140,
+    borderRadius: 10,
+    backgroundColor: colors.surfaceSecondary,
+  },
+  previewPlaceholder: {
+    width: '100%',
+    height: 140,
+    borderRadius: 10,
+    backgroundColor: colors.surfaceSecondary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addFab: {
+    position: 'absolute',
+    right: spacing.lg,
+    bottom: spacing.lg,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    ...Shadow.md,
+  },
+});
+
+export default styles;

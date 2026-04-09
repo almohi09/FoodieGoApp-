@@ -363,29 +363,41 @@ router.get(
   requireAuth,
   requireRole(['seller', 'admin']),
   async (req, res) => {
-    if (sellerRepository.isEnabled()) {
-      const items =
-        (await sellerRepository.getRestaurantMenu(req.params.restaurantId)) ||
-        [];
-      const categories = Array.from(
-        new Set(items.map(item => item.category)),
-      ).map((name, index) => ({
-        id: `cat_${index + 1}`,
-        name,
-        sortOrder: index + 1,
-        itemCount: items.filter(item => item.category === name).length,
-      }));
-      return res.json({ items, categories });
+    const restaurantId = req.params.restaurantId;
+    const items = sellerRepository.isEnabled()
+      ? (await sellerRepository.getRestaurantMenu(restaurantId)) || []
+      : db.menuByRestaurant.get(restaurantId) || [];
+
+    const seededCategories = [...(db.menuCategories.get(restaurantId) || [])];
+    const categoriesByName = new Map<string, { id: string; name: string; sortOrder: number }>();
+
+    seededCategories.forEach((category, index) => {
+      categoriesByName.set(category.name, {
+        id: category.id,
+        name: category.name,
+        sortOrder: Number.isFinite(category.sortOrder) ? category.sortOrder : index + 1,
+      });
+    });
+
+    let nextSortOrder = seededCategories.length + 1;
+    for (const name of new Set(items.map(item => item.category))) {
+      if (!categoriesByName.has(name)) {
+        categoriesByName.set(name, {
+          id: `cat_${nextSortOrder}`,
+          name,
+          sortOrder: nextSortOrder,
+        });
+        nextSortOrder += 1;
+      }
     }
-    const items = db.menuByRestaurant.get(req.params.restaurantId) || [];
-    const categories = Array.from(
-      new Set(items.map(item => item.category)),
-    ).map((name, index) => ({
-      id: `cat_${index + 1}`,
-      name,
-      sortOrder: index + 1,
-      itemCount: items.filter(item => item.category === name).length,
-    }));
+
+    const categories = Array.from(categoriesByName.values())
+      .sort((a, b) => a.sortOrder - b.sortOrder)
+      .map(category => ({
+        ...category,
+        itemCount: items.filter(item => item.category === category.name).length,
+      }));
+
     res.json({ items, categories });
   },
 );

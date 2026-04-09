@@ -67,13 +67,16 @@ APK location: `android/app/build/outputs/apk/debug/app-debug.apk`
 
 ## Windows USB Build (Path-Length Safe)
 
-If Android build fails with CMake/Ninja path length errors (for example `Filename longer than 260 characters`), use a short junction path:
+If Android build fails with CMake/Ninja path length errors (for example `Filename longer than 260 characters`), use the project standard recovery flow.
+
+This repo already sets a short native staging path in `android/app/build.gradle`:
+`buildStagingDirectory "C:/fgb_foodiego/cxx"`.
 
 ```powershell
-New-Item -ItemType Junction -Path C:\fg -Target C:\Users\Almohi1\Desktop\fullstack_development\projects\FoodieGo\FoodieGoApp
-cd C:\fg\android
+cd android
 .\gradlew clean
-.\gradlew app:installDebug
+.\gradlew app:assembleDebug
+.\gradlew app:installDebug -PreactNativeDevServerPort=8081
 ```
 
 Then start and launch app with Metro on `8081`:
@@ -84,6 +87,8 @@ npm run start
 adb reverse tcp:8081 tcp:8081
 npx react-native run-android --port 8081
 ```
+
+Full guide: [docs/14_WINDOWS_ANDROID_BUILD_TROUBLESHOOTING.md](./docs/14_WINDOWS_ANDROID_BUILD_TROUBLESHOOTING.md)
 
 ---
 

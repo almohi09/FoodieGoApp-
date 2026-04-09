@@ -1,144 +1,159 @@
-import { Dimensions } from 'react-native';
+import { Colors } from './colors';
+import { Typography } from './typography';
+import { Radius, Shadow, Spacing } from './spacing';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
+export { Colors, Typography, Spacing, Radius, Shadow };
 
-const BASE_WIDTH = 375;
-const scale = SCREEN_WIDTH / BASE_WIDTH;
-
-export const responsiveSize = (size: number): number => {
-  return Math.round(size * scale);
-};
+export const responsiveSize = (size: number): number => size;
 
 export const colors = {
-  primary: '#E85D3F',
-  primaryDark: '#C6472F',
-  primaryLight: '#F39A7A',
-  success: '#4FA56D',
-  successLight: '#EAF5ED',
-  info: '#4E8FCB',
-  infoLight: '#E8F1FA',
-  loyalty: '#D9A441',
-  loyaltyLight: '#FBF3E2',
-  error: '#D94C4C',
-  errorLight: '#FCECEC',
-  warning: '#E3A13B',
-
-  background: '#FFF8F1',
-  surface: '#FFFFFF',
-  surfaceSecondary: '#F7EFE5',
-
-  textPrimary: '#2F241F',
-  textSecondary: '#6E5B51',
-  textTertiary: '#9A877B',
-  textInverse: '#FFFFFF',
-
-  border: '#EADCCD',
-  borderLight: '#F4EBDD',
-  divider: '#EADCCD',
-
-  overlay: 'rgba(38, 24, 17, 0.35)',
-  shadow: 'rgba(52, 35, 26, 0.12)',
-
-  veg: '#4FA56D',
-  nonVeg: '#D94C4C',
-  jain: '#D9A441',
+  primary: Colors.PRIMARY,
+  primaryDark: Colors.PRIMARY_DARK,
+  primaryLight: Colors.PRIMARY_LIGHT,
+  primaryGhost: Colors.PRIMARY_LIGHT,
+  secondary: Colors.INFO,
+  secondaryLight: Colors.INFO_LIGHT,
+  success: Colors.SUCCESS,
+  successLight: Colors.SUCCESS_LIGHT,
+  info: Colors.INFO,
+  infoLight: Colors.INFO_LIGHT,
+  loyalty: Colors.STAR,
+  loyaltyLight: Colors.WARNING_LIGHT,
+  warning: Colors.WARNING,
+  warningLight: Colors.WARNING_LIGHT,
+  error: Colors.ERROR,
+  errorLight: Colors.ERROR_LIGHT,
+  background: Colors.BG_PRIMARY,
+  surface: Colors.BG_PRIMARY,
+  surfaceSecondary: Colors.BG_SECONDARY,
+  surfaceElevated: Colors.BG_PRIMARY,
+  surfaceWarm: Colors.BG_SECONDARY,
+  surfaceCard: Colors.BG_PRIMARY,
+  textPrimary: Colors.TEXT_PRIMARY,
+  textSecondary: Colors.TEXT_SECONDARY,
+  textTertiary: Colors.TEXT_TERTIARY,
+  textInverse: Colors.TEXT_INVERSE,
+  textMuted: Colors.TEXT_TERTIARY,
+  border: Colors.BORDER,
+  borderLight: Colors.BORDER,
+  borderAccent: Colors.PRIMARY,
+  divider: Colors.BORDER,
+  overlay: Colors.OVERLAY,
+  overlayLight: Colors.OVERLAY_LIGHT,
+  overlayGradient: Colors.OVERLAY,
+  overlayDark: Colors.OVERLAY_DARK,
+  overlaySoft: Colors.OVERLAY_SOFT,
+  shadow: Colors.SHADOW,
+  shadowMedium: Colors.SHADOW,
+  shadowDark: Colors.SHADOW,
+  veg: Colors.VEG,
+  nonVeg: Colors.NON_VEG,
+  white95: Colors.WHITE_95,
+  white90: Colors.WHITE_90,
+  white85: Colors.WHITE_85,
+  white80: Colors.WHITE_80,
+  white70: Colors.WHITE_70,
+  white45: Colors.WHITE_45,
+  white30: Colors.WHITE_30,
+  white25: Colors.WHITE_25,
+  white20: Colors.WHITE_20,
+  white15: Colors.WHITE_15,
+  black35: Colors.BLACK_35,
+  black06: Colors.BLACK_06,
+  jain: Colors.WARNING,
+  gradient: {
+    primary: [Colors.PRIMARY, Colors.PRIMARY_DARK],
+    warm: [Colors.BG_PRIMARY, Colors.BG_SECONDARY],
+    dark: [Colors.TEXT_PRIMARY, Colors.TEXT_SECONDARY],
+    sunset: [Colors.PRIMARY, Colors.WARNING],
+    success: [Colors.SUCCESS, Colors.VEG],
+  },
+  promo: {
+    gold: Colors.STAR,
+    orange: Colors.WARNING,
+    red: Colors.PRIMARY,
+  },
+  status: {
+    online: Colors.SUCCESS,
+    busy: Colors.WARNING,
+    offline: Colors.TEXT_TERTIARY,
+    pending: Colors.INFO,
+    preparing: Colors.WARNING,
+    delivered: Colors.SUCCESS,
+    cancelled: Colors.ERROR,
+    placed: Colors.STATUS_PLACED,
+    pickedUp: Colors.STATUS_PICKED,
+  },
+  statusBg: {
+    placed: Colors.STATUS_PLACED_BG,
+    confirmed: Colors.STATUS_CONFIRMED_BG,
+    preparing: Colors.STATUS_PREPARING_BG,
+    pickedUp: Colors.STATUS_PICKED_BG,
+    delivered: Colors.STATUS_DELIVERED_BG,
+    cancelled: Colors.STATUS_CANCELLED_BG,
+  },
 };
 
 export const spacing = {
-  xs: responsiveSize(4),
-  sm: responsiveSize(8),
-  md: responsiveSize(12),
-  lg: responsiveSize(16),
-  xl: responsiveSize(20),
-  xxl: responsiveSize(24),
-  xxxl: responsiveSize(32),
+  xs: Spacing.xs,
+  sm: Spacing.sm,
+  cardGap: Spacing.cardGap,
+  md: Spacing.md,
+  lg: Spacing.lg,
+  xl: Spacing.xl,
+  xxl: Spacing.xxl,
+  screenEdge: Spacing.screenEdge,
+  sectionGap: Spacing.sectionGap,
+  cardPadding: Spacing.cardPadding,
+  iconText: Spacing.iconText,
+  touchTarget: Spacing.touchTarget,
+  xxxl: Spacing.xxl,
+  huge: Spacing.xxl,
 };
 
 export const borderRadius = {
-  sm: responsiveSize(8),
-  md: responsiveSize(12),
-  lg: responsiveSize(16),
-  xl: responsiveSize(20),
-  full: 9999,
+  xs: Radius.sm,
+  sm: Radius.sm,
+  md: Radius.md,
+  lg: Radius.lg,
+  xl: Radius.xl,
+  xxl: Radius.xl,
+  full: Radius.full,
+  circle: Radius.full,
 };
 
 export const typography = {
-  h1: {
-    fontSize: responsiveSize(28),
-    fontWeight: '700' as const,
-    lineHeight: responsiveSize(36),
-  },
-  h2: {
-    fontSize: responsiveSize(24),
-    fontWeight: '700' as const,
-    lineHeight: responsiveSize(32),
-  },
-  h3: {
-    fontSize: responsiveSize(20),
-    fontWeight: '600' as const,
-    lineHeight: responsiveSize(28),
-  },
-  h4: {
-    fontSize: responsiveSize(18),
-    fontWeight: '600' as const,
-    lineHeight: responsiveSize(24),
-  },
-  body: {
-    fontSize: responsiveSize(16),
-    fontWeight: '400' as const,
-    lineHeight: responsiveSize(24),
-  },
-  bodyMedium: {
-    fontSize: responsiveSize(16),
-    fontWeight: '500' as const,
-    lineHeight: responsiveSize(24),
-  },
-  caption: {
-    fontSize: responsiveSize(14),
-    fontWeight: '400' as const,
-    lineHeight: responsiveSize(20),
-  },
-  captionMedium: {
-    fontSize: responsiveSize(14),
-    fontWeight: '500' as const,
-    lineHeight: responsiveSize(20),
-  },
-  small: {
-    fontSize: responsiveSize(12),
-    fontWeight: '400' as const,
-    lineHeight: responsiveSize(16),
-  },
+  h1: Typography.h1,
+  h2: Typography.h2,
+  h3: Typography.h3,
+  h4: Typography.h4,
+  body: Typography.body1,
+  bodyMedium: Typography.body1,
+  bodySemibold: { ...Typography.body1, fontWeight: '600' as const },
+  caption: Typography.caption,
+  captionMedium: Typography.label,
+  captionSemibold: { ...Typography.label, fontWeight: '600' as const },
+  small: Typography.caption,
+  smallMedium: Typography.label,
+  tiny: { ...Typography.caption, fontSize: 11, fontWeight: '600' as const },
+  button: Typography.label,
 };
 
 export const shadows = {
-  sm: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: responsiveSize(1) },
-    shadowOpacity: 0.05,
-    shadowRadius: responsiveSize(2),
-    elevation: 1,
-  },
-  md: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: responsiveSize(2) },
-    shadowOpacity: 0.1,
-    shadowRadius: responsiveSize(4),
-    elevation: 3,
-  },
-  lg: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: responsiveSize(4) },
-    shadowOpacity: 0.15,
-    shadowRadius: responsiveSize(8),
-    elevation: 5,
-  },
+  xs: Shadow.sm,
+  sm: Shadow.sm,
+  md: Shadow.md,
+  lg: Shadow.md,
+  xl: Shadow.md,
+  primary: Shadow.md,
+  card: Shadow.md,
 };
 
 export const hitSlop = {
-  top: responsiveSize(10),
-  bottom: responsiveSize(10),
-  left: responsiveSize(10),
-  right: responsiveSize(10),
+  top: 10,
+  bottom: 10,
+  left: 10,
+  right: 10,
 };
 
 export const commonStyles = {
@@ -161,6 +176,15 @@ export const commonStyles = {
   card: {
     backgroundColor: colors.surface,
     borderRadius: borderRadius.lg,
-    ...shadows.md,
+    ...shadows.card,
+  },
+  sectionTitle: {
+    ...typography.h4,
+    color: colors.textPrimary,
+  },
+  sectionSubtitle: {
+    ...typography.caption,
+    color: colors.textSecondary,
+    marginTop: 2,
   },
 };

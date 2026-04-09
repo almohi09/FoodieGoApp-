@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "390136193246",
+    "project_id": "foodiego1",
+    "storage_bucket": "foodiego1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:390136193246:android:321e9876a5d178ebb2e24f",
+        "android_client_info": {
+          "package_name": "com.foodiegoapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_AmZCTlGJeEVIjRpf4-4d8c1OzonQFWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

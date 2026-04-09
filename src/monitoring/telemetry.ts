@@ -1,4 +1,4 @@
-import { analyticsService, EventName } from '../data/api/analyticsService';
+import { analyticsService, EventName } from '../api/analyticsService';
 import { captureError } from './errorCenter';
 import { createTraceId, getObservabilityContext } from './observabilityContext';
 
@@ -20,3 +20,4 @@ export const trackEvent = async (
 };
 
 export default trackEvent;
+

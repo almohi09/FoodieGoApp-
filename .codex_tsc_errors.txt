@@ -1,0 +1,848 @@
+﻿src/components/common/AppErrorBoundary.tsx(39,146): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/common/EmptyState.tsx(26,128): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/common/MapView.tsx(236,7): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminAuditLogScreen.tsx(120,5): error TS2657: JSX expressions must have one parent element.
+src/screens/admin/AdminAuditLogScreen.tsx(124,48): error TS1136: Property assignment expected.
+src/screens/admin/AdminAuditLogScreen.tsx(124,51): error TS1005: '}' expected.
+src/screens/admin/AdminAuditLogScreen.tsx(124,52): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminAuditLogScreen.tsx(124,73): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/admin/AdminAuditLogScreen.tsx(126,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminAuditLogScreen.tsx(128,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/admin/AdminAuditLogScreen.tsx(170,15): error TS1005: '}' expected.
+src/screens/admin/AdminAuditLogScreen.tsx(231,15): error TS1005: '}' expected.
+src/screens/admin/AdminAuditLogScreen.tsx(333,5): error TS1005: ')' expected.
+src/screens/admin/AdminAuditLogScreen.tsx(334,3): error TS1109: Expression expected.
+src/screens/admin/AdminAuditLogScreen.tsx(335,1): error TS1128: Declaration or statement expected.
+src/screens/admin/AdminDashboardScreen.tsx(460,5): error TS2657: JSX expressions must have one parent element.
+src/screens/admin/AdminDashboardScreen.tsx(472,150): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminDashboardScreen.tsx(480,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminDashboardScreen.tsx(516,107): error TS1005: ':' expected.
+src/screens/admin/AdminDashboardScreen.tsx(517,15): error TS1005: '}' expected.
+src/screens/admin/AdminDashboardScreen.tsx(530,15): error TS1109: Expression expected.
+src/screens/admin/AdminDashboardScreen.tsx(530,16): error TS1005: ':' expected.
+src/screens/admin/AdminDashboardScreen.tsx(531,15): error TS1005: '}' expected.
+src/screens/admin/AdminDashboardScreen.tsx(547,52): error TS1005: ',' expected.
+src/screens/admin/AdminDashboardScreen.tsx(548,13): error TS1005: '}' expected.
+src/screens/admin/AdminDashboardScreen.tsx(591,52): error TS1005: ',' expected.
+src/screens/admin/AdminDashboardScreen.tsx(592,13): error TS1005: '}' expected.
+src/screens/admin/AdminDashboardScreen.tsx(673,19): error TS1109: Expression expected.
+src/screens/admin/AdminDashboardScreen.tsx(673,20): error TS1005: ':' expected.
+src/screens/admin/AdminDashboardScreen.tsx(674,19): error TS1005: '}' expected.
+src/screens/admin/AdminDashboardScreen.tsx(738,21): error TS1109: Expression expected.
+src/screens/admin/AdminDashboardScreen.tsx(738,22): error TS1005: ':' expected.
+src/screens/admin/AdminDashboardScreen.tsx(739,21): error TS1005: '}' expected.
+src/screens/admin/AdminDashboardScreen.tsx(795,21): error TS1109: Expression expected.
+src/screens/admin/AdminDashboardScreen.tsx(795,22): error TS1005: ':' expected.
+src/screens/admin/AdminDashboardScreen.tsx(796,21): error TS1005: '}' expected.
+src/screens/admin/AdminDashboardScreen.tsx(811,21): error TS1109: Expression expected.
+src/screens/admin/AdminDashboardScreen.tsx(811,22): error TS1005: ':' expected.
+src/screens/admin/AdminDashboardScreen.tsx(812,21): error TS1005: '}' expected.
+src/screens/admin/AdminDashboardScreen.tsx(825,21): error TS1109: Expression expected.
+src/screens/admin/AdminDashboardScreen.tsx(825,22): error TS1005: ':' expected.
+src/screens/admin/AdminDashboardScreen.tsx(826,21): error TS1005: '}' expected.
+src/screens/admin/AdminDashboardScreen.tsx(844,48): error TS1136: Property assignment expected.
+src/screens/admin/AdminDashboardScreen.tsx(844,51): error TS1005: '}' expected.
+src/screens/admin/AdminDashboardScreen.tsx(844,52): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminDashboardScreen.tsx(844,95): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/admin/AdminDashboardScreen.tsx(846,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminDashboardScreen.tsx(850,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/admin/AdminDashboardScreen.tsx(895,25): error TS1109: Expression expected.
+src/screens/admin/AdminDashboardScreen.tsx(895,26): error TS1005: ':' expected.
+src/screens/admin/AdminDashboardScreen.tsx(896,25): error TS1005: '}' expected.
+src/screens/admin/AdminDashboardScreen.tsx(914,25): error TS1109: Expression expected.
+src/screens/admin/AdminDashboardScreen.tsx(914,26): error TS1005: ':' expected.
+src/screens/admin/AdminDashboardScreen.tsx(915,25): error TS1005: '}' expected.
+src/screens/admin/AdminDashboardScreen.tsx(936,25): error TS1109: Expression expected.
+src/screens/admin/AdminDashboardScreen.tsx(936,26): error TS1005: ':' expected.
+src/screens/admin/AdminDashboardScreen.tsx(937,25): error TS1005: '}' expected.
+src/screens/admin/AdminDashboardScreen.tsx(954,9): error TS17002: Expected corresponding JSX closing tag for 'ScrollView'.
+src/screens/admin/AdminDashboardScreen.tsx(962,48): error TS1136: Property assignment expected.
+src/screens/admin/AdminDashboardScreen.tsx(962,51): error TS1005: '}' expected.
+src/screens/admin/AdminDashboardScreen.tsx(962,52): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminDashboardScreen.tsx(962,90): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/admin/AdminDashboardScreen.tsx(964,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminDashboardScreen.tsx(968,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/admin/AdminDashboardScreen.tsx(1011,7): error TS1005: ')' expected.
+src/screens/admin/AdminDashboardScreen.tsx(1013,7): error TS2657: JSX expressions must have one parent element.
+src/screens/admin/AdminDashboardScreen.tsx(1019,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminDashboardScreen.tsx(1025,5): error TS1128: Declaration or statement expected.
+src/screens/admin/AdminDashboardScreen.tsx(1026,3): error TS1109: Expression expected.
+src/screens/admin/AdminDashboardScreen.tsx(1027,1): error TS1128: Declaration or statement expected.
+src/screens/admin/AdminDispatchBoardScreen.tsx(183,5): error TS2657: JSX expressions must have one parent element.
+src/screens/admin/AdminDispatchBoardScreen.tsx(187,48): error TS1136: Property assignment expected.
+src/screens/admin/AdminDispatchBoardScreen.tsx(187,51): error TS1005: '}' expected.
+src/screens/admin/AdminDispatchBoardScreen.tsx(187,52): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminDispatchBoardScreen.tsx(187,73): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/admin/AdminDispatchBoardScreen.tsx(189,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminDispatchBoardScreen.tsx(191,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/admin/AdminDispatchBoardScreen.tsx(223,15): error TS1005: '}' expected.
+src/screens/admin/AdminDispatchBoardScreen.tsx(297,21): error TS1109: Expression expected.
+src/screens/admin/AdminDispatchBoardScreen.tsx(297,22): error TS1005: ':' expected.
+src/screens/admin/AdminDispatchBoardScreen.tsx(298,21): error TS1005: '}' expected.
+src/screens/admin/AdminDispatchBoardScreen.tsx(318,21): error TS1109: Expression expected.
+src/screens/admin/AdminDispatchBoardScreen.tsx(318,22): error TS1005: ':' expected.
+src/screens/admin/AdminDispatchBoardScreen.tsx(319,21): error TS1005: '}' expected.
+src/screens/admin/AdminDispatchBoardScreen.tsx(360,5): error TS1005: ')' expected.
+src/screens/admin/AdminDispatchBoardScreen.tsx(361,3): error TS1109: Expression expected.
+src/screens/admin/AdminDispatchBoardScreen.tsx(362,1): error TS1128: Declaration or statement expected.
+src/screens/admin/AdminModerationDetailScreen.tsx(373,17): error TS1109: Expression expected.
+src/screens/admin/AdminModerationDetailScreen.tsx(373,18): error TS1005: ':' expected.
+src/screens/admin/AdminModerationDetailScreen.tsx(374,17): error TS1005: '}' expected.
+src/screens/admin/AdminModerationDetailScreen.tsx(381,110): error TS1005: ':' expected.
+src/screens/admin/AdminModerationDetailScreen.tsx(382,17): error TS1005: '}' expected.
+src/screens/admin/AdminModerationDetailScreen.tsx(389,110): error TS1005: ':' expected.
+src/screens/admin/AdminModerationDetailScreen.tsx(390,17): error TS1005: '}' expected.
+src/screens/admin/AdminModerationDetailScreen.tsx(534,5): error TS2657: JSX expressions must have one parent element.
+src/screens/admin/AdminModerationDetailScreen.tsx(538,48): error TS1136: Property assignment expected.
+src/screens/admin/AdminModerationDetailScreen.tsx(538,51): error TS1005: '}' expected.
+src/screens/admin/AdminModerationDetailScreen.tsx(538,52): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminModerationDetailScreen.tsx(538,73): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/admin/AdminModerationDetailScreen.tsx(540,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminModerationDetailScreen.tsx(542,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/admin/AdminModerationDetailScreen.tsx(580,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminModerationDetailScreen.tsx(602,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminModerationDetailScreen.tsx(614,5): error TS1005: ')' expected.
+src/screens/admin/AdminModerationDetailScreen.tsx(615,3): error TS1109: Expression expected.
+src/screens/admin/AdminModerationDetailScreen.tsx(616,1): error TS1128: Declaration or statement expected.
+src/screens/admin/AdminModerationScreen.tsx(46,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminModerationScreen.tsx(127,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminModerationScreen.tsx(300,11): error TS1005: '}' expected.
+src/screens/admin/AdminModerationScreen.tsx(337,5): error TS2657: JSX expressions must have one parent element.
+src/screens/admin/AdminModerationScreen.tsx(341,48): error TS1136: Property assignment expected.
+src/screens/admin/AdminModerationScreen.tsx(341,51): error TS1005: '}' expected.
+src/screens/admin/AdminModerationScreen.tsx(341,52): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminModerationScreen.tsx(341,73): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/admin/AdminModerationScreen.tsx(343,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminModerationScreen.tsx(345,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/admin/AdminModerationScreen.tsx(352,103): error TS1005: ':' expected.
+src/screens/admin/AdminModerationScreen.tsx(353,13): error TS1005: '}' expected.
+src/screens/admin/AdminModerationScreen.tsx(366,105): error TS1005: ':' expected.
+src/screens/admin/AdminModerationScreen.tsx(367,13): error TS1005: '}' expected.
+src/screens/admin/AdminModerationScreen.tsx(408,5): error TS1005: ')' expected.
+src/screens/admin/AdminModerationScreen.tsx(409,3): error TS1109: Expression expected.
+src/screens/admin/AdminModerationScreen.tsx(410,1): error TS1128: Declaration or statement expected.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(184,5): error TS2657: JSX expressions must have one parent element.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(188,48): error TS1136: Property assignment expected.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(188,51): error TS1005: '}' expected.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(188,52): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(188,73): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(190,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(192,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(339,13): error TS1109: Expression expected.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(339,14): error TS1005: ':' expected.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(340,13): error TS1005: '}' expected.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(363,13): error TS1109: Expression expected.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(363,14): error TS1005: ':' expected.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(364,13): error TS1005: '}' expected.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(387,13): error TS1109: Expression expected.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(387,14): error TS1005: ':' expected.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(388,13): error TS1005: '}' expected.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(421,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(433,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(439,5): error TS1005: ')' expected.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(440,3): error TS1109: Expression expected.
+src/screens/admin/AdminNotificationPreferencesScreen.tsx(441,1): error TS1128: Declaration or statement expected.
+src/screens/admin/AdminSLABreachScreen.tsx(202,5): error TS2657: JSX expressions must have one parent element.
+src/screens/admin/AdminSLABreachScreen.tsx(206,48): error TS1136: Property assignment expected.
+src/screens/admin/AdminSLABreachScreen.tsx(206,51): error TS1005: '}' expected.
+src/screens/admin/AdminSLABreachScreen.tsx(206,52): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminSLABreachScreen.tsx(206,73): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/admin/AdminSLABreachScreen.tsx(208,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/admin/AdminSLABreachScreen.tsx(210,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/admin/AdminSLABreachScreen.tsx(288,17): error TS1005: '}' expected.
+src/screens/admin/AdminSLABreachScreen.tsx(328,15): error TS1005: '}' expected.
+src/screens/admin/AdminSLABreachScreen.tsx(505,17): error TS1109: Expression expected.
+src/screens/admin/AdminSLABreachScreen.tsx(505,18): error TS1005: ':' expected.
+src/screens/admin/AdminSLABreachScreen.tsx(506,17): error TS1005: '}' expected.
+src/screens/admin/AdminSLABreachScreen.tsx(540,5): error TS1005: ')' expected.
+src/screens/admin/AdminSLABreachScreen.tsx(541,3): error TS1109: Expression expected.
+src/screens/admin/AdminSLABreachScreen.tsx(542,1): error TS1128: Declaration or statement expected.
+src/screens/auth/AdminLoginScreen.tsx(72,102): error TS1005: ',' expected.
+src/screens/auth/AdminLoginScreen.tsx(72,115): error TS1005: '}' expected.
+src/screens/auth/AdminLoginScreen.tsx(116,78): error TS1136: Property assignment expected.
+src/screens/auth/AdminLoginScreen.tsx(116,81): error TS1005: '}' expected.
+src/screens/auth/AdminLoginScreen.tsx(116,82): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/AdminLoginScreen.tsx(116,114): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/auth/AdminLoginScreen.tsx(116,115): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/AdminLoginScreen.tsx(120,19): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/auth/AdminLoginScreen.tsx(126,56): error TS1005: ',' expected.
+src/screens/auth/AdminLoginScreen.tsx(127,15): error TS1005: '}' expected.
+src/screens/auth/AdminLoginScreen.tsx(151,11): error TS17002: Expected corresponding JSX closing tag for 'ScrollView'.
+src/screens/auth/AdminLoginScreen.tsx(152,9): error TS17002: Expected corresponding JSX closing tag for 'KeyboardAvoidingView'.
+src/screens/auth/AdminLoginScreen.tsx(153,5): error TS1005: ')' expected.
+src/screens/auth/AdminLoginScreen.tsx(154,3): error TS1109: Expression expected.
+src/screens/auth/AdminLoginScreen.tsx(155,1): error TS1128: Declaration or statement expected.
+src/screens/auth/LoginOptionsScreen.tsx(69,15): error TS1109: Expression expected.
+src/screens/auth/LoginOptionsScreen.tsx(69,16): error TS1005: ':' expected.
+src/screens/auth/LoginOptionsScreen.tsx(70,15): error TS1005: '}' expected.
+src/screens/auth/LoginOptionsScreen.tsx(77,102): error TS1005: ':' expected.
+src/screens/auth/LoginOptionsScreen.tsx(78,13): error TS1005: '}' expected.
+src/screens/auth/LoginOptionsScreen.tsx(110,17): error TS1109: Expression expected.
+src/screens/auth/LoginOptionsScreen.tsx(110,18): error TS1005: ':' expected.
+src/screens/auth/LoginOptionsScreen.tsx(111,17): error TS1005: '}' expected.
+src/screens/auth/LoginOptionsScreen.tsx(129,17): error TS1109: Expression expected.
+src/screens/auth/LoginOptionsScreen.tsx(129,18): error TS1005: ':' expected.
+src/screens/auth/LoginOptionsScreen.tsx(130,17): error TS1005: '}' expected.
+src/screens/auth/LoginOptionsScreen.tsx(151,106): error TS1005: ':' expected.
+src/screens/auth/LoginOptionsScreen.tsx(152,15): error TS1005: '}' expected.
+src/screens/auth/LoginOptionsScreen.tsx(173,106): error TS1005: ':' expected.
+src/screens/auth/LoginOptionsScreen.tsx(174,15): error TS1005: '}' expected.
+src/screens/auth/LoginScreen.tsx(99,70): error TS1136: Property assignment expected.
+src/screens/auth/LoginScreen.tsx(99,73): error TS1005: '}' expected.
+src/screens/auth/LoginScreen.tsx(99,74): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/LoginScreen.tsx(99,109): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/auth/LoginScreen.tsx(99,136): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/LoginScreen.tsx(101,11): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/auth/LoginScreen.tsx(103,70): error TS1136: Property assignment expected.
+src/screens/auth/LoginScreen.tsx(103,73): error TS1005: '}' expected.
+src/screens/auth/LoginScreen.tsx(103,74): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/LoginScreen.tsx(103,105): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/auth/LoginScreen.tsx(103,132): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/LoginScreen.tsx(105,11): error TS17002: Expected corresponding JSX closing tag for 'KeyboardAvoidingView'.
+src/screens/auth/LoginScreen.tsx(106,7): error TS1005: ')' expected.
+src/screens/auth/LoginScreen.tsx(107,5): error TS1109: Expression expected.
+src/screens/auth/LoginScreen.tsx(108,3): error TS1109: Expression expected.
+src/screens/auth/LoginScreen.tsx(109,1): error TS1128: Declaration or statement expected.
+src/screens/auth/OnboardingScreen.tsx(147,7): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/OTPVerifyScreen.tsx(126,70): error TS1136: Property assignment expected.
+src/screens/auth/OTPVerifyScreen.tsx(126,73): error TS1005: '}' expected.
+src/screens/auth/OTPVerifyScreen.tsx(126,74): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/OTPVerifyScreen.tsx(126,95): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/auth/OTPVerifyScreen.tsx(126,122): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/OTPVerifyScreen.tsx(128,11): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/auth/OTPVerifyScreen.tsx(167,80): error TS1005: '}' expected.
+src/screens/auth/OTPVerifyScreen.tsx(167,134): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/OTPVerifyScreen.tsx(171,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/auth/OTPVerifyScreen.tsx(172,11): error TS17002: Expected corresponding JSX closing tag for 'KeyboardAvoidingView'.
+src/screens/auth/OTPVerifyScreen.tsx(173,7): error TS1005: ')' expected.
+src/screens/auth/OTPVerifyScreen.tsx(174,5): error TS1109: Expression expected.
+src/screens/auth/OTPVerifyScreen.tsx(175,3): error TS1109: Expression expected.
+src/screens/auth/OTPVerifyScreen.tsx(176,1): error TS1128: Declaration or statement expected.
+src/screens/auth/PhoneEntryScreen.tsx(97,44): error TS1136: Property assignment expected.
+src/screens/auth/PhoneEntryScreen.tsx(97,47): error TS1005: '}' expected.
+src/screens/auth/PhoneEntryScreen.tsx(97,48): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/PhoneEntryScreen.tsx(97,78): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/auth/PhoneEntryScreen.tsx(99,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/PhoneEntryScreen.tsx(101,11): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/auth/PhoneEntryScreen.tsx(104,44): error TS1136: Property assignment expected.
+src/screens/auth/PhoneEntryScreen.tsx(104,47): error TS1005: '}' expected.
+src/screens/auth/PhoneEntryScreen.tsx(104,48): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/PhoneEntryScreen.tsx(104,79): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/auth/PhoneEntryScreen.tsx(106,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/PhoneEntryScreen.tsx(110,11): error TS17002: Expected corresponding JSX closing tag for 'KeyboardAvoidingView'.
+src/screens/auth/PhoneEntryScreen.tsx(111,7): error TS1005: ')' expected.
+src/screens/auth/PhoneEntryScreen.tsx(112,5): error TS1109: Expression expected.
+src/screens/auth/PhoneEntryScreen.tsx(113,3): error TS1109: Expression expected.
+src/screens/auth/PhoneEntryScreen.tsx(114,1): error TS1128: Declaration or statement expected.
+src/screens/auth/SellerLoginScreen.tsx(72,102): error TS1005: ',' expected.
+src/screens/auth/SellerLoginScreen.tsx(72,115): error TS1005: '}' expected.
+src/screens/auth/SellerLoginScreen.tsx(115,78): error TS1136: Property assignment expected.
+src/screens/auth/SellerLoginScreen.tsx(115,81): error TS1005: '}' expected.
+src/screens/auth/SellerLoginScreen.tsx(115,82): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/SellerLoginScreen.tsx(115,114): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/auth/SellerLoginScreen.tsx(115,115): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/SellerLoginScreen.tsx(119,19): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/auth/SellerLoginScreen.tsx(125,56): error TS1005: ',' expected.
+src/screens/auth/SellerLoginScreen.tsx(126,15): error TS1005: '}' expected.
+src/screens/auth/SellerLoginScreen.tsx(148,74): error TS1136: Property assignment expected.
+src/screens/auth/SellerLoginScreen.tsx(148,77): error TS1005: '}' expected.
+src/screens/auth/SellerLoginScreen.tsx(148,78): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/SellerLoginScreen.tsx(148,125): error TS1005: '}' expected.
+src/screens/auth/SellerLoginScreen.tsx(148,130): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/auth/SellerLoginScreen.tsx(148,132): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/auth/SellerLoginScreen.tsx(148,133): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/SellerLoginScreen.tsx(150,15): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/auth/SellerLoginScreen.tsx(151,13): error TS17002: Expected corresponding JSX closing tag for 'ScrollView'.
+src/screens/auth/SellerLoginScreen.tsx(152,11): error TS17002: Expected corresponding JSX closing tag for 'KeyboardAvoidingView'.
+src/screens/auth/SellerLoginScreen.tsx(153,7): error TS1005: ')' expected.
+src/screens/auth/SellerLoginScreen.tsx(154,5): error TS1109: Expression expected.
+src/screens/auth/SellerLoginScreen.tsx(155,3): error TS1109: Expression expected.
+src/screens/auth/SellerLoginScreen.tsx(156,1): error TS1128: Declaration or statement expected.
+src/screens/auth/SellerRegisterScreen.tsx(113,52): error TS1005: ',' expected.
+src/screens/auth/SellerRegisterScreen.tsx(114,13): error TS1005: '}' expected.
+src/screens/auth/SellerRegisterScreen.tsx(200,64): error TS1005: ',' expected.
+src/screens/auth/SellerRegisterScreen.tsx(201,21): error TS1005: '}' expected.
+src/screens/auth/SellerRegisterScreen.tsx(242,250): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/SellerRegisterScreen.tsx(249,103): error TS1005: ',' expected.
+src/screens/auth/SellerRegisterScreen.tsx(249,115): error TS1005: '}' expected.
+src/screens/auth/SignupScreen.tsx(156,70): error TS1136: Property assignment expected.
+src/screens/auth/SignupScreen.tsx(156,73): error TS1005: '}' expected.
+src/screens/auth/SignupScreen.tsx(156,74): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/SignupScreen.tsx(156,104): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/auth/SignupScreen.tsx(156,131): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/auth/SignupScreen.tsx(158,11): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/auth/SignupScreen.tsx(159,9): error TS17002: Expected corresponding JSX closing tag for 'KeyboardAvoidingView'.
+src/screens/auth/SignupScreen.tsx(160,5): error TS1005: ')' expected.
+src/screens/auth/SignupScreen.tsx(161,3): error TS1109: Expression expected.
+src/screens/auth/SignupScreen.tsx(162,1): error TS1128: Declaration or statement expected.
+src/screens/auth/UserRegisterScreen.tsx(81,102): error TS1005: ',' expected.
+src/screens/auth/UserRegisterScreen.tsx(81,115): error TS1005: '}' expected.
+src/screens/cart/CartScreen.tsx(110,7): error TS2657: JSX expressions must have one parent element.
+src/screens/cart/CartScreen.tsx(112,72): error TS1136: Property assignment expected.
+src/screens/cart/CartScreen.tsx(112,75): error TS1005: '}' expected.
+src/screens/cart/CartScreen.tsx(112,76): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/cart/CartScreen.tsx(112,97): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/cart/CartScreen.tsx(112,98): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/cart/CartScreen.tsx(114,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/cart/CartScreen.tsx(127,7): error TS1005: ')' expected.
+src/screens/cart/CartScreen.tsx(128,5): error TS1109: Expression expected.
+src/screens/cart/CartScreen.tsx(129,3): error TS1128: Declaration or statement expected.
+src/screens/cart/CartScreen.tsx(137,70): error TS1136: Property assignment expected.
+src/screens/cart/CartScreen.tsx(137,73): error TS1005: '}' expected.
+src/screens/cart/CartScreen.tsx(137,74): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/cart/CartScreen.tsx(137,95): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/cart/CartScreen.tsx(137,96): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/cart/CartScreen.tsx(139,11): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/cart/CartScreen.tsx(141,98): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/cart/CartScreen.tsx(146,7): error TS1005: ')' expected.
+src/screens/cart/CartScreen.tsx(164,15): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/cart/CartScreen.tsx(172,15): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/cart/CartScreen.tsx(180,7): error TS2657: JSX expressions must have one parent element.
+src/screens/cart/CartScreen.tsx(223,68): error TS1005: ',' expected.
+src/screens/cart/CartScreen.tsx(224,21): error TS1005: '}' expected.
+src/screens/cart/CartScreen.tsx(237,68): error TS1005: ',' expected.
+src/screens/cart/CartScreen.tsx(238,21): error TS1005: '}' expected.
+src/screens/cart/CartScreen.tsx(316,5): error TS1128: Declaration or statement expected.
+src/screens/cart/CartScreen.tsx(317,3): error TS1109: Expression expected.
+src/screens/cart/CartScreen.tsx(318,1): error TS1128: Declaration or statement expected.
+src/screens/cart/index.tsx(46,48): error TS1005: ',' expected.
+src/screens/cart/index.tsx(47,11): error TS1005: '}' expected.
+src/screens/cart/index.tsx(71,60): error TS1005: ',' expected.
+src/screens/cart/index.tsx(72,17): error TS1005: '}' expected.
+src/screens/cart/index.tsx(91,64): error TS1005: ',' expected.
+src/screens/cart/index.tsx(92,19): error TS1005: '}' expected.
+src/screens/cart/index.tsx(99,64): error TS1005: ',' expected.
+src/screens/cart/index.tsx(100,19): error TS1005: '}' expected.
+src/screens/cart/index.tsx(141,48): error TS1005: ',' expected.
+src/screens/cart/index.tsx(142,11): error TS1005: '}' expected.
+src/screens/checkout/CheckoutScreen.tsx(422,5): error TS2657: JSX expressions must have one parent element.
+src/screens/checkout/CheckoutScreen.tsx(427,70): error TS1136: Property assignment expected.
+src/screens/checkout/CheckoutScreen.tsx(427,73): error TS1005: '}' expected.
+src/screens/checkout/CheckoutScreen.tsx(427,74): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/checkout/CheckoutScreen.tsx(427,95): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/checkout/CheckoutScreen.tsx(427,96): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/checkout/CheckoutScreen.tsx(429,11): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/checkout/CheckoutScreen.tsx(444,52): error TS1005: ',' expected.
+src/screens/checkout/CheckoutScreen.tsx(445,15): error TS1005: '}' expected.
+src/screens/checkout/CheckoutScreen.tsx(462,112): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/checkout/CheckoutScreen.tsx(508,54): error TS1005: ',' expected.
+src/screens/checkout/CheckoutScreen.tsx(509,15): error TS1005: '}' expected.
+src/screens/checkout/CheckoutScreen.tsx(534,52): error TS1005: ',' expected.
+src/screens/checkout/CheckoutScreen.tsx(535,13): error TS1005: '}' expected.
+src/screens/checkout/CheckoutScreen.tsx(612,7): error TS1005: ')' expected.
+src/screens/checkout/CheckoutScreen.tsx(628,5): error TS1128: Declaration or statement expected.
+src/screens/checkout/CheckoutScreen.tsx(629,3): error TS1109: Expression expected.
+src/screens/checkout/CheckoutScreen.tsx(630,1): error TS1128: Declaration or statement expected.
+src/screens/checkout/index.tsx(202,5): error TS2657: JSX expressions must have one parent element.
+src/screens/checkout/index.tsx(203,8): error TS17008: JSX element 'ScrollView' has no corresponding closing tag.
+src/screens/checkout/index.tsx(207,74): error TS1136: Property assignment expected.
+src/screens/checkout/index.tsx(207,77): error TS1005: '}' expected.
+src/screens/checkout/index.tsx(207,78): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/checkout/index.tsx(207,116): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/checkout/index.tsx(207,117): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/checkout/index.tsx(209,15): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/checkout/index.tsx(253,131): error TS1005: ':' expected.
+src/screens/checkout/index.tsx(254,13): error TS1005: '}' expected.
+src/screens/checkout/index.tsx(269,131): error TS1005: ':' expected.
+src/screens/checkout/index.tsx(270,13): error TS1005: '}' expected.
+src/screens/checkout/index.tsx(282,132): error TS1005: ':' expected.
+src/screens/checkout/index.tsx(283,13): error TS1005: '}' expected.
+src/screens/checkout/index.tsx(295,138): error TS1005: ':' expected.
+src/screens/checkout/index.tsx(296,13): error TS1005: '}' expected.
+src/screens/checkout/index.tsx(337,7): error TS1005: ')' expected.
+src/screens/checkout/index.tsx(342,122): error TS1005: ':' expected.
+src/screens/checkout/index.tsx(343,11): error TS1005: '}' expected.
+src/screens/checkout/index.tsx(354,5): error TS1128: Declaration or statement expected.
+src/screens/checkout/index.tsx(355,3): error TS1109: Expression expected.
+src/screens/checkout/index.tsx(356,1): error TS1128: Declaration or statement expected.
+src/screens/debug/ErrorCenterScreen.tsx(35,5): error TS2657: JSX expressions must have one parent element.
+src/screens/debug/ErrorCenterScreen.tsx(46,70): error TS1136: Property assignment expected.
+src/screens/debug/ErrorCenterScreen.tsx(46,73): error TS1005: '}' expected.
+src/screens/debug/ErrorCenterScreen.tsx(46,74): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/debug/ErrorCenterScreen.tsx(46,95): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/debug/ErrorCenterScreen.tsx(46,96): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/debug/ErrorCenterScreen.tsx(48,11): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/debug/ErrorCenterScreen.tsx(52,102): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/debug/ErrorCenterScreen.tsx(96,5): error TS1005: ')' expected.
+src/screens/debug/ErrorCenterScreen.tsx(97,3): error TS1109: Expression expected.
+src/screens/debug/ErrorCenterScreen.tsx(98,1): error TS1128: Declaration or statement expected.
+src/screens/home/HomeScreen.tsx(319,102): error TS1005: ':' expected.
+src/screens/home/HomeScreen.tsx(320,13): error TS1005: '}' expected.
+src/screens/home/HomeScreen.tsx(355,72): error TS1136: Property assignment expected.
+src/screens/home/HomeScreen.tsx(355,75): error TS1005: '}' expected.
+src/screens/home/HomeScreen.tsx(355,76): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/home/HomeScreen.tsx(355,96): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/home/HomeScreen.tsx(355,97): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/home/HomeScreen.tsx(357,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/home/HomeScreen.tsx(358,17): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/home/HomeScreen.tsx(359,9): error TS17002: Expected corresponding JSX closing tag for 'Animated.View'.
+src/screens/home/HomeScreen.tsx(360,5): error TS1005: ')' expected.
+src/screens/home/HomeScreen.tsx(361,3): error TS1109: Expression expected.
+src/screens/home/HomeScreen.tsx(372,108): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/home/HomeScreen.tsx(392,60): error TS1005: ',' expected.
+src/screens/home/HomeScreen.tsx(393,17): error TS1005: '}' expected.
+src/screens/home/HomeScreen.tsx(409,17): error TS1109: Expression expected.
+src/screens/home/HomeScreen.tsx(409,18): error TS1005: ':' expected.
+src/screens/home/HomeScreen.tsx(410,17): error TS1005: '}' expected.
+src/screens/home/HomeScreen.tsx(435,13): error TS1005: '}' expected.
+src/screens/home/HomeScreen.tsx(524,55): error TS1005: ',' expected.
+src/screens/home/HomeScreen.tsx(525,15): error TS1005: '}' expected.
+src/screens/home/HomeScreen.tsx(587,50): error TS1005: ',' expected.
+src/screens/home/HomeScreen.tsx(588,13): error TS1005: '}' expected.
+src/screens/home/HomeScreen.tsx(917,1): error TS1128: Declaration or statement expected.
+src/screens/home/index.tsx(183,48): error TS1005: ',' expected.
+src/screens/home/index.tsx(184,11): error TS1005: '}' expected.
+src/screens/home/index.tsx(196,48): error TS1005: ',' expected.
+src/screens/home/index.tsx(197,11): error TS1005: '}' expected.
+src/screens/home/index.tsx(208,105): error TS1005: ':' expected.
+src/screens/home/index.tsx(209,13): error TS1005: '}' expected.
+src/screens/home/index.tsx(218,52): error TS1005: ',' expected.
+src/screens/home/index.tsx(219,13): error TS1005: '}' expected.
+src/screens/home/index.tsx(231,52): error TS1005: ',' expected.
+src/screens/home/index.tsx(232,13): error TS1005: '}' expected.
+src/screens/home/index.tsx(296,15): error TS1005: '}' expected.
+src/screens/home/index.tsx(338,44): error TS1136: Property assignment expected.
+src/screens/home/index.tsx(338,47): error TS1005: '}' expected.
+src/screens/home/index.tsx(338,48): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/home/index.tsx(340,23): error TS1005: '}' expected.
+src/screens/home/index.tsx(341,13): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/home/index.tsx(342,11): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/home/index.tsx(344,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/home/index.tsx(346,11): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/home/index.tsx(349,7): error TS1005: ')' expected.
+src/screens/home/index.tsx(360,5): error TS1128: Declaration or statement expected.
+src/screens/home/index.tsx(361,3): error TS1109: Expression expected.
+src/screens/home/index.tsx(378,1): error TS1128: Declaration or statement expected.
+src/screens/main/RewardsScreen.tsx(66,56): error TS1005: ',' expected.
+src/screens/main/RewardsScreen.tsx(67,15): error TS1005: '}' expected.
+src/screens/main/RewardsScreen.tsx(140,132): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/main/RewardsScreen.tsx(155,106): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/main/SearchScreen.tsx(229,5): error TS2657: JSX expressions must have one parent element.
+src/screens/main/SearchScreen.tsx(253,48): error TS1136: Property assignment expected.
+src/screens/main/SearchScreen.tsx(253,51): error TS1005: '}' expected.
+src/screens/main/SearchScreen.tsx(253,52): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/main/SearchScreen.tsx(253,71): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/main/SearchScreen.tsx(255,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/main/SearchScreen.tsx(259,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/main/SearchScreen.tsx(260,10): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/main/SearchScreen.tsx(278,50): error TS1005: ',' expected.
+src/screens/main/SearchScreen.tsx(279,13): error TS1005: '}' expected.
+src/screens/main/SearchScreen.tsx(308,5): error TS1005: ')' expected.
+src/screens/main/SearchScreen.tsx(309,3): error TS1109: Expression expected.
+src/screens/main/SearchScreen.tsx(318,108): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/main/SearchScreen.tsx(335,60): error TS1005: ',' expected.
+src/screens/main/SearchScreen.tsx(336,17): error TS1005: '}' expected.
+src/screens/main/SearchScreen.tsx(353,76): error TS1136: Property assignment expected.
+src/screens/main/SearchScreen.tsx(353,79): error TS1005: '}' expected.
+src/screens/main/SearchScreen.tsx(353,80): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/main/SearchScreen.tsx(353,106): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/main/SearchScreen.tsx(353,107): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/main/SearchScreen.tsx(359,17): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/main/SearchScreen.tsx(360,13): error TS1005: ')' expected.
+src/screens/main/SearchScreen.tsx(361,12): error TS1005: ':' expected.
+src/screens/main/SearchScreen.tsx(361,13): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/main/SearchScreen.tsx(363,9): error TS1005: ',' expected.
+src/screens/main/SearchScreen.tsx(363,11): error TS1134: Variable declaration expected.
+src/screens/main/SearchScreen.tsx(367,8): error TS1128: Declaration or statement expected.
+src/screens/main/SearchScreen.tsx(368,5): error TS1128: Declaration or statement expected.
+src/screens/main/SearchScreen.tsx(369,3): error TS1109: Expression expected.
+src/screens/main/SearchScreen.tsx(374,94): error TS1005: ':' expected.
+src/screens/main/SearchScreen.tsx(375,7): error TS1005: '}' expected.
+src/screens/main/SearchScreen.tsx(480,1): error TS1128: Declaration or statement expected.
+src/screens/notifications/index.tsx(123,5): error TS2657: JSX expressions must have one parent element.
+src/screens/notifications/index.tsx(126,70): error TS1136: Property assignment expected.
+src/screens/notifications/index.tsx(126,73): error TS1005: '}' expected.
+src/screens/notifications/index.tsx(126,74): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/notifications/index.tsx(126,102): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/notifications/index.tsx(126,103): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/notifications/index.tsx(128,11): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/notifications/index.tsx(140,101): error TS1005: ':' expected.
+src/screens/notifications/index.tsx(141,13): error TS1005: '}' expected.
+src/screens/notifications/index.tsx(166,5): error TS1005: ')' expected.
+src/screens/notifications/index.tsx(167,3): error TS1109: Expression expected.
+src/screens/notifications/index.tsx(168,1): error TS1128: Declaration or statement expected.
+src/screens/orders/OrdersScreen.tsx(127,116): error TS1005: ':' expected.
+src/screens/orders/OrdersScreen.tsx(128,13): error TS1005: '}' expected.
+src/screens/orders/OrdersScreen.tsx(136,114): error TS1005: ':' expected.
+src/screens/orders/OrdersScreen.tsx(137,13): error TS1005: '}' expected.
+src/screens/orders/OrdersScreen.tsx(157,56): error TS1005: ',' expected.
+src/screens/orders/OrdersScreen.tsx(158,15): error TS1005: '}' expected.
+src/screens/orders/OrdersScreen.tsx(178,68): error TS1005: ',' expected.
+src/screens/orders/OrdersScreen.tsx(179,21): error TS1005: '}' expected.
+src/screens/orders/OrderTrackingScreen.tsx(131,5): error TS2657: JSX expressions must have one parent element.
+src/screens/orders/OrderTrackingScreen.tsx(136,70): error TS1136: Property assignment expected.
+src/screens/orders/OrderTrackingScreen.tsx(136,73): error TS1005: '}' expected.
+src/screens/orders/OrderTrackingScreen.tsx(136,74): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/orders/OrderTrackingScreen.tsx(136,95): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/orders/OrderTrackingScreen.tsx(136,96): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/orders/OrderTrackingScreen.tsx(138,11): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/orders/OrderTrackingScreen.tsx(178,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/orders/OrderTrackingScreen.tsx(186,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/orders/OrderTrackingScreen.tsx(250,74): error TS1136: Property assignment expected.
+src/screens/orders/OrderTrackingScreen.tsx(250,77): error TS1005: '}' expected.
+src/screens/orders/OrderTrackingScreen.tsx(250,78): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/orders/OrderTrackingScreen.tsx(250,104): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/orders/OrderTrackingScreen.tsx(250,105): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/orders/OrderTrackingScreen.tsx(254,15): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/orders/OrderTrackingScreen.tsx(287,11): error TS17002: Expected corresponding JSX closing tag for 'ScrollView'.
+src/screens/orders/OrderTrackingScreen.tsx(290,7): error TS1005: ')' expected.
+src/screens/orders/OrderTrackingScreen.tsx(291,5): error TS1109: Expression expected.
+src/screens/orders/OrderTrackingScreen.tsx(292,3): error TS1109: Expression expected.
+src/screens/orders/OrderTrackingScreen.tsx(293,1): error TS1128: Declaration or statement expected.
+src/screens/orders/OrderTrackingScreen/index.tsx(314,101): error TS1005: ',' expected.
+src/screens/orders/OrderTrackingScreen/index.tsx(314,115): error TS1005: '}' expected.
+src/screens/orders/OrderTrackingScreen/index.tsx(424,60): error TS1005: ',' expected.
+src/screens/orders/OrderTrackingScreen/index.tsx(425,17): error TS1005: '}' expected.
+src/screens/orders/OrderTrackingScreen/index.tsx(437,60): error TS1005: ',' expected.
+src/screens/orders/OrderTrackingScreen/index.tsx(438,17): error TS1005: '}' expected.
+src/screens/orders/OrderTrackingScreen/index.tsx(460,106): error TS1005: ',' expected.
+src/screens/orders/OrderTrackingScreen/index.tsx(460,123): error TS1005: '}' expected.
+src/screens/owner/DashboardScreen/index.tsx(248,5): error TS2657: JSX expressions must have one parent element.
+src/screens/owner/DashboardScreen/index.tsx(257,52): error TS1005: ',' expected.
+src/screens/owner/DashboardScreen/index.tsx(258,13): error TS1005: '}' expected.
+src/screens/owner/DashboardScreen/index.tsx(270,48): error TS1136: Property assignment expected.
+src/screens/owner/DashboardScreen/index.tsx(270,51): error TS1005: '}' expected.
+src/screens/owner/DashboardScreen/index.tsx(270,52): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/owner/DashboardScreen/index.tsx(270,104): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/owner/DashboardScreen/index.tsx(272,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/owner/DashboardScreen/index.tsx(278,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/owner/DashboardScreen/index.tsx(283,9): error TS17002: Expected corresponding JSX closing tag for 'ScrollView'.
+src/screens/owner/DashboardScreen/index.tsx(317,7): error TS1005: ')' expected.
+src/screens/owner/DashboardScreen/index.tsx(334,53): error TS1005: ',' expected.
+src/screens/owner/DashboardScreen/index.tsx(335,15): error TS1005: '}' expected.
+src/screens/owner/DashboardScreen/index.tsx(358,5): error TS1128: Declaration or statement expected.
+src/screens/owner/DashboardScreen/index.tsx(359,3): error TS1109: Expression expected.
+src/screens/owner/DashboardScreen/index.tsx(360,1): error TS1128: Declaration or statement expected.
+src/screens/owner/MenuScreen/index.tsx(250,114): error TS1005: ',' expected.
+src/screens/owner/MenuScreen/index.tsx(250,133): error TS1005: '}' expected.
+src/screens/owner/MenuScreen/index.tsx(253,114): error TS1005: ',' expected.
+src/screens/owner/MenuScreen/index.tsx(253,133): error TS1005: '}' expected.
+src/screens/owner/MenuScreen/index.tsx(256,114): error TS1005: ',' expected.
+src/screens/owner/MenuScreen/index.tsx(256,133): error TS1005: '}' expected.
+src/screens/owner/MenuScreen/index.tsx(305,114): error TS1005: ',' expected.
+src/screens/owner/MenuScreen/index.tsx(305,127): error TS1005: '}' expected.
+src/screens/owner/MenuScreen/index.tsx(308,114): error TS1005: ',' expected.
+src/screens/owner/MenuScreen/index.tsx(308,127): error TS1005: '}' expected.
+src/screens/owner/MenuScreen/index.tsx(319,97): error TS1005: ',' expected.
+src/screens/owner/MenuScreen/index.tsx(319,109): error TS1005: '}' expected.
+src/screens/owner/MenuScreen/index.tsx(333,103): error TS1005: ',' expected.
+src/screens/owner/MenuScreen/index.tsx(333,115): error TS1005: '}' expected.
+src/screens/owner/MenuScreen/index.tsx(336,103): error TS1005: ',' expected.
+src/screens/owner/MenuScreen/index.tsx(336,115): error TS1005: '}' expected.
+src/screens/owner/MenuScreen/index.tsx(400,64): error TS1005: ',' expected.
+src/screens/owner/MenuScreen/index.tsx(401,19): error TS1005: '}' expected.
+src/screens/owner/MenuScreen/index.tsx(418,103): error TS1005: ',' expected.
+src/screens/owner/MenuScreen/index.tsx(418,115): error TS1005: '}' expected.
+src/screens/owner/MenuScreen/index.tsx(421,103): error TS1005: ',' expected.
+src/screens/owner/MenuScreen/index.tsx(421,115): error TS1005: '}' expected.
+src/screens/owner/OwnerOrderDetailScreen/index.tsx(204,103): error TS1005: ',' expected.
+src/screens/owner/OwnerOrderDetailScreen/index.tsx(204,119): error TS1005: '}' expected.
+src/screens/owner/OwnerOrderDetailScreen/index.tsx(208,102): error TS1005: ',' expected.
+src/screens/owner/OwnerOrderDetailScreen/index.tsx(208,117): error TS1005: '}' expected.
+src/screens/owner/OwnerOrderDetailScreen/index.tsx(263,105): error TS1005: ',' expected.
+src/screens/owner/OwnerOrderDetailScreen/index.tsx(263,123): error TS1005: '}' expected.
+src/screens/owner/OwnerOrderDetailScreen/index.tsx(271,52): error TS1005: ',' expected.
+src/screens/owner/OwnerOrderDetailScreen/index.tsx(272,13): error TS1005: '}' expected.
+src/screens/owner/OwnerOrderDetailScreen/index.tsx(277,109): error TS1005: ',' expected.
+src/screens/owner/OwnerOrderDetailScreen/index.tsx(277,129): error TS1005: '}' expected.
+src/screens/owner/OwnerOrderDetailScreen/index.tsx(283,100): error TS1005: ',' expected.
+src/screens/owner/OwnerOrderDetailScreen/index.tsx(283,115): error TS1005: '}' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(386,9): error TS1109: Expression expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(386,10): error TS1005: ':' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(387,9): error TS1005: '}' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(418,106): error TS1005: ',' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(418,121): error TS1005: '}' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(421,106): error TS1005: ',' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(421,121): error TS1005: '}' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(431,56): error TS1005: ',' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(432,15): error TS1005: '}' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(438,56): error TS1005: ',' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(439,15): error TS1005: '}' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(459,15): error TS1005: '}' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(502,19): error TS1005: '}' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(517,105): error TS1005: ',' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(517,119): error TS1005: '}' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(520,105): error TS1005: ',' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(520,119): error TS1005: '}' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(538,61): error TS1005: ',' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(539,19): error TS1005: '}' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(549,105): error TS1005: ',' expected.
+src/screens/owner/OwnerOrdersScreen/index.tsx(549,119): error TS1005: '}' expected.
+src/screens/owner/OwnerProfileScreen/index.tsx(258,60): error TS1005: ',' expected.
+src/screens/owner/OwnerProfileScreen/index.tsx(259,17): error TS1005: '}' expected.
+src/screens/owner/OwnerProfileScreen/index.tsx(269,52): error TS1005: ',' expected.
+src/screens/owner/OwnerProfileScreen/index.tsx(270,13): error TS1005: '}' expected.
+src/screens/owner/OwnerProfileScreen/index.tsx(326,106): error TS1005: ':' expected.
+src/screens/owner/OwnerProfileScreen/index.tsx(327,11): error TS1005: '}' expected.
+src/screens/profile/LocationEntryScreen.tsx(38,48): error TS1005: ',' expected.
+src/screens/profile/LocationEntryScreen.tsx(39,11): error TS1005: '}' expected.
+src/screens/profile/LocationEntryScreen.tsx(88,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/profile/LocationEntryScreen.tsx(94,99): error TS1005: ':' expected.
+src/screens/profile/LocationEntryScreen.tsx(95,11): error TS1005: '}' expected.
+src/screens/profile/ProfileScreen.tsx(50,3): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/profile/ProfileScreen.tsx(136,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/profile/ProfileScreen.tsx(151,94): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/profile/ProfileScreen.tsx(162,94): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/profile/ProfileScreen.tsx(173,94): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/profile/ProfileScreen.tsx(344,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/restaurant/RestaurantDetailScreen.tsx(135,102): error TS1005: ':' expected.
+src/screens/restaurant/RestaurantDetailScreen.tsx(136,13): error TS1005: '}' expected.
+src/screens/restaurant/RestaurantDetailScreen.tsx(142,103): error TS1005: ':' expected.
+src/screens/restaurant/RestaurantDetailScreen.tsx(143,13): error TS1005: '}' expected.
+src/screens/restaurant/RestaurantDetailScreen.tsx(221,106): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/restaurant/RestaurantDetailScreen.tsx(247,17): error TS1005: '}' expected.
+src/screens/restaurant/RestaurantDetailScreen.tsx(306,52): error TS1005: ',' expected.
+src/screens/restaurant/RestaurantDetailScreen.tsx(307,13): error TS1005: '}' expected.
+src/screens/restaurant/RestaurantDetailScreen.tsx(324,106): error TS1005: ':' expected.
+src/screens/restaurant/RestaurantDetailScreen.tsx(325,13): error TS1005: '}' expected.
+src/screens/restaurant/RestaurantDetailScreen/index.tsx(228,19): error TS1005: '}' expected.
+src/screens/restaurant/RestaurantDetailScreen/index.tsx(300,84): error TS1005: ',' expected.
+src/screens/restaurant/RestaurantDetailScreen/index.tsx(301,29): error TS1005: '}' expected.
+src/screens/restaurant/RestaurantDetailScreen/index.tsx(311,84): error TS1005: ',' expected.
+src/screens/restaurant/RestaurantDetailScreen/index.tsx(312,29): error TS1005: '}' expected.
+src/screens/restaurant/RestaurantDetailScreen/index.tsx(320,84): error TS1005: ',' expected.
+src/screens/restaurant/RestaurantDetailScreen/index.tsx(321,29): error TS1005: '}' expected.
+src/screens/restaurant/RestaurantListScreen/index.tsx(107,131): error TS1005: ':' expected.
+src/screens/restaurant/RestaurantListScreen/index.tsx(108,21): error TS1005: '}' expected.
+src/screens/rider/RiderDashboardScreen.tsx(290,118): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderDashboardScreen.tsx(310,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderDashboardScreen.tsx(320,105): error TS1005: ':' expected.
+src/screens/rider/RiderDashboardScreen.tsx(321,13): error TS1005: '}' expected.
+src/screens/rider/RiderDashboardScreen.tsx(335,56): error TS1005: ',' expected.
+src/screens/rider/RiderDashboardScreen.tsx(336,15): error TS1005: '}' expected.
+src/screens/rider/RiderDashboardScreen.tsx(395,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderDashboardScreen.tsx(463,17): error TS1109: Expression expected.
+src/screens/rider/RiderDashboardScreen.tsx(463,18): error TS1005: ':' expected.
+src/screens/rider/RiderDashboardScreen.tsx(464,17): error TS1005: '}' expected.
+src/screens/rider/RiderDashboardScreen.tsx(490,17): error TS1109: Expression expected.
+src/screens/rider/RiderDashboardScreen.tsx(490,18): error TS1005: ':' expected.
+src/screens/rider/RiderDashboardScreen.tsx(491,17): error TS1005: '}' expected.
+src/screens/rider/RiderDashboardScreen.tsx(525,13): error TS1109: Expression expected.
+src/screens/rider/RiderDashboardScreen.tsx(525,14): error TS1005: ':' expected.
+src/screens/rider/RiderDashboardScreen.tsx(526,13): error TS1005: '}' expected.
+src/screens/rider/RiderDashboardScreen.tsx(597,57): error TS1005: ',' expected.
+src/screens/rider/RiderDashboardScreen.tsx(598,17): error TS1005: '}' expected.
+src/screens/rider/RiderDashboardScreen.tsx(641,21): error TS1109: Expression expected.
+src/screens/rider/RiderDashboardScreen.tsx(641,22): error TS1005: ':' expected.
+src/screens/rider/RiderDashboardScreen.tsx(642,21): error TS1005: '}' expected.
+src/screens/rider/RiderDashboardScreen.tsx(656,114): error TS1005: ':' expected.
+src/screens/rider/RiderDashboardScreen.tsx(657,21): error TS1005: '}' expected.
+src/screens/rider/RiderDashboardScreen.tsx(687,92): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderDashboardScreen.tsx(693,48): error TS1005: ',' expected.
+src/screens/rider/RiderDashboardScreen.tsx(694,11): error TS1005: '}' expected.
+src/screens/rider/RiderDashboardScreen.tsx(703,48): error TS1005: ',' expected.
+src/screens/rider/RiderDashboardScreen.tsx(704,11): error TS1005: '}' expected.
+src/screens/rider/RiderDashboardScreen.tsx(711,92): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderEarningsScreen.tsx(98,7): error TS1109: Expression expected.
+src/screens/rider/RiderEarningsScreen.tsx(98,8): error TS1005: ':' expected.
+src/screens/rider/RiderEarningsScreen.tsx(99,7): error TS1005: '}' expected.
+src/screens/rider/RiderEarningsScreen.tsx(154,44): error TS1136: Property assignment expected.
+src/screens/rider/RiderEarningsScreen.tsx(154,47): error TS1005: '}' expected.
+src/screens/rider/RiderEarningsScreen.tsx(154,48): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderEarningsScreen.tsx(154,69): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/rider/RiderEarningsScreen.tsx(156,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderEarningsScreen.tsx(160,11): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/rider/RiderEarningsScreen.tsx(167,7): error TS1005: ')' expected.
+src/screens/rider/RiderEarningsScreen.tsx(251,5): error TS1128: Declaration or statement expected.
+src/screens/rider/RiderEarningsScreen.tsx(252,3): error TS1109: Expression expected.
+src/screens/rider/RiderEarningsScreen.tsx(253,1): error TS1128: Declaration or statement expected.
+src/screens/rider/RiderEarningsScreen/index.tsx(150,15): error TS1005: '}' expected.
+src/screens/rider/RiderHistoryScreen.tsx(81,89): error TS1005: ':' expected.
+src/screens/rider/RiderHistoryScreen.tsx(82,7): error TS1005: '}' expected.
+src/screens/rider/RiderHistoryScreen.tsx(135,44): error TS1136: Property assignment expected.
+src/screens/rider/RiderHistoryScreen.tsx(135,47): error TS1005: '}' expected.
+src/screens/rider/RiderHistoryScreen.tsx(135,48): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderHistoryScreen.tsx(135,69): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/rider/RiderHistoryScreen.tsx(137,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderHistoryScreen.tsx(141,11): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/rider/RiderHistoryScreen.tsx(148,7): error TS1005: ')' expected.
+src/screens/rider/RiderHistoryScreen.tsx(217,5): error TS1128: Declaration or statement expected.
+src/screens/rider/RiderHistoryScreen.tsx(218,3): error TS1109: Expression expected.
+src/screens/rider/RiderHistoryScreen.tsx(219,1): error TS1128: Declaration or statement expected.
+src/screens/rider/RiderHistoryScreen/index.tsx(122,102): error TS1005: ',' expected.
+src/screens/rider/RiderHistoryScreen/index.tsx(122,117): error TS1005: '}' expected.
+src/screens/rider/RiderHistoryScreen/index.tsx(161,100): error TS1005: ',' expected.
+src/screens/rider/RiderHistoryScreen/index.tsx(161,109): error TS1005: '}' expected.
+src/screens/rider/RiderHistoryScreen/index.tsx(166,56): error TS1005: ',' expected.
+src/screens/rider/RiderHistoryScreen/index.tsx(167,15): error TS1005: '}' expected.
+src/screens/rider/RiderHomeScreen/index.tsx(385,105): error TS1005: ',' expected.
+src/screens/rider/RiderHomeScreen/index.tsx(385,121): error TS1005: '}' expected.
+src/screens/rider/RiderHomeScreen/index.tsx(399,129): error TS1005: ':' expected.
+src/screens/rider/RiderHomeScreen/index.tsx(400,15): error TS1005: '}' expected.
+src/screens/rider/RiderHomeScreen/index.tsx(472,106): error TS1005: ',' expected.
+src/screens/rider/RiderHomeScreen/index.tsx(472,119): error TS1005: '}' expected.
+src/screens/rider/RiderHomeScreen/index.tsx(475,113): error TS1005: ',' expected.
+src/screens/rider/RiderHomeScreen/index.tsx(475,133): error TS1005: '}' expected.
+src/screens/rider/RiderLoginScreen.tsx(101,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderLoginScreen.tsx(107,107): error TS1005: ',' expected.
+src/screens/rider/RiderLoginScreen.tsx(107,125): error TS1005: '}' expected.
+src/screens/rider/RiderOnboardingScreen/index.tsx(37,104): error TS1005: ',' expected.
+src/screens/rider/RiderOnboardingScreen/index.tsx(37,119): error TS1005: '}' expected.
+src/screens/rider/RiderOnboardingScreen/index.tsx(52,17): error TS1005: '}' expected.
+src/screens/rider/RiderOnboardingScreen/index.tsx(59,104): error TS1005: ',' expected.
+src/screens/rider/RiderOnboardingScreen/index.tsx(59,119): error TS1005: '}' expected.
+src/screens/rider/RiderOnboardingScreen/index.tsx(74,104): error TS1005: ',' expected.
+src/screens/rider/RiderOnboardingScreen/index.tsx(74,119): error TS1005: '}' expected.
+src/screens/rider/RiderOnboardingScreen/index.tsx(84,104): error TS1005: ',' expected.
+src/screens/rider/RiderOnboardingScreen/index.tsx(84,119): error TS1005: '}' expected.
+src/screens/rider/RiderOTPVerifyScreen.tsx(158,100): error TS1005: ',' expected.
+src/screens/rider/RiderOTPVerifyScreen.tsx(158,113): error TS1005: '}' expected.
+src/screens/rider/RiderOTPVerifyScreen.tsx(202,94): error TS1005: ':' expected.
+src/screens/rider/RiderOTPVerifyScreen.tsx(203,11): error TS1005: '}' expected.
+src/screens/rider/RiderOTPVerifyScreen.tsx(215,102): error TS1005: '}' expected.
+src/screens/rider/RiderOTPVerifyScreen.tsx(215,144): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderOTPVerifyScreen.tsx(225,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/rider/RiderOTPVerifyScreen.tsx(227,9): error TS17002: Expected corresponding JSX closing tag for 'KeyboardAvoidingView'.
+src/screens/rider/RiderOTPVerifyScreen.tsx(228,5): error TS1005: ')' expected.
+src/screens/rider/RiderOTPVerifyScreen.tsx(229,3): error TS1109: Expression expected.
+src/screens/rider/RiderOTPVerifyScreen.tsx(230,1): error TS1128: Declaration or statement expected.
+src/screens/rider/RiderProfileScreen/index.tsx(144,102): error TS1005: ',' expected.
+src/screens/rider/RiderProfileScreen/index.tsx(144,117): error TS1005: '}' expected.
+src/screens/rider/RiderProfileScreen/index.tsx(162,100): error TS1005: ',' expected.
+src/screens/rider/RiderProfileScreen/index.tsx(162,115): error TS1005: '}' expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(193,8): error TS17008: JSX element 'ScrollView' has no corresponding closing tag.
+src/screens/rider/RiderTaskDetailScreen.tsx(202,48): error TS1136: Property assignment expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(202,51): error TS1005: '}' expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(202,52): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderTaskDetailScreen.tsx(202,73): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/rider/RiderTaskDetailScreen.tsx(204,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderTaskDetailScreen.tsx(206,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/rider/RiderTaskDetailScreen.tsx(211,9): error TS1005: ')' expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(244,97): error TS1005: ':' expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(245,13): error TS1005: '}' expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(292,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderTaskDetailScreen.tsx(304,15): error TS1109: Expression expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(304,16): error TS1005: ':' expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(305,15): error TS1005: '}' expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(366,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderTaskDetailScreen.tsx(379,7): error TS1128: Declaration or statement expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(389,9): error TS1109: Expression expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(389,10): error TS1005: ':' expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(391,15): error TS1005: ',' expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(399,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderTaskDetailScreen.tsx(411,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderTaskDetailScreen.tsx(423,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/rider/RiderTaskDetailScreen.tsx(434,7): error TS1128: Declaration or statement expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(435,5): error TS1109: Expression expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(436,3): error TS1109: Expression expected.
+src/screens/rider/RiderTaskDetailScreen.tsx(437,1): error TS1128: Declaration or statement expected.
+src/screens/seller/SellerDashboardScreen.tsx(307,94): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerDashboardScreen.tsx(310,92): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerDashboardScreen.tsx(384,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerDashboardScreen.tsx(439,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerDashboardScreen.tsx(450,104): error TS1005: ':' expected.
+src/screens/seller/SellerDashboardScreen.tsx(451,13): error TS1005: '}' expected.
+src/screens/seller/SellerDashboardScreen.tsx(461,104): error TS1005: ':' expected.
+src/screens/seller/SellerDashboardScreen.tsx(462,13): error TS1005: '}' expected.
+src/screens/seller/SellerDashboardScreen.tsx(535,25): error TS1109: Expression expected.
+src/screens/seller/SellerDashboardScreen.tsx(535,26): error TS1005: ':' expected.
+src/screens/seller/SellerDashboardScreen.tsx(536,25): error TS1005: '}' expected.
+src/screens/seller/SellerDashboardScreen.tsx(549,25): error TS1109: Expression expected.
+src/screens/seller/SellerDashboardScreen.tsx(549,26): error TS1005: ':' expected.
+src/screens/seller/SellerDashboardScreen.tsx(550,25): error TS1005: '}' expected.
+src/screens/seller/SellerDashboardScreen.tsx(566,23): error TS1109: Expression expected.
+src/screens/seller/SellerDashboardScreen.tsx(566,24): error TS1005: ':' expected.
+src/screens/seller/SellerDashboardScreen.tsx(567,23): error TS1005: '}' expected.
+src/screens/seller/SellerDashboardScreen.tsx(582,23): error TS1109: Expression expected.
+src/screens/seller/SellerDashboardScreen.tsx(582,24): error TS1005: ':' expected.
+src/screens/seller/SellerDashboardScreen.tsx(583,23): error TS1005: '}' expected.
+src/screens/seller/SellerDashboardScreen.tsx(631,19): error TS1109: Expression expected.
+src/screens/seller/SellerDashboardScreen.tsx(631,20): error TS1005: ':' expected.
+src/screens/seller/SellerDashboardScreen.tsx(632,19): error TS1005: '}' expected.
+src/screens/seller/SellerMenuItemFormScreen.tsx(136,5): error TS2657: JSX expressions must have one parent element.
+src/screens/seller/SellerMenuItemFormScreen.tsx(146,70): error TS1136: Property assignment expected.
+src/screens/seller/SellerMenuItemFormScreen.tsx(146,73): error TS1005: '}' expected.
+src/screens/seller/SellerMenuItemFormScreen.tsx(146,74): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerMenuItemFormScreen.tsx(146,95): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/seller/SellerMenuItemFormScreen.tsx(146,96): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerMenuItemFormScreen.tsx(150,11): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/seller/SellerMenuItemFormScreen.tsx(154,126): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerMenuItemFormScreen.tsx(163,9): error TS17002: Expected corresponding JSX closing tag for 'KeyboardAvoidingView'.
+src/screens/seller/SellerMenuItemFormScreen.tsx(256,55): error TS1005: ',' expected.
+src/screens/seller/SellerMenuItemFormScreen.tsx(257,17): error TS1005: '}' expected.
+src/screens/seller/SellerMenuItemFormScreen.tsx(308,15): error TS1109: Expression expected.
+src/screens/seller/SellerMenuItemFormScreen.tsx(308,16): error TS1005: ':' expected.
+src/screens/seller/SellerMenuItemFormScreen.tsx(309,15): error TS1005: '}' expected.
+src/screens/seller/SellerMenuItemFormScreen.tsx(345,15): error TS1109: Expression expected.
+src/screens/seller/SellerMenuItemFormScreen.tsx(345,16): error TS1005: ':' expected.
+src/screens/seller/SellerMenuItemFormScreen.tsx(346,15): error TS1005: '}' expected.
+src/screens/seller/SellerMenuItemFormScreen.tsx(452,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerMenuItemFormScreen.tsx(462,5): error TS1005: ')' expected.
+src/screens/seller/SellerMenuItemFormScreen.tsx(463,3): error TS1109: Expression expected.
+src/screens/seller/SellerMenuItemFormScreen.tsx(464,1): error TS1128: Declaration or statement expected.
+src/screens/seller/SellerMenuScreen.tsx(203,92): error TS1005: ':' expected.
+src/screens/seller/SellerMenuScreen.tsx(204,7): error TS1005: '}' expected.
+src/screens/seller/SellerMenuScreen.tsx(279,11): error TS1109: Expression expected.
+src/screens/seller/SellerMenuScreen.tsx(279,12): error TS1005: ':' expected.
+src/screens/seller/SellerMenuScreen.tsx(280,11): error TS1005: '}' expected.
+src/screens/seller/SellerMenuScreen.tsx(298,91): error TS1005: ':' expected.
+src/screens/seller/SellerMenuScreen.tsx(299,11): error TS1005: '}' expected.
+src/screens/seller/SellerMenuScreen.tsx(324,5): error TS2657: JSX expressions must have one parent element.
+src/screens/seller/SellerMenuScreen.tsx(335,72): error TS1136: Property assignment expected.
+src/screens/seller/SellerMenuScreen.tsx(335,75): error TS1005: '}' expected.
+src/screens/seller/SellerMenuScreen.tsx(335,76): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerMenuScreen.tsx(335,97): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/seller/SellerMenuScreen.tsx(335,98): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerMenuScreen.tsx(339,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/seller/SellerMenuScreen.tsx(348,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerMenuScreen.tsx(378,13): error TS1109: Expression expected.
+src/screens/seller/SellerMenuScreen.tsx(378,14): error TS1005: ':' expected.
+src/screens/seller/SellerMenuScreen.tsx(379,13): error TS1005: '}' expected.
+src/screens/seller/SellerMenuScreen.tsx(406,56): error TS1005: ',' expected.
+src/screens/seller/SellerMenuScreen.tsx(407,15): error TS1005: '}' expected.
+src/screens/seller/SellerMenuScreen.tsx(447,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerMenuScreen.tsx(487,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerMenuScreen.tsx(499,7): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerMenuScreen.tsx(529,60): error TS1005: ',' expected.
+src/screens/seller/SellerMenuScreen.tsx(530,17): error TS1005: '}' expected.
+src/screens/seller/SellerMenuScreen.tsx(541,15): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerMenuScreen.tsx(552,5): error TS1005: ')' expected.
+src/screens/seller/SellerMenuScreen.tsx(553,3): error TS1109: Expression expected.
+src/screens/seller/SellerMenuScreen.tsx(554,1): error TS1128: Declaration or statement expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(150,5): error TS2657: JSX expressions must have one parent element.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(152,70): error TS1136: Property assignment expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(152,73): error TS1005: '}' expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(152,74): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(152,95): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(152,96): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(154,11): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(173,56): error TS1005: ',' expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(174,15): error TS1005: '}' expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(208,19): error TS1109: Expression expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(208,20): error TS1005: ':' expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(209,19): error TS1005: '}' expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(234,19): error TS1109: Expression expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(234,20): error TS1005: ':' expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(235,19): error TS1005: '}' expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(260,19): error TS1109: Expression expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(260,20): error TS1005: ':' expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(261,19): error TS1005: '}' expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(282,7): error TS1005: ')' expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(289,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(294,5): error TS1128: Declaration or statement expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(295,3): error TS1109: Expression expected.
+src/screens/seller/SellerNotificationPreferencesScreen.tsx(296,1): error TS1128: Declaration or statement expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(233,5): error TS2657: JSX expressions must have one parent element.
+src/screens/seller/SellerStoreHoursScreen.tsx(237,48): error TS1136: Property assignment expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(237,51): error TS1005: '}' expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(237,52): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerStoreHoursScreen.tsx(237,73): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/screens/seller/SellerStoreHoursScreen.tsx(239,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerStoreHoursScreen.tsx(241,13): error TS17002: Expected corresponding JSX closing tag for 'View'.
+src/screens/seller/SellerStoreHoursScreen.tsx(281,15): error TS1109: Expression expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(281,16): error TS1005: ':' expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(282,15): error TS1005: '}' expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(303,15): error TS1109: Expression expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(303,16): error TS1005: ':' expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(304,15): error TS1005: '}' expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(325,15): error TS1109: Expression expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(325,16): error TS1005: ':' expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(326,15): error TS1005: '}' expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(362,64): error TS1005: ',' expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(363,19): error TS1005: '}' expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(413,21): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerStoreHoursScreen.tsx(450,21): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerStoreHoursScreen.tsx(520,9): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/screens/seller/SellerStoreHoursScreen.tsx(526,5): error TS1005: ')' expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(527,3): error TS1109: Expression expected.
+src/screens/seller/SellerStoreHoursScreen.tsx(528,1): error TS1128: Declaration or statement expected.

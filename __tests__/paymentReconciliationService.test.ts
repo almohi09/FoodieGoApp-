@@ -1,9 +1,9 @@
 import {
   paymentReconciliationService,
-} from '../src/data/api/paymentReconciliationService';
-import { paymentService } from '../src/data/api/paymentService';
+} from '../src/api/paymentReconciliationService';
+import { paymentService } from '../src/api/paymentService';
 
-jest.mock('../src/data/api/paymentService', () => ({
+jest.mock('../src/api/paymentService', () => ({
   paymentService: {
     getPaymentStatus: jest.fn(),
   },
@@ -51,3 +51,4 @@ describe('paymentReconciliationService', () => {
     expect(mocked).toHaveBeenCalledTimes(1);
   });
 });
+

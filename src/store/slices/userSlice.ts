@@ -1,102 +1,200 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User, Address } from '../../domain/types';
+import { Address, User } from '../../types';
 
-interface UserState {
+export interface UserState {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
 }
 
-const initialState: UserState = {
+export const initialUserState: UserState = {
   user: null,
   isAuthenticated: false,
   isLoading: false,
   error: null,
 };
 
-const userSlice = createSlice({
-  name: 'user',
-  initialState,
-  reducers: {
-    setUser: (state, action: PayloadAction<User | null>) => {
-      state.user = action.payload;
-      state.isAuthenticated = !!action.payload;
-      state.error = null;
-    },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload;
-    },
-    setError: (state, action: PayloadAction<string | null>) => {
-      state.error = action.payload;
-      state.isLoading = false;
-    },
-    updateUser: (state, action: PayloadAction<Partial<User>>) => {
-      if (state.user) {
-        state.user = { ...state.user, ...action.payload };
-      }
-    },
-    addAddress: (state, action: PayloadAction<Address>) => {
-      if (state.user) {
-        const addresses = state.user.addresses.map(a => ({ ...a, isDefault: false }));
-        addresses.push({ ...action.payload, isDefault: addresses.length === 0 });
-        state.user.addresses = addresses;
-      }
-    },
-    updateAddress: (state, action: PayloadAction<Address>) => {
-      if (state.user) {
-        state.user.addresses = state.user.addresses.map(a =>
-          a.id === action.payload.id ? action.payload : a
-        );
-      }
-    },
-    removeAddress: (state, action: PayloadAction<string>) => {
-      if (state.user) {
-        const filtered = state.user.addresses.filter(a => a.id !== action.payload);
-        if (filtered.length > 0 && !filtered.some(a => a.isDefault)) {
-          filtered[0].isDefault = true;
-        }
-        state.user.addresses = filtered;
-      }
-    },
-    setDefaultAddress: (state, action: PayloadAction<string>) => {
-      if (state.user) {
-        state.user.addresses = state.user.addresses.map(a => ({
-          ...a,
-          isDefault: a.id === action.payload,
-        }));
-      }
-    },
-    addFoodieCoins: (state, action: PayloadAction<number>) => {
-      if (state.user) {
-        state.user.foodieCoins += action.payload;
-      }
-    },
-    deductFoodieCoins: (state, action: PayloadAction<number>) => {
-      if (state.user && state.user.foodieCoins >= action.payload) {
-        state.user.foodieCoins -= action.payload;
-      }
-    },
-    logout: (state) => {
-      state.user = null;
-      state.isAuthenticated = false;
-      state.error = null;
-    },
-  },
-});
+type UserActionMap = {
+  setUser: User | null;
+  setLoading: boolean;
+  setError: string | null;
+  updateUser: Partial<User>;
+  addAddress: Address;
+  updateAddress: Address;
+  removeAddress: string;
+  setDefaultAddress: string;
+  addFoodieCoins: number;
+  deductFoodieCoins: number;
+  logout: undefined;
+};
 
-export const {
-  setUser,
-  setLoading,
-  setError,
-  updateUser,
-  addAddress,
-  updateAddress,
-  removeAddress,
-  setDefaultAddress,
-  addFoodieCoins,
-  deductFoodieCoins,
-  logout,
-} = userSlice.actions;
+type ActionName = keyof UserActionMap;
+export type UserAction = {
+  [K in ActionName]: UserActionMap[K] extends undefined
+    ? { type: `user/${K}` }
+    : { type: `user/${K}`; payload: UserActionMap[K] };
+}[ActionName];
 
-export default userSlice.reducer;
+const createAction = <K extends ActionName>(type: K) => {
+  return (payload?: UserActionMap[K]) =>
+    payload === undefined
+      ? ({ type: `user/${type}` } as UserAction)
+      : ({ type: `user/${type}`, payload } as UserAction);
+};
+
+export const setUser = createAction('setUser');
+export const setLoading = createAction('setLoading');
+export const setError = createAction('setError');
+export const updateUser = createAction('updateUser');
+export const addAddress = createAction('addAddress');
+export const updateAddress = createAction('updateAddress');
+export const removeAddress = createAction('removeAddress');
+export const setDefaultAddress = createAction('setDefaultAddress');
+export const addFoodieCoins = createAction('addFoodieCoins');
+export const deductFoodieCoins = createAction('deductFoodieCoins');
+export const logout = createAction('logout');
+
+export const reduceUserState = (
+  state: UserState,
+  action: UserAction | { type: string; payload?: unknown },
+): UserState => {
+  switch (action.type) {
+    case 'user/setUser': {
+      const user = (action as Extract<UserAction, { type: 'user/setUser' }>).payload;
+      return {
+        ...state,
+        user,
+        isAuthenticated: !!user,
+        error: null,
+      };
+    }
+    case 'user/setLoading':
+      return {
+        ...state,
+        isLoading: (action as Extract<UserAction, { type: 'user/setLoading' }>).payload,
+      };
+    case 'user/setError':
+      return {
+        ...state,
+        error: (action as Extract<UserAction, { type: 'user/setError' }>).payload,
+        isLoading: false,
+      };
+    case 'user/updateUser': {
+      if (!state.user) {
+        return state;
+      }
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...(action as Extract<UserAction, { type: 'user/updateUser' }>).payload,
+        },
+      };
+    }
+    case 'user/addAddress': {
+      if (!state.user) {
+        return state;
+      }
+      const newAddress = (action as Extract<UserAction, { type: 'user/addAddress' }>).payload;
+      const addresses = state.user.addresses.map(address => ({
+        ...address,
+        isDefault: false,
+      }));
+      addresses.push({ ...newAddress, isDefault: addresses.length === 0 });
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          addresses,
+        },
+      };
+    }
+    case 'user/updateAddress': {
+      if (!state.user) {
+        return state;
+      }
+      const payload = (action as Extract<UserAction, { type: 'user/updateAddress' }>).payload;
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          addresses: state.user.addresses.map(address =>
+            address.id === payload.id ? payload : address,
+          ),
+        },
+      };
+    }
+    case 'user/removeAddress': {
+      if (!state.user) {
+        return state;
+      }
+      const addressId = (action as Extract<UserAction, { type: 'user/removeAddress' }>).payload;
+      const filtered = state.user.addresses.filter(address => address.id !== addressId);
+      if (filtered.length > 0 && !filtered.some(address => address.isDefault)) {
+        filtered[0] = { ...filtered[0], isDefault: true };
+      }
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          addresses: filtered,
+        },
+      };
+    }
+    case 'user/setDefaultAddress': {
+      if (!state.user) {
+        return state;
+      }
+      const addressId = (action as Extract<UserAction, { type: 'user/setDefaultAddress' }>).payload;
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          addresses: state.user.addresses.map(address => ({
+            ...address,
+            isDefault: address.id === addressId,
+          })),
+        },
+      };
+    }
+    case 'user/addFoodieCoins': {
+      if (!state.user) {
+        return state;
+      }
+      const amount = (action as Extract<UserAction, { type: 'user/addFoodieCoins' }>).payload;
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          foodieCoins: state.user.foodieCoins + amount,
+        },
+      };
+    }
+    case 'user/deductFoodieCoins': {
+      if (!state.user) {
+        return state;
+      }
+      const amount = (action as Extract<UserAction, { type: 'user/deductFoodieCoins' }>).payload;
+      if (state.user.foodieCoins < amount) {
+        return state;
+      }
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          foodieCoins: state.user.foodieCoins - amount,
+        },
+      };
+    }
+    case 'user/logout':
+      return {
+        ...state,
+        user: null,
+        isAuthenticated: false,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+

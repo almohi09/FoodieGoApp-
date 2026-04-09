@@ -20,7 +20,7 @@ jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );
 
-jest.mock('../src/presentation/navigation/AppNavigator', () => ({
+jest.mock('../src/navigation/AppNavigator', () => ({
   AppNavigator: () => {
     const { View } = require('react-native');
     return <View />;
@@ -34,3 +34,4 @@ test('renders correctly', async () => {
     ReactTestRenderer.create(<App />);
   });
 });
+
